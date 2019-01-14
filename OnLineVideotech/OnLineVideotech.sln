@@ -7,6 +7,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnLineVideotech.Web", "src\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{DB2047ED-3275-4060-9EED-9F52A74E83B8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{D91DE1D9-ADBD-48DC-95E1-17FE360DB7AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnLineVideotech.Data", "src\Data\OnLineVideotech.Data\OnLineVideotech.Data.csproj", "{C5B0D510-577A-4640-8AF3-53F82AEE1016}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnLineVideotech.Data.Models", "src\Data\OnLineVideotech.Data.Models\OnLineVideotech.Data.Models.csproj", "{72DC8774-EE15-410E-B770-4736DC9CF218}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,12 +23,22 @@ Global
 		{7691D9A6-CE02-4167-84D9-1F7DB20A1B42}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7691D9A6-CE02-4167-84D9-1F7DB20A1B42}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7691D9A6-CE02-4167-84D9-1F7DB20A1B42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5B0D510-577A-4640-8AF3-53F82AEE1016}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5B0D510-577A-4640-8AF3-53F82AEE1016}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5B0D510-577A-4640-8AF3-53F82AEE1016}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5B0D510-577A-4640-8AF3-53F82AEE1016}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72DC8774-EE15-410E-B770-4736DC9CF218}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72DC8774-EE15-410E-B770-4736DC9CF218}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72DC8774-EE15-410E-B770-4736DC9CF218}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72DC8774-EE15-410E-B770-4736DC9CF218}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{7691D9A6-CE02-4167-84D9-1F7DB20A1B42} = {DB2047ED-3275-4060-9EED-9F52A74E83B8}
+		{C5B0D510-577A-4640-8AF3-53F82AEE1016} = {D91DE1D9-ADBD-48DC-95E1-17FE360DB7AF}
+		{72DC8774-EE15-410E-B770-4736DC9CF218} = {D91DE1D9-ADBD-48DC-95E1-17FE360DB7AF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {80514B06-2881-4908-BED1-912B48BA6FD0}
