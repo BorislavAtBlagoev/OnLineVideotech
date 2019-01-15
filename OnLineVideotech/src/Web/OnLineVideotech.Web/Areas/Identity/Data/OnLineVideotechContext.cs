@@ -1,9 +1,15 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using OnLineVideotech.Web.Areas.Identity.Data;
 
 namespace OnLineVideotech.Web.Models
 {
-    public class OnLineVideotechContext : IdentityDbContext<OnLineVideotechUser>
+    public class OnLineVideotechContext : IdentityDbContext<User>
     {
         public OnLineVideotechContext(DbContextOptions<OnLineVideotechContext> options)
             : base(options)

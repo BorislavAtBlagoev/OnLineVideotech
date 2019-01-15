@@ -12,8 +12,6 @@ using Microsoft.EntityFrameworkCore;
 using OnLineVideotech.Web.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using OnLineVideotech.Web.Areas.Identity.Data;
-using OnLineVideotech.Web.Models;
 
 namespace OnLineVideotech.Web
 {
@@ -36,11 +34,11 @@ namespace OnLineVideotech.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<OnLineVideotechContext>(options =>
+            services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<OnLineVideotechUser>()
-                .AddEntityFrameworkStores<OnLineVideotechContext>();
+            services.AddDefaultIdentity<IdentityUser>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

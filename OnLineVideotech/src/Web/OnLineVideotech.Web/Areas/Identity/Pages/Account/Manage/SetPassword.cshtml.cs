@@ -12,12 +12,12 @@ namespace OnLineVideotech.Web.Areas.Identity.Pages.Account.Manage
 {
     public class SetPasswordModel : PageModel
     {
-        private readonly UserManager<OnLineVideotechUser> _userManager;
-        private readonly SignInManager<OnLineVideotechUser> _signInManager;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
 
         public SetPasswordModel(
-            UserManager<OnLineVideotechUser> userManager,
-            SignInManager<OnLineVideotechUser> signInManager)
+            UserManager<User> userManager,
+            SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;

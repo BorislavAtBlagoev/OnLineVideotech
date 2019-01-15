@@ -1,8 +1,7 @@
 @using Microsoft.AspNetCore.Identity
-@using OnLineVideotech.Web.Areas.Identity.Data
 
-@inject SignInManager<OnLineVideotechUser> SignInManager
-@inject UserManager<OnLineVideotechUser> UserManager
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 
 @if (SignInManager.IsSignedIn(User))
 {

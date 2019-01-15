@@ -16,13 +16,13 @@ namespace OnLineVideotech.Web.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class ExternalLoginModel : PageModel
     {
-        private readonly SignInManager<OnLineVideotechUser> _signInManager;
-        private readonly UserManager<OnLineVideotechUser> _userManager;
+        private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<User> _userManager;
         private readonly ILogger<ExternalLoginModel> _logger;
 
         public ExternalLoginModel(
-            SignInManager<OnLineVideotechUser> signInManager,
-            UserManager<OnLineVideotechUser> userManager,
+            SignInManager<User> signInManager,
+            UserManager<User> userManager,
             ILogger<ExternalLoginModel> logger)
         {
             _signInManager = signInManager;
@@ -115,7 +115,7 @@ namespace OnLineVideotech.Web.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                var user = new OnLineVideotechUser { UserName = Input.Email, Email = Input.Email };
+                var user = new User { UserName = Input.Email, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

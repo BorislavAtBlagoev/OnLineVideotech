@@ -12,12 +12,12 @@ namespace OnLineVideotech.Web.Areas.Identity.Pages.Account.Manage
 {
     public class ExternalLoginsModel : PageModel
     {
-        private readonly UserManager<OnLineVideotechUser> _userManager;
-        private readonly SignInManager<OnLineVideotechUser> _signInManager;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
 
         public ExternalLoginsModel(
-            UserManager<OnLineVideotechUser> userManager,
-            SignInManager<OnLineVideotechUser> signInManager)
+            UserManager<User> userManager,
+            SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;

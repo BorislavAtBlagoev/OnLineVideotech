@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Identity;
 
 namespace OnLineVideotech.Web.Areas.Identity.Data
 {
-    // Add profile data for application users by adding properties to the OnLineVideotechUser class
-    public class OnLineVideotechUser : IdentityUser
+    // Add profile data for application users by adding properties to the User class
+    public class User : IdentityUser
     {
     }
 }

@@ -12,13 +12,13 @@ namespace OnLineVideotech.Web.Areas.Identity.Pages.Account.Manage
 {
     public class ResetAuthenticatorModel : PageModel
     {
-        UserManager<OnLineVideotechUser> _userManager;
-        private readonly SignInManager<OnLineVideotechUser> _signInManager;
+        UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
         ILogger<ResetAuthenticatorModel> _logger;
 
         public ResetAuthenticatorModel(
-            UserManager<OnLineVideotechUser> userManager,
-            SignInManager<OnLineVideotechUser> signInManager,
+            UserManager<User> userManager,
+            SignInManager<User> signInManager,
             ILogger<ResetAuthenticatorModel> logger)
         {
             _userManager = userManager;

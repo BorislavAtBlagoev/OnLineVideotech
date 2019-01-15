@@ -14,13 +14,13 @@ namespace OnLineVideotech.Web.Areas.Identity.Pages.Account.Manage
 {
     public partial class IndexModel : PageModel
     {
-        private readonly UserManager<OnLineVideotechUser> _userManager;
-        private readonly SignInManager<OnLineVideotechUser> _signInManager;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
         private readonly IEmailSender _emailSender;
 
         public IndexModel(
-            UserManager<OnLineVideotechUser> userManager,
-            SignInManager<OnLineVideotechUser> signInManager,
+            UserManager<User> userManager,
+            SignInManager<User> signInManager,
             IEmailSender emailSender)
         {
             _userManager = userManager;
