@@ -9,6 +9,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{D91DE1D9-A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnLineVideotech.Web", "src\Web\OnLineVideotech.Web\OnLineVideotech.Web.csproj", "{F2895087-AFA1-46D5-B95C-801F12ACC549}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnLineVideotech.Data", "src\Data\OnLineVideotech.Data\OnLineVideotech.Data.csproj", "{FCBC4550-677E-4944-8A19-665A52F8FDA7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnLineVideotech.Data.Models", "src\Data\OnLineVideotech.Data.Models\OnLineVideotech.Data.Models.csproj", "{462F9225-2D91-43B0-8CED-CB2DCA3C13C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,12 +23,22 @@ Global
 		{F2895087-AFA1-46D5-B95C-801F12ACC549}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2895087-AFA1-46D5-B95C-801F12ACC549}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2895087-AFA1-46D5-B95C-801F12ACC549}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCBC4550-677E-4944-8A19-665A52F8FDA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCBC4550-677E-4944-8A19-665A52F8FDA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCBC4550-677E-4944-8A19-665A52F8FDA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCBC4550-677E-4944-8A19-665A52F8FDA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{462F9225-2D91-43B0-8CED-CB2DCA3C13C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{462F9225-2D91-43B0-8CED-CB2DCA3C13C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{462F9225-2D91-43B0-8CED-CB2DCA3C13C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{462F9225-2D91-43B0-8CED-CB2DCA3C13C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F2895087-AFA1-46D5-B95C-801F12ACC549} = {DB2047ED-3275-4060-9EED-9F52A74E83B8}
+		{FCBC4550-677E-4944-8A19-665A52F8FDA7} = {D91DE1D9-ADBD-48DC-95E1-17FE360DB7AF}
+		{462F9225-2D91-43B0-8CED-CB2DCA3C13C0} = {D91DE1D9-ADBD-48DC-95E1-17FE360DB7AF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {80514B06-2881-4908-BED1-912B48BA6FD0}
