@@ -12,7 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Identity\Services\" />
+    <ProjectReference Include="..\..\Data\OnLineVideotech.Data.Models\OnLineVideotech.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Data\OnLineVideotech.Data\OnLineVideotech.Data.csproj" />
   </ItemGroup>
 
 </Project>

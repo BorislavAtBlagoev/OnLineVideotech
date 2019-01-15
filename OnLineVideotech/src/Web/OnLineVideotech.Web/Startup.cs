@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using OnLineVideotech.Web.Models;
 using OnLineVideotech.Web.Areas.Identity.Data;
+using OnLineVideotech.Web.Models;
 
 namespace OnLineVideotech.Web
 {
