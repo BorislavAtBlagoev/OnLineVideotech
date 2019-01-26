@@ -7,7 +7,5 @@ namespace OnLineVideotech.Data.Models
         public int Id { get; set; }
 
         public List<Movie> Movies{ get; set; }
-
-        public List<string> UserType { get; set; }
     }
 }

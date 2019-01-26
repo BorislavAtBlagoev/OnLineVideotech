@@ -10,8 +10,8 @@ using OnLineVideotech.Data;
 namespace OnLineVideotech.Data.Migrations
 {
     [DbContext(typeof(OnLineVideotechDbContext))]
-    [Migration("20190123230426_IentiyDbTest")]
-    partial class IentiyDbTest
+    [Migration("20190126213714_DBcration")]
+    partial class DBcration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -135,12 +135,113 @@ namespace OnLineVideotech.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("OnLineVideotech.Data.Models.Genre", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Genres");
+                });
+
+            modelBuilder.Entity("OnLineVideotech.Data.Models.GenreMovie", b =>
+                {
+                    b.Property<int>("GenreId");
+
+                    b.Property<int>("MovieId");
+
+                    b.HasKey("GenreId", "MovieId");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("GenreMovie");
+                });
+
+            modelBuilder.Entity("OnLineVideotech.Data.Models.History", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<string>("Price");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Histories");
+                });
+
+            modelBuilder.Entity("OnLineVideotech.Data.Models.HistoryCustomer", b =>
+                {
+                    b.Property<int>("HistoryId");
+
+                    b.Property<string>("CustomerId");
+
+                    b.HasKey("HistoryId", "CustomerId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("HistoryCustomer");
+                });
+
+            modelBuilder.Entity("OnLineVideotech.Data.Models.HistoryMovie", b =>
+                {
+                    b.Property<int>("HistoryId");
+
+                    b.Property<int>("MovieId");
+
+                    b.HasKey("HistoryId", "MovieId");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("HistoryMovie");
+                });
+
+            modelBuilder.Entity("OnLineVideotech.Data.Models.Movie", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.Property<int?>("PriceId");
+
+                    b.Property<double>("Rating");
+
+                    b.Property<string>("Year");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PriceId");
+
+                    b.ToTable("Movies");
+                });
+
+            modelBuilder.Entity("OnLineVideotech.Data.Models.Price", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Prices");
+                });
+
             modelBuilder.Entity("OnLineVideotech.Data.Models.User", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccessFailedCount");
+
+                    b.Property<string>("Address");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
@@ -149,6 +250,10 @@ namespace OnLineVideotech.Data.Migrations
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
+
+                    b.Property<string>("FirstName");
+
+                    b.Property<string>("LastName");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -229,6 +334,52 @@ namespace OnLineVideotech.Data.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("OnLineVideotech.Data.Models.GenreMovie", b =>
+                {
+                    b.HasOne("OnLineVideotech.Data.Models.Genre", "Genre")
+                        .WithMany("Movies")
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("OnLineVideotech.Data.Models.Movie", "Movie")
+                        .WithMany("Genres")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("OnLineVideotech.Data.Models.HistoryCustomer", b =>
+                {
+                    b.HasOne("OnLineVideotech.Data.Models.User", "Customer")
+                        .WithMany("Histories")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("OnLineVideotech.Data.Models.History", "History")
+                        .WithMany("Customers")
+                        .HasForeignKey("HistoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("OnLineVideotech.Data.Models.HistoryMovie", b =>
+                {
+                    b.HasOne("OnLineVideotech.Data.Models.History", "History")
+                        .WithMany("Movies")
+                        .HasForeignKey("HistoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("OnLineVideotech.Data.Models.Movie", "Movie")
+                        .WithMany("Histories")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("OnLineVideotech.Data.Models.Movie", b =>
+                {
+                    b.HasOne("OnLineVideotech.Data.Models.Price")
+                        .WithMany("Movies")
+                        .HasForeignKey("PriceId");
                 });
 #pragma warning restore 612, 618
         }

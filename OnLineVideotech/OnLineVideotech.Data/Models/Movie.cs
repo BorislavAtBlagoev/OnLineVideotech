@@ -13,5 +13,7 @@ namespace OnLineVideotech.Data.Models
         public double Rating { get; set; }
 
         public List<GenreMovie> Genres { get; set; }
+
+        public List<HistoryMovie> Histories { get; set; }
     }
 }
