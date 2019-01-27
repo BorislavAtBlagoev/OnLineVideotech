@@ -9,7 +9,7 @@ namespace OnLineVideotech.Data.Models
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(50)]
+        [StringLength(100, MinimumLength = 1)]
         public string Name { get; set; }
 
         [Required]

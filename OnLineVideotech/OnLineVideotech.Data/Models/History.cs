@@ -13,7 +13,7 @@ namespace OnLineVideotech.Data.Models
         public DateTime Date { get; set; }
 
         [Required]
-        [MaxLength(20)]
+        [StringLength(100, MinimumLength = 1)]
         public string Price { get; set; }
 
         public List<HistoryMovie> Movies { get; set; }
