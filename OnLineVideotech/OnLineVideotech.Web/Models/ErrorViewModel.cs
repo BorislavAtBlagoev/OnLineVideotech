@@ -1,5 +1,3 @@
-using System;
-
 namespace OnLineVideotech.Web.Models
 {
     public class ErrorViewModel

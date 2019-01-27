@@ -11,6 +11,6 @@ namespace OnLineVideotech.Data.Models
 
         public string Address { get; set; }
 
-        public List<HistoryCustomer> Histories { get; set; }
+        public List<HistoryCustomer> Histories { get; set; } = new List<HistoryCustomer>();
     }
 }
