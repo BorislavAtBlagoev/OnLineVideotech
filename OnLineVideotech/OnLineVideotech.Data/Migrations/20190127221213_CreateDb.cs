@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace OnLineVideotech.Data.Migrations
 {
-    public partial class DBcration : Migration
+    public partial class CreateDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -41,9 +41,9 @@ namespace OnLineVideotech.Data.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    Address = table.Column<string>(nullable: true)
+                    FirstName = table.Column<string>(maxLength: 100, nullable: true),
+                    LastName = table.Column<string>(maxLength: 100, nullable: true),
+                    Address = table.Column<string>(maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -56,7 +56,7 @@ namespace OnLineVideotech.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -70,7 +70,7 @@ namespace OnLineVideotech.Data.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Date = table.Column<DateTime>(nullable: false),
-                    Price = table.Column<string>(nullable: true)
+                    Price = table.Column<string>(maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -82,7 +82,8 @@ namespace OnLineVideotech.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    MoviePrice = table.Column<decimal>(type: "decimal(18, 2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -205,6 +206,7 @@ namespace OnLineVideotech.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_HistoryCustomer", x => new { x.HistoryId, x.CustomerId });
+                    table.UniqueConstraint("AK_HistoryCustomer_CustomerId_HistoryId", x => new { x.CustomerId, x.HistoryId });
                     table.ForeignKey(
                         name: "FK_HistoryCustomer_AspNetUsers_CustomerId",
                         column: x => x.CustomerId,
@@ -225,10 +227,14 @@ namespace OnLineVideotech.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
-                    Year = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 100, nullable: false),
+                    Year = table.Column<DateTime>(nullable: false),
                     Rating = table.Column<double>(nullable: false),
-                    PriceId = table.Column<int>(nullable: true)
+                    VideoPath = table.Column<string>(nullable: false),
+                    PosterPath = table.Column<string>(nullable: false),
+                    TrailerPath = table.Column<string>(nullable: false),
+                    Summary = table.Column<string>(nullable: false),
+                    PriceId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -238,7 +244,7 @@ namespace OnLineVideotech.Data.Migrations
                         column: x => x.PriceId,
                         principalTable: "Prices",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -332,11 +338,6 @@ namespace OnLineVideotech.Data.Migrations
                 name: "IX_GenreMovie_MovieId",
                 table: "GenreMovie",
                 column: "MovieId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_HistoryCustomer_CustomerId",
-                table: "HistoryCustomer",
-                column: "CustomerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_HistoryMovie_MovieId",

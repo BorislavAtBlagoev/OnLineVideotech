@@ -1,15 +1,18 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OnLineVideotech.Data;
 using OnLineVideotech.Data.Models;
+using OnLineVideotech.Interfaces;
+using OnLineVideotech.Services;
 using OnLineVideotech.Web.Infrastructure.Extensions;
+using AutoMapper;
 
 namespace OnLineVideotech.Web
 {
@@ -33,7 +36,8 @@ namespace OnLineVideotech.Web
             services.AddDbContext<OnLineVideotechDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<User>(options =>
+
+            services.AddIdentity<User, IdentityRole>(options =>
             {
                 options.Password.RequireDigit = false;
                 options.Password.RequireLowercase = false;
@@ -44,7 +48,11 @@ namespace OnLineVideotech.Web
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<OnLineVideotechDbContext>();
 
+            services.AddAutoMapper();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddTransient<IMovieService, MovieService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

@@ -70,6 +70,17 @@ namespace OnLineVideotech.Data
                 .WithMany(c => c.Customers)
                 .HasForeignKey(hc=> hc.HistoryId);
 
+            builder
+                .Entity<Price>()
+                .Property(p => p.MoviePrice)
+                .HasColumnType("decimal(18, 2)");
+
+            builder
+                .Entity<Price>()
+                .HasMany(m => m.Movies)
+                .WithOne(p => p.Price)
+                .HasForeignKey(m => m.PriceId);
+
             base.OnModelCreating(builder);
         }
     }

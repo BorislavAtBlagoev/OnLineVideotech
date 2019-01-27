@@ -139,7 +139,9 @@ namespace OnLineVideotech.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100);
 
                     b.HasKey("Id");
 
@@ -167,7 +169,9 @@ namespace OnLineVideotech.Data.Migrations
 
                     b.Property<DateTime>("Date");
 
-                    b.Property<string>("Price");
+                    b.Property<string>("Price")
+                        .IsRequired()
+                        .HasMaxLength(100);
 
                     b.HasKey("Id");
 
@@ -182,7 +186,7 @@ namespace OnLineVideotech.Data.Migrations
 
                     b.HasKey("HistoryId", "CustomerId");
 
-                    b.HasIndex("CustomerId");
+                    b.HasAlternateKey("CustomerId", "HistoryId");
 
                     b.ToTable("HistoryCustomer");
                 });
@@ -206,13 +210,27 @@ namespace OnLineVideotech.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100);
 
-                    b.Property<int?>("PriceId");
+                    b.Property<string>("PosterPath")
+                        .IsRequired();
+
+                    b.Property<int>("PriceId");
 
                     b.Property<double>("Rating");
 
-                    b.Property<string>("Year");
+                    b.Property<string>("Summary")
+                        .IsRequired();
+
+                    b.Property<string>("TrailerPath")
+                        .IsRequired();
+
+                    b.Property<string>("VideoPath")
+                        .IsRequired();
+
+                    b.Property<DateTime>("Year");
 
                     b.HasKey("Id");
 
@@ -227,6 +245,9 @@ namespace OnLineVideotech.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<decimal>("MoviePrice")
+                        .HasColumnType("decimal(18, 2)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Prices");
@@ -239,7 +260,8 @@ namespace OnLineVideotech.Data.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
-                    b.Property<string>("Address");
+                    b.Property<string>("Address")
+                        .HasMaxLength(100);
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
@@ -249,9 +271,11 @@ namespace OnLineVideotech.Data.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
-                    b.Property<string>("FirstName");
+                    b.Property<string>("FirstName")
+                        .HasMaxLength(100);
 
-                    b.Property<string>("LastName");
+                    b.Property<string>("LastName")
+                        .HasMaxLength(100);
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -375,9 +399,10 @@ namespace OnLineVideotech.Data.Migrations
 
             modelBuilder.Entity("OnLineVideotech.Data.Models.Movie", b =>
                 {
-                    b.HasOne("OnLineVideotech.Data.Models.Price")
+                    b.HasOne("OnLineVideotech.Data.Models.Price", "Price")
                         .WithMany("Movies")
-                        .HasForeignKey("PriceId");
+                        .HasForeignKey("PriceId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

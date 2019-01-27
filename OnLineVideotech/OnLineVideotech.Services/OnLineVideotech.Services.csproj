@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\OnLineVideotech.Data\OnLineVideotech.Data.csproj" />
+    <ProjectReference Include="..\OnLineVideotech.Interfaces\OnLineVideotech.Interfaces.csproj" />
   </ItemGroup>
 
 </Project>
