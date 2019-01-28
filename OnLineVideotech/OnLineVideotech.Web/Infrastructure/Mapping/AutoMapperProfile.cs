@@ -34,7 +34,7 @@ namespace OnLineVideotech.Web.Infrastructure.Mapping
                         })
                         .Where(i => i.Definition == typeof(IMapFrom<>))
                         .SelectMany(i => i.Arguments)
-                        .First(),
+                        .First()
                  })
                  .ToList()
                  .ForEach(mapping => this.CreateMap(mapping.Source, mapping.Destination));

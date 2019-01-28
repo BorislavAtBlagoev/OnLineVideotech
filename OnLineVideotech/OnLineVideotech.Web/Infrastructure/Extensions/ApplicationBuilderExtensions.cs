@@ -23,18 +23,28 @@ namespace OnLineVideotech.Web.Infrastructure.Extensions
                 {
                     string adminName = GlobalConstants.AdministratorRole;
 
-                    bool roleExists = await roleManager.RoleExistsAsync(adminName);
-
-                    if (!roleExists)
+                    string[] roles = new[]
                     {
-                        await roleManager.CreateAsync(new IdentityRole
+                        adminName,
+                        GlobalConstants.RegularUser,
+                        GlobalConstants.SuperUser
+                    };
+
+                    foreach (var role in roles)
+                    {
+                        bool roleExists = await roleManager.RoleExistsAsync(role);
+
+                        if (!roleExists)
                         {
-                            Name = adminName,
-                        });
+                            await roleManager.CreateAsync(new IdentityRole
+                            {
+                                Name = role,
+                            });
+                        }
                     }
 
-                    User adminUser = await userManager.FindByNameAsync(adminName);
                     string adminEmail = "admin@mysite.com";
+                    User adminUser = await userManager.FindByEmailAsync(adminEmail);                 
 
                     if (adminUser == null)
                     {
@@ -44,7 +54,7 @@ namespace OnLineVideotech.Web.Infrastructure.Extensions
                             UserName = adminEmail
                         };
 
-                        await userManager.CreateAsync(adminUser, "admin");
+                        await userManager.CreateAsync(adminUser, "admin12");
 
                         await userManager.AddToRoleAsync(adminUser, adminName);
                     }
