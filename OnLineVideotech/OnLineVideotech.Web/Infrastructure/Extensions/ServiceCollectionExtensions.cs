@@ -1,9 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using OnLineVideotech.Interfaces;
-using System.Linq;
-using System.Reflection;
-
-namespace OnLineVideotech.Web.Infrastructure.Extensions
+﻿namespace OnLineVideotech.Web.Infrastructure.Extensions
 {
     public static class ServiceCollectionExtensions
     {

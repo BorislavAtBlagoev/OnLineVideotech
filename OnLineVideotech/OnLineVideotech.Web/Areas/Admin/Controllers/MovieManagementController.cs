@@ -2,17 +2,21 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OnLineVideotech.Data.Models;
-using OnLineVideotech.Interfaces;
-using OnLineVideotech.Web.Models.Movies;
+using OnLineVideotech.Services.Interfaces;
+using OnLineVideotech.Web.Areas.Admin.Models;
+using OnLineVideotech.Web.Controllers;
+using OnLineVideotech.Web.Infrastructure;
 
-namespace OnLineVideotech.Web.Controllers
+namespace OnLineVideotech.Web.Areas.Admin.Controllers
 {
-    public class MoviesController : Controller
+    [Area("Admin")]
+    [Authorize(Roles = GlobalConstants.AdministratorRole)]
+    public class MovieManagementController : Controller
     {
         private readonly IMovieService movies;
         private readonly UserManager<User> userManager;
 
-        public MoviesController(
+        public MovieManagementController(
             IMovieService movies,
             UserManager<User> userManager)
         {
@@ -20,10 +24,8 @@ namespace OnLineVideotech.Web.Controllers
             this.userManager = userManager;
         }
 
-        [Authorize]
         public IActionResult Add() => this.View();
 
-        [Authorize]
         [HttpPost]
         public IActionResult Add(AddMovieViewModel movieModel)
         {

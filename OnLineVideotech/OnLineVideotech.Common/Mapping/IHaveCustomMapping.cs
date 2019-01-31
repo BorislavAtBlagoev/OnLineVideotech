@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace OnLineVideotech.Web.Infrastructure.Mapping
+namespace OnLineVideotech.Common.Mapping
 {
     public interface IHaveCustomMapping
     {

@@ -1,9 +1,9 @@
 ﻿using System;
 using OnLineVideotech.Data;
 using OnLineVideotech.Data.Models;
-using OnLineVideotech.Interfaces;
+using OnLineVideotech.Services.Interfaces;
 
-namespace OnLineVideotech.Services
+namespace OnLineVideotech.Services.Implementations
 {
     public class MovieService : IMovieService
     {

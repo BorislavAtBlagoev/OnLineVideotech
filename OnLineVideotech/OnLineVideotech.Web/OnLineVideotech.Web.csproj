@@ -16,14 +16,9 @@
 
 
   <ItemGroup>
+    <ProjectReference Include="..\OnLineVideotech.Common\OnLineVideotech.Common.csproj" />
     <ProjectReference Include="..\OnLineVideotech.Data\OnLineVideotech.Data.csproj" />
     <ProjectReference Include="..\OnLineVideotech.Services\OnLineVideotech.Services.csproj" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Admin\Views\" />
   </ItemGroup>
 
 </Project>

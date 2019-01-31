@@ -2,7 +2,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace OnLineVideotech.Web.Models.Movies
+namespace OnLineVideotech.Web.Areas.Admin.Models
 {
     public class AddMovieViewModel
     {

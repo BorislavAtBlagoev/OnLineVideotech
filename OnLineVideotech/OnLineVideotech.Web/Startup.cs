@@ -9,10 +9,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OnLineVideotech.Data;
 using OnLineVideotech.Data.Models;
-using OnLineVideotech.Interfaces;
-using OnLineVideotech.Services;
 using OnLineVideotech.Web.Infrastructure.Extensions;
 using AutoMapper;
+using OnLineVideotech.Services.Implementations;
+using OnLineVideotech.Services.Interfaces;
+using OnLineVideotech.Services.Admin.Interfaces;
+using OnLineVideotech.Services.Admin.Implementations;
 
 namespace OnLineVideotech.Web
 {
@@ -46,13 +48,19 @@ namespace OnLineVideotech.Web
                 options.Password.RequiredLength = 3;
             })
                 .AddDefaultUI(UIFramework.Bootstrap4)
-                .AddEntityFrameworkStores<OnLineVideotechDbContext>();
+                .AddEntityFrameworkStores<OnLineVideotechDbContext>()
+                .AddDefaultTokenProviders();
+
+            services.AddTransient<IMovieService, MovieService>();
+            services.AddTransient<IAdminUserService, AdminUserService>();
 
             services.AddAutoMapper();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
-            services.AddTransient<IMovieService, MovieService>();
+            services.AddMvc(options =>
+            {
+                options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+            })
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
