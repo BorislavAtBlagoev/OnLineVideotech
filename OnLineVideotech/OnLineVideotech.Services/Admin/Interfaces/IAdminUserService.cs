@@ -7,5 +7,7 @@ namespace OnLineVideotech.Services.Admin.Interfaces
     public interface IAdminUserService
     {
         Task<IEnumerable<AdminUserListingServiceModel>> AllAsync();
+
+        void SaveChanges();
     }
 }

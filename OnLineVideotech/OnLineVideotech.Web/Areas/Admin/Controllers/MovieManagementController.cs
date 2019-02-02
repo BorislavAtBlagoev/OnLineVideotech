@@ -1,17 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OnLineVideotech.Data.Models;
-using OnLineVideotech.Services.Interfaces;
+using OnLineVideotech.Services.Admin.Interfaces;
 using OnLineVideotech.Web.Areas.Admin.Models;
 using OnLineVideotech.Web.Controllers;
-using OnLineVideotech.Web.Infrastructure;
 
 namespace OnLineVideotech.Web.Areas.Admin.Controllers
 {
-    [Area("Admin")]
-    [Authorize(Roles = GlobalConstants.AdministratorRole)]
-    public class MovieManagementController : Controller
+    public class MovieManagementController : BaseAdminController
     {
         private readonly IMovieService movies;
         private readonly UserManager<User> userManager;

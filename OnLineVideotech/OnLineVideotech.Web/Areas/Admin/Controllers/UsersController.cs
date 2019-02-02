@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +6,6 @@ using OnLineVideotech.Data.Models;
 using OnLineVideotech.Services.Admin.Interfaces;
 using OnLineVideotech.Services.Admin.Models;
 using OnLineVideotech.Web.Areas.Admin.Models.Users;
-using OnLineVideotech.Web.Infrastructure;
 using OnLineVideotech.Web.Infrastructure.Extensions;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +13,7 @@ using System.Threading.Tasks;
 
 namespace OnLineVideotech.Web.Areas.Admin.Controllers
 {
-    [Area("Admin")]
-    [Authorize(Roles = GlobalConstants.AdministratorRole)]
-    public class UsersController : Controller
+    public class UsersController : BaseAdminController
     {
         private readonly IAdminUserService users;
         private readonly RoleManager<IdentityRole> roleManager;
@@ -69,6 +65,9 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
+            IList<string> roles = await this.userManager.GetRolesAsync(user);
+
+            await this.userManager.RemoveFromRolesAsync(user, roles);
             await this.userManager.AddToRoleAsync(user, model.Role);
 
             TempData.AddSuccessMessage($"User {user.UserName} successfully added to {model.Role} role");

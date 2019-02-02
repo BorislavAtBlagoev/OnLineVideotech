@@ -21,4 +21,12 @@
     <ProjectReference Include="..\OnLineVideotech.Services\OnLineVideotech.Services.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="Areas\RegularUser\Controllers\" />
+    <Folder Include="Areas\RegularUser\Data\" />
+    <Folder Include="Areas\RegularUser\Models\" />
+    <Folder Include="Areas\RegularUser\Views\" />
+  </ItemGroup>
+
 </Project>

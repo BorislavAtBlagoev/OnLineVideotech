@@ -11,8 +11,6 @@ using OnLineVideotech.Data;
 using OnLineVideotech.Data.Models;
 using OnLineVideotech.Web.Infrastructure.Extensions;
 using AutoMapper;
-using OnLineVideotech.Services.Implementations;
-using OnLineVideotech.Services.Interfaces;
 using OnLineVideotech.Services.Admin.Interfaces;
 using OnLineVideotech.Services.Admin.Implementations;
 

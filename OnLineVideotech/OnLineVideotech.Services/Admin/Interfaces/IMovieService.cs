@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OnLineVideotech.Services.Interfaces
+namespace OnLineVideotech.Services.Admin.Interfaces
 {
     public interface IMovieService
     {

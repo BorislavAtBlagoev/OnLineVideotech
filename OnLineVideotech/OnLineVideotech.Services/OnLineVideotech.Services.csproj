@@ -17,4 +17,8 @@
     <ProjectReference Include="..\OnLineVideotech.Data\OnLineVideotech.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Implementations\" />
+  </ItemGroup>
+
 </Project>

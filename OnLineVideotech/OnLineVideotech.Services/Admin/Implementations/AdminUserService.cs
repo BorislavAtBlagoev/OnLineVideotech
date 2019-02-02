@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using OnLineVideotech.Data;
 using OnLineVideotech.Services.Admin.Interfaces;
@@ -27,5 +26,10 @@ namespace OnLineVideotech.Services.Admin.Implementations
                        Email = x.Email
                    })
                    .ToListAsync();
+
+        public async void SaveChanges()
+        {
+            await this.db.SaveChangesAsync();
+        }
     }
 }
