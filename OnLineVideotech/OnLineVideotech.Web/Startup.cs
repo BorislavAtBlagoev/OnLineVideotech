@@ -13,6 +13,8 @@ using OnLineVideotech.Web.Infrastructure.Extensions;
 using AutoMapper;
 using OnLineVideotech.Services.Admin.Interfaces;
 using OnLineVideotech.Services.Admin.Implementations;
+using OnLineVideotech.Services.Implementations;
+using OnLineVideotech.Services.Interfaces;
 
 namespace OnLineVideotech.Web
 {
@@ -37,7 +39,7 @@ namespace OnLineVideotech.Web
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<User, IdentityRole>(options =>
+            services.AddIdentity<User, Role>(options =>
             {
                 options.Password.RequireDigit = false;
                 options.Password.RequireLowercase = false;
@@ -51,6 +53,7 @@ namespace OnLineVideotech.Web
 
             services.AddTransient<IMovieService, MovieService>();
             services.AddTransient<IAdminUserService, AdminUserService>();
+            services.AddTransient<IPriceService, PriceService>();         
 
             services.AddAutoMapper();
 

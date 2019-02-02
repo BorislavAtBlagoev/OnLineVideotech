@@ -8,6 +8,5 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
     [Authorize(Roles = GlobalConstants.AdministratorRole)]
     public abstract class BaseAdminController : Controller
     {
-
     }
 }

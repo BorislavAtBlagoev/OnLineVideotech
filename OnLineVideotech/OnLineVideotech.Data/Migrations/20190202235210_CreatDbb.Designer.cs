@@ -10,8 +10,8 @@ using OnLineVideotech.Data;
 namespace OnLineVideotech.Data.Migrations
 {
     [DbContext(typeof(OnLineVideotechDbContext))]
-    [Migration("20190128215426_CreateDb")]
-    partial class CreateDb
+    [Migration("20190202235210_CreatDbb")]
+    partial class CreatDbb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,6 +29,9 @@ namespace OnLineVideotech.Data.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
                     b.Property<string>("Name")
                         .HasMaxLength(256);
 
@@ -43,6 +46,8 @@ namespace OnLineVideotech.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityRole");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -184,7 +189,7 @@ namespace OnLineVideotech.Data.Migrations
 
                     b.HasKey("HistoryId", "CustomerId");
 
-                    b.HasAlternateKey("CustomerId", "HistoryId");
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("HistoryCustomer");
                 });
@@ -215,8 +220,6 @@ namespace OnLineVideotech.Data.Migrations
                     b.Property<string>("PosterPath")
                         .IsRequired();
 
-                    b.Property<int>("PriceId");
-
                     b.Property<double>("Rating");
 
                     b.Property<string>("Summary")
@@ -232,21 +235,25 @@ namespace OnLineVideotech.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PriceId");
-
                     b.ToTable("Movies");
                 });
 
             modelBuilder.Entity("OnLineVideotech.Data.Models.Price", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<int>("Id");
+
+                    b.Property<int>("MovieId");
+
+                    b.Property<string>("RoleId");
 
                     b.Property<decimal>("MoviePrice")
-                        .HasColumnType("decimal(18, 2)");
+                        .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id", "MovieId", "RoleId");
+
+                    b.HasIndex("MovieId");
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("Prices");
                 });
@@ -309,6 +316,13 @@ namespace OnLineVideotech.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("OnLineVideotech.Data.Models.Role", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityRole");
+
+                    b.HasDiscriminator().HasValue("Role");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -395,11 +409,16 @@ namespace OnLineVideotech.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("OnLineVideotech.Data.Models.Movie", b =>
+            modelBuilder.Entity("OnLineVideotech.Data.Models.Price", b =>
                 {
-                    b.HasOne("OnLineVideotech.Data.Models.Price", "Price")
+                    b.HasOne("OnLineVideotech.Data.Models.Movie", "Movie")
+                        .WithMany("Roles")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("OnLineVideotech.Data.Models.Role", "Role")
                         .WithMany("Movies")
-                        .HasForeignKey("PriceId")
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

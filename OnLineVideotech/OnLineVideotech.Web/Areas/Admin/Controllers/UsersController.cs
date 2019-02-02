@@ -16,11 +16,11 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
     public class UsersController : BaseAdminController
     {
         private readonly IAdminUserService users;
-        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly RoleManager<Role> roleManager;
         private readonly UserManager<User> userManager;
 
         public UsersController(IAdminUserService users,
-            RoleManager<IdentityRole> roleManager,
+            RoleManager<Role> roleManager,
             UserManager<User> userManager)
         {
             this.users = users;

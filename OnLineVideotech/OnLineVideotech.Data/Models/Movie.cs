@@ -31,12 +31,10 @@ namespace OnLineVideotech.Data.Models
         [Required]
         public string Summary { get; set; }
 
-        public int PriceId { get; set; }
-
-        public Price Price { get; set; }
-
         public List<GenreMovie> Genres { get; set; } = new List<GenreMovie>();
 
         public List<HistoryMovie> Histories { get; set; } = new List<HistoryMovie>();
-    }
+
+        public List<Price> Roles { get; set; } = new List<Price>();
+     }
 }

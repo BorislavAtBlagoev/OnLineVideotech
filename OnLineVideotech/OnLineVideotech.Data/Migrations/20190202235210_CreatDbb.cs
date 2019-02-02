@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace OnLineVideotech.Data.Migrations
 {
-    public partial class CreateDb : Migration
+    public partial class CreatDbb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,7 +15,8 @@ namespace OnLineVideotech.Data.Migrations
                     Id = table.Column<string>(nullable: false),
                     Name = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true)
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    Discriminator = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -78,16 +79,22 @@ namespace OnLineVideotech.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Prices",
+                name: "Movies",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    MoviePrice = table.Column<decimal>(type: "decimal(18, 2)", nullable: false)
+                    Name = table.Column<string>(maxLength: 100, nullable: false),
+                    Year = table.Column<DateTime>(nullable: false),
+                    Rating = table.Column<double>(nullable: false),
+                    VideoPath = table.Column<string>(nullable: false),
+                    PosterPath = table.Column<string>(nullable: false),
+                    TrailerPath = table.Column<string>(nullable: false),
+                    Summary = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Prices", x => x.Id);
+                    table.PrimaryKey("PK_Movies", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -206,7 +213,6 @@ namespace OnLineVideotech.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_HistoryCustomer", x => new { x.HistoryId, x.CustomerId });
-                    table.UniqueConstraint("AK_HistoryCustomer_CustomerId_HistoryId", x => new { x.CustomerId, x.HistoryId });
                     table.ForeignKey(
                         name: "FK_HistoryCustomer_AspNetUsers_CustomerId",
                         column: x => x.CustomerId,
@@ -217,32 +223,6 @@ namespace OnLineVideotech.Data.Migrations
                         name: "FK_HistoryCustomer_Histories_HistoryId",
                         column: x => x.HistoryId,
                         principalTable: "Histories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Movies",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(maxLength: 100, nullable: false),
-                    Year = table.Column<DateTime>(nullable: false),
-                    Rating = table.Column<double>(nullable: false),
-                    VideoPath = table.Column<string>(nullable: false),
-                    PosterPath = table.Column<string>(nullable: false),
-                    TrailerPath = table.Column<string>(nullable: false),
-                    Summary = table.Column<string>(nullable: false),
-                    PriceId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Movies", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Movies_Prices_PriceId",
-                        column: x => x.PriceId,
-                        principalTable: "Prices",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -295,6 +275,32 @@ namespace OnLineVideotech.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Prices",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false),
+                    MovieId = table.Column<int>(nullable: false),
+                    RoleId = table.Column<string>(nullable: false),
+                    MoviePrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Prices", x => new { x.Id, x.MovieId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_Prices_Movies_MovieId",
+                        column: x => x.MovieId,
+                        principalTable: "Movies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Prices_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -340,14 +346,24 @@ namespace OnLineVideotech.Data.Migrations
                 column: "MovieId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_HistoryCustomer_CustomerId",
+                table: "HistoryCustomer",
+                column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_HistoryMovie_MovieId",
                 table: "HistoryMovie",
                 column: "MovieId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Movies_PriceId",
-                table: "Movies",
-                column: "PriceId");
+                name: "IX_Prices_MovieId",
+                table: "Prices",
+                column: "MovieId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Prices_RoleId",
+                table: "Prices",
+                column: "RoleId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -377,7 +393,7 @@ namespace OnLineVideotech.Data.Migrations
                 name: "HistoryMovie");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "Prices");
 
             migrationBuilder.DropTable(
                 name: "Genres");
@@ -392,7 +408,7 @@ namespace OnLineVideotech.Data.Migrations
                 name: "Movies");
 
             migrationBuilder.DropTable(
-                name: "Prices");
+                name: "AspNetRoles");
         }
     }
 }

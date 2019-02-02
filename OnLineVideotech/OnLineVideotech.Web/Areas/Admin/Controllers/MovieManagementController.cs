@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OnLineVideotech.Data.Models;
-using OnLineVideotech.Services.Admin.Interfaces;
+using OnLineVideotech.Services.Interfaces;
 using OnLineVideotech.Web.Areas.Admin.Models;
 using OnLineVideotech.Web.Controllers;
 
@@ -37,8 +37,7 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
                movieModel.VideoPath,
                movieModel.PosterPath,
                movieModel.TrailerPath,
-               movieModel.Summary,
-               5);
+               movieModel.Summary);
 
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }

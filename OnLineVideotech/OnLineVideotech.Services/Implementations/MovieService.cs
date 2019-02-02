@@ -1,9 +1,9 @@
 ﻿using System;
 using OnLineVideotech.Data;
 using OnLineVideotech.Data.Models;
-using OnLineVideotech.Services.Admin.Interfaces;
+using OnLineVideotech.Services.Interfaces;
 
-namespace OnLineVideotech.Services.Admin.Implementations
+namespace OnLineVideotech.Services.Implementations
 {
     public class MovieService : IMovieService
     {
@@ -21,8 +21,7 @@ namespace OnLineVideotech.Services.Admin.Implementations
             string videoPath,
             string posterPath,
             string trailerPath,
-            string summary,
-            int priceId)
+            string summary)
         {
             Movie movie = new Movie
             {
@@ -32,8 +31,7 @@ namespace OnLineVideotech.Services.Admin.Implementations
                 VideoPath = videoPath,
                 PosterPath = posterPath,
                 TrailerPath = trailerPath,
-                Summary = summary,
-                PriceId = priceId
+                Summary = summary
             };
 
             this.db.Add(movie);

@@ -17,7 +17,7 @@ namespace OnLineVideotech.Web.Infrastructure.Extensions
                 serviceScope.ServiceProvider.GetService<OnLineVideotechDbContext>().Database.Migrate();
 
                 UserManager<User> userManager = serviceScope.ServiceProvider.GetService<UserManager<User>>();
-                RoleManager<IdentityRole> roleManager = serviceScope.ServiceProvider.GetService<RoleManager<IdentityRole>>();
+                RoleManager<Role> roleManager = serviceScope.ServiceProvider.GetService<RoleManager<Role>>();
 
                 Task.Run(async () =>
                 {
@@ -36,7 +36,7 @@ namespace OnLineVideotech.Web.Infrastructure.Extensions
 
                         if (!roleExists)
                         {
-                            await roleManager.CreateAsync(new IdentityRole
+                            await roleManager.CreateAsync(new Role
                             {
                                 Name = role,
                             });

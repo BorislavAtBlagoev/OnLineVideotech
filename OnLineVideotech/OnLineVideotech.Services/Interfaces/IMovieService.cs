@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OnLineVideotech.Services.Admin.Interfaces
+namespace OnLineVideotech.Services.Interfaces
 {
     public interface IMovieService
     {
@@ -11,7 +11,6 @@ namespace OnLineVideotech.Services.Admin.Interfaces
             string videoPath, 
             string posterPath, 
             string trailerPath, 
-            string summary,
-            int priceId);
+            string summary);
     }
 }

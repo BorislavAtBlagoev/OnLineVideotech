@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using OnLineVideotech.Data.Models;
 
@@ -68,18 +69,23 @@ namespace OnLineVideotech.Data
                 .Entity<HistoryCustomer>()
                 .HasOne(hc => hc.History)
                 .WithMany(c => c.Customers)
-                .HasForeignKey(hc=> hc.HistoryId);
+                .HasForeignKey(hc => hc.HistoryId);
 
             builder
                 .Entity<Price>()
-                .Property(p => p.MoviePrice)
-                .HasColumnType("decimal(18, 2)");
+                .HasKey(pr => new { pr.Id, pr.MovieId, pr.RoleId });
 
             builder
                 .Entity<Price>()
-                .HasMany(m => m.Movies)
-                .WithOne(p => p.Price)
-                .HasForeignKey(m => m.PriceId);
+                .HasOne(m => m.Movie)
+                .WithMany(r => r.Roles)
+                .HasForeignKey(m => m.MovieId);
+
+            builder
+               .Entity<Price>()
+               .HasOne(r => r.Role)
+               .WithMany(m => m.Movies)
+               .HasForeignKey(r => r.RoleId);
 
             base.OnModelCreating(builder);
         }
