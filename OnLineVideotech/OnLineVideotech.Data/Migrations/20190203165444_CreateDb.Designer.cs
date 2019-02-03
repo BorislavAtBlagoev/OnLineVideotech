@@ -10,8 +10,8 @@ using OnLineVideotech.Data;
 namespace OnLineVideotech.Data.Migrations
 {
     [DbContext(typeof(OnLineVideotechDbContext))]
-    [Migration("20190202235210_CreatDbb")]
-    partial class CreatDbb
+    [Migration("20190203165444_CreateDb")]
+    partial class CreateDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
