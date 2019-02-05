@@ -51,7 +51,7 @@ namespace OnLineVideotech.Web
                 .AddEntityFrameworkStores<OnLineVideotechDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddTransient<IMovieService, MovieService>();
+            services.AddTransient<IMovieManagementService, MovieManagementService>();
             services.AddTransient<IAdminUserService, AdminUserService>();
             services.AddTransient<IPriceService, PriceService>();
             services.AddTransient<IRoleService, RoleService>();

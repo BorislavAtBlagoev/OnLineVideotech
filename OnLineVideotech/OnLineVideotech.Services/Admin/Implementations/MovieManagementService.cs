@@ -4,15 +4,16 @@ using System.Threading.Tasks;
 using OnLineVideotech.Data;
 using OnLineVideotech.Data.Models;
 using OnLineVideotech.Services.Admin.Models;
+using OnLineVideotech.Services.Implementations;
 using OnLineVideotech.Services.Interfaces;
 
-namespace OnLineVideotech.Services.Implementations
+namespace OnLineVideotech.Services.Admin.Interfaces
 {
-    public class MovieService : BaseService, IBaseService, IMovieService
+    public class MovieManagementService : BaseService, IBaseService, IMovieManagementService
     {
         private readonly IPriceService price;
 
-        public MovieService(OnLineVideotechDbContext db, IPriceService price) : base(db)
+        public MovieManagementService(OnLineVideotechDbContext db, IPriceService price) : base(db)
         {
             this.price = price;
         }

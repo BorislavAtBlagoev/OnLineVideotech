@@ -1,11 +1,12 @@
 ﻿using OnLineVideotech.Services.Admin.Models;
+using OnLineVideotech.Services.Implementations;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace OnLineVideotech.Services.Interfaces
 {
-    public interface IMovieService
+    public interface IMovieManagementService : IBaseService
     {
         Task Create(
             string name, 
@@ -16,7 +17,5 @@ namespace OnLineVideotech.Services.Interfaces
             string trailerPath, 
             string summary,
             List<PriceServiceModel> prices);
-
-        Task SaveChanges();
     }
 }

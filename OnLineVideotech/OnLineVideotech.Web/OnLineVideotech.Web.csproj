@@ -6,6 +6,13 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Areas\RegularUser\**" />
+    <Content Remove="Areas\RegularUser\**" />
+    <EmbeddedResource Remove="Areas\RegularUser\**" />
+    <None Remove="Areas\RegularUser\**" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.0.0" />
@@ -19,14 +26,6 @@
     <ProjectReference Include="..\OnLineVideotech.Common\OnLineVideotech.Common.csproj" />
     <ProjectReference Include="..\OnLineVideotech.Data\OnLineVideotech.Data.csproj" />
     <ProjectReference Include="..\OnLineVideotech.Services\OnLineVideotech.Services.csproj" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <Folder Include="Areas\RegularUser\Controllers\" />
-    <Folder Include="Areas\RegularUser\Data\" />
-    <Folder Include="Areas\RegularUser\Models\" />
-    <Folder Include="Areas\RegularUser\Views\" />
   </ItemGroup>
 
 </Project>

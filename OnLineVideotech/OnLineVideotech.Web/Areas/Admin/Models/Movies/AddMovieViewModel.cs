@@ -9,6 +9,7 @@ namespace OnLineVideotech.Web.Areas.Admin.Models
     {
         [Required]
         [StringLength(100, MinimumLength = 1)]
+        [Display(Name = "Movie name")]
         public string Name { get; set; }
 
         [Required]
@@ -19,12 +20,15 @@ namespace OnLineVideotech.Web.Areas.Admin.Models
         public double Rating { get; set; }
 
         [Required]
+        [Display(Name = "Video path")]
         public string VideoPath { get; set; }
 
         [Required]
+        [Display(Name = "Poster address")]
         public string PosterPath { get; set; }
 
         [Required]
+        [Display(Name = "Trailer address")]
         public string TrailerPath { get; set; }
 
         [Required]

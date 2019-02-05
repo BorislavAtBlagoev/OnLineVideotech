@@ -33,7 +33,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Movie" asp-action="Index">Movies</a>
                         </li>
                         @if (User.IsInRole(GlobalConstants.AdministratorRole))
                         {
@@ -41,7 +41,7 @@
                                 <a class="nav-link text-dark" asp-area="Admin" asp-controller="Users" asp-action="Index">Users</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="MovieManagement" asp-action="AddMovie">Movie</a>
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="MovieManagement" asp-action="AddMovie">Add movie</a>
                             </li>
                         }
                     </ul>

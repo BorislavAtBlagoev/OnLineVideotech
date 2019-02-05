@@ -13,12 +13,12 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
 {
     public class MovieManagementController : BaseAdminController
     {
-        private readonly IMovieService movies;
+        private readonly IMovieManagementService movies;
         private readonly UserManager<User> userManager;
         private readonly IRoleService roleService;
 
         public MovieManagementController(
-            IMovieService movies,
+            IMovieManagementService movies,
             UserManager<User> userManager,
             IRoleService roleService)
         {
