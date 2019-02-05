@@ -1,19 +1,17 @@
 ﻿using OnLineVideotech.Data;
 using OnLineVideotech.Data.Models;
 using OnLineVideotech.Services.Interfaces;
+using System.Threading.Tasks;
 
 namespace OnLineVideotech.Services.Implementations
 {
-    public class PriceService : IPriceService
+    public class PriceService : BaseService, IBaseService, IPriceService
     {
-        private readonly OnLineVideotechDbContext db;
-
-        public PriceService(OnLineVideotechDbContext db)
+        public PriceService(OnLineVideotechDbContext db) : base(db)
         {
-            this.db = db;
         }
 
-        public void CreatePrice(Movie movie, Role role, decimal moviePrice)
+        public async Task CreatePrice(Movie movie, Role role, decimal moviePrice)
         {
             Price price = new Price
             {
@@ -22,8 +20,8 @@ namespace OnLineVideotech.Services.Implementations
                MoviePrice = moviePrice
             };
 
-            db.Add(price);
-            db.SaveChanges();
+            this.Db.Add(price);
+            await base.SaveChanges();
         }
     }
 }

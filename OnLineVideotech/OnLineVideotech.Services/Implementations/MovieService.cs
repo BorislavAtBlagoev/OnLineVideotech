@@ -1,27 +1,28 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using OnLineVideotech.Data;
 using OnLineVideotech.Data.Models;
+using OnLineVideotech.Services.Admin.Models;
 using OnLineVideotech.Services.Interfaces;
 
 namespace OnLineVideotech.Services.Implementations
 {
-    public class MovieService : IMovieService
+    public class MovieService : BaseService, IBaseService, IMovieService
     {
-        private readonly OnLineVideotechDbContext db;
-
-        public MovieService(OnLineVideotechDbContext db)
+        public MovieService(OnLineVideotechDbContext db) : base(db)
         {
-            this.db = db;
         }
 
-        public void Create(
+        public async Task Create(
             string name,
             DateTime year,
             double rating,
             string videoPath,
             string posterPath,
             string trailerPath,
-            string summary)
+            string summary,
+            List<PriceServiceModel> prices)
         {
             Movie movie = new Movie
             {
@@ -34,8 +35,8 @@ namespace OnLineVideotech.Services.Implementations
                 Summary = summary
             };
 
-            this.db.Add(movie);
-            this.db.SaveChanges();
+            this.Db.Add(movie);
+            await base.SaveChanges();
         }
     }
 }

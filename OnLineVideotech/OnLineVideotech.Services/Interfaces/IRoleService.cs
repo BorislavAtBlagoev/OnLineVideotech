@@ -1,10 +1,11 @@
 ﻿using OnLineVideotech.Data.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace OnLineVideotech.Services.Interfaces
 {
-    public interface IPriceService
+    public interface IRoleService
     {
-        Task CreatePrice(Movie movie, Role role, decimal moviePrice);
+        Task<IEnumerable<Role>> GetAllRoles();
     }
 }

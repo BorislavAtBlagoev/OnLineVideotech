@@ -1,16 +1,22 @@
-﻿using System;
+﻿using OnLineVideotech.Services.Admin.Models;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace OnLineVideotech.Services.Interfaces
 {
     public interface IMovieService
     {
-        void Create(
+        Task Create(
             string name, 
             DateTime year, 
             double rating, 
             string videoPath, 
             string posterPath, 
             string trailerPath, 
-            string summary);
+            string summary,
+            List<PriceServiceModel> prices);
+
+        Task SaveChanges();
     }
 }

@@ -3,7 +3,7 @@ using OnLineVideotech.Data.Models;
 
 namespace OnLineVideotech.Services.Admin.Models
 {
-    public class AdminUserListingServiceModel : IMapFrom<User>
+    public class AdminUserListingServiceModel
     {
         public string Id { get; set; }
 

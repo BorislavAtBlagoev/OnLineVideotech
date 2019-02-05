@@ -1,5 +1,6 @@
-﻿using OnLineVideotech.Data.Models;
+﻿using OnLineVideotech.Services.Admin.Models;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace OnLineVideotech.Web.Areas.Admin.Models
@@ -11,6 +12,7 @@ namespace OnLineVideotech.Web.Areas.Admin.Models
         public string Name { get; set; }
 
         [Required]
+        [DataType(DataType.Date)]
         public DateTime Year { get; set; }
 
         [Required]
@@ -28,8 +30,7 @@ namespace OnLineVideotech.Web.Areas.Admin.Models
         [Required]
         public string Summary { get; set; }
 
-        public int PriceId { get; set; }
-
-        public Price Price { get; set; }
+        [Required]
+        public List<PriceServiceModel> Prices { get; set; }
     }
 }

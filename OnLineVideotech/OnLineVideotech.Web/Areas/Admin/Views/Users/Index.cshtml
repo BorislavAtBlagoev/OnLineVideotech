@@ -40,10 +40,14 @@
                             <div class="col-md-4">
                                 <input class="btn btn-sm btn-primary" type="submit" value="Add Role" />
                             </div>
-                        </div>                     
-                    </form>                   
+                        </div>
+                    </form>
                 </th>
             </tr>
         }
     </tbody>
 </table>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

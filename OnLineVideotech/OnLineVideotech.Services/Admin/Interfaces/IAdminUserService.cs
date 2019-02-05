@@ -8,6 +8,6 @@ namespace OnLineVideotech.Services.Admin.Interfaces
     {
         Task<IEnumerable<AdminUserListingServiceModel>> AllAsync();
 
-        void SaveChanges();
+        Task SaveChanges();
     }
 }
