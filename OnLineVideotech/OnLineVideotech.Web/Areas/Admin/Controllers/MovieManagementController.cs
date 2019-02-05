@@ -5,6 +5,7 @@ using OnLineVideotech.Services.Admin.Models;
 using OnLineVideotech.Services.Interfaces;
 using OnLineVideotech.Web.Areas.Admin.Models;
 using OnLineVideotech.Web.Controllers;
+using OnLineVideotech.Web.Infrastructure.Extensions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -62,18 +63,9 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
                model.Summary,
                model.Prices);
 
-            return RedirectToAction(nameof(HomeController.Index), "Home");
-        }
+            TempData.AddSuccessMessage($"Movie '{model.Name}' successfully created");
 
-        [HttpPost]
-        public IActionResult AddPrice(PriceServiceModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            return RedirectToAction(nameof(AddMovie)); ;
+            return RedirectToAction(nameof(AddMovie));
         }
     }
 }

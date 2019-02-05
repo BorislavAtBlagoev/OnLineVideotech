@@ -10,7 +10,7 @@ using OnLineVideotech.Data;
 namespace OnLineVideotech.Data.Migrations
 {
     [DbContext(typeof(OnLineVideotechDbContext))]
-    [Migration("20190203165444_CreateDb")]
+    [Migration("20190205011607_CreateDb")]
     partial class CreateDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -155,7 +155,7 @@ namespace OnLineVideotech.Data.Migrations
                 {
                     b.Property<int>("GenreId");
 
-                    b.Property<int>("MovieId");
+                    b.Property<Guid>("MovieId");
 
                     b.HasKey("GenreId", "MovieId");
 
@@ -198,7 +198,7 @@ namespace OnLineVideotech.Data.Migrations
                 {
                     b.Property<int>("HistoryId");
 
-                    b.Property<int>("MovieId");
+                    b.Property<Guid>("MovieId");
 
                     b.HasKey("HistoryId", "MovieId");
 
@@ -209,9 +209,8 @@ namespace OnLineVideotech.Data.Migrations
 
             modelBuilder.Entity("OnLineVideotech.Data.Models.Movie", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -240,9 +239,9 @@ namespace OnLineVideotech.Data.Migrations
 
             modelBuilder.Entity("OnLineVideotech.Data.Models.Price", b =>
                 {
-                    b.Property<int>("Id");
+                    b.Property<Guid>("Id");
 
-                    b.Property<int>("MovieId");
+                    b.Property<Guid>("MovieId");
 
                     b.Property<string>("RoleId");
 

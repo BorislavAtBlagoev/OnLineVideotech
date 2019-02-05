@@ -6,8 +6,13 @@ namespace OnLineVideotech.Data.Models
 {
     public class Movie
     {
+        public Movie()
+        {
+            this.Id = Guid.NewGuid();
+        }
+
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         [StringLength(100, MinimumLength = 1)]

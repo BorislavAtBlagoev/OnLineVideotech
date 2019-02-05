@@ -74,6 +74,7 @@
                                         <div class="form-group">
                                             <input asp-for="@Model.Prices[i].Price" class="form-control" />
                                             <span asp-validation-for="@Model.Prices[i].Price" class="text-danger"></span>
+                                            <input type="hidden" asp-for="@Model.Prices[i].RoleId" value="@Model.Prices[i].Role.Id" class="form-control" />
                                         </div>
                                     </div>
                                     <div class="col-md-4">

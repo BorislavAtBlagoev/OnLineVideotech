@@ -10,8 +10,11 @@ namespace OnLineVideotech.Services.Implementations
 {
     public class MovieService : BaseService, IBaseService, IMovieService
     {
-        public MovieService(OnLineVideotechDbContext db) : base(db)
+        private readonly IPriceService price;
+
+        public MovieService(OnLineVideotechDbContext db, IPriceService price) : base(db)
         {
+            this.price = price;
         }
 
         public async Task Create(
@@ -36,6 +39,12 @@ namespace OnLineVideotech.Services.Implementations
             };
 
             this.Db.Add(movie);
+
+            foreach (var item in prices)
+            {
+                await this.price.CreatePrice(movie.Id, item.RoleId, item.Price);                
+            }
+
             await base.SaveChanges();
         }
     }

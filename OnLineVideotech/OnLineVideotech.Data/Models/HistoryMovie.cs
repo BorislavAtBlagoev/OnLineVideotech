@@ -1,10 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
 
 namespace OnLineVideotech.Data.Models
 {
     public class HistoryMovie
     {
-        public int MovieId { get; set; }
+        public Guid MovieId { get; set; }
 
         public Movie Movie { get; set; }
 

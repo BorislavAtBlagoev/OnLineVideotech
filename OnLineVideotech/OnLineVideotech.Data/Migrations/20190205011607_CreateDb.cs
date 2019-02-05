@@ -82,8 +82,7 @@ namespace OnLineVideotech.Data.Migrations
                 name: "Movies",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(maxLength: 100, nullable: false),
                     Year = table.Column<DateTime>(nullable: false),
                     Rating = table.Column<double>(nullable: false),
@@ -232,7 +231,7 @@ namespace OnLineVideotech.Data.Migrations
                 columns: table => new
                 {
                     GenreId = table.Column<int>(nullable: false),
-                    MovieId = table.Column<int>(nullable: false)
+                    MovieId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -255,7 +254,7 @@ namespace OnLineVideotech.Data.Migrations
                 name: "HistoryMovie",
                 columns: table => new
                 {
-                    MovieId = table.Column<int>(nullable: false),
+                    MovieId = table.Column<Guid>(nullable: false),
                     HistoryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -279,8 +278,8 @@ namespace OnLineVideotech.Data.Migrations
                 name: "Prices",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false),
-                    MovieId = table.Column<int>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
+                    MovieId = table.Column<Guid>(nullable: false),
                     RoleId = table.Column<string>(nullable: false),
                     MoviePrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },

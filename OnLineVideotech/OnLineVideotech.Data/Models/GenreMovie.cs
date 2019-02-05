@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace OnLineVideotech.Data.Models
 {
@@ -8,7 +9,7 @@ namespace OnLineVideotech.Data.Models
 
         public Genre Genre { get; set; }
 
-        public int MovieId { get; set; }
+        public Guid MovieId { get; set; }
 
         public Movie Movie { get; set; }
     }

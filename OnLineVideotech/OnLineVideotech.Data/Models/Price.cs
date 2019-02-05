@@ -1,13 +1,19 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OnLineVideotech.Data.Models
 {
     public class Price
     {
-        public int Id { get; set; }
+        public Price()
+        {
+            this.Id = Guid.NewGuid();
+        }
+   
+        public Guid Id { get; set; }
 
-        public int MovieId { get; set; }
+        public Guid MovieId { get; set; }
 
         public Movie Movie { get; set; }
     

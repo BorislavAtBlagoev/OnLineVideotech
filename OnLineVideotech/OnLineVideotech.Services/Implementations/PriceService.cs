@@ -1,6 +1,7 @@
 ﻿using OnLineVideotech.Data;
 using OnLineVideotech.Data.Models;
 using OnLineVideotech.Services.Interfaces;
+using System;
 using System.Threading.Tasks;
 
 namespace OnLineVideotech.Services.Implementations
@@ -11,17 +12,16 @@ namespace OnLineVideotech.Services.Implementations
         {
         }
 
-        public async Task CreatePrice(Movie movie, Role role, decimal moviePrice)
+        public async Task CreatePrice(Guid movieId, string roleId, decimal moviePrice)
         {
             Price price = new Price
             {
-               MovieId = movie.Id,
-               RoleId = role.Id,
+               MovieId = movieId,
+               RoleId = roleId,
                MoviePrice = moviePrice
             };
 
-            this.Db.Add(price);
-            await base.SaveChanges();
+            await this.Db.AddAsync(price);           
         }
     }
 }
