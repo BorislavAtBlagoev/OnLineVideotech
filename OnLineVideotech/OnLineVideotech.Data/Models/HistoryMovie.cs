@@ -8,7 +8,7 @@ namespace OnLineVideotech.Data.Models
 
         public Movie Movie { get; set; }
 
-        public int HistoryId { get; set; }
+        public Guid HistoryId { get; set; }
 
         public History History { get; set; }
     }

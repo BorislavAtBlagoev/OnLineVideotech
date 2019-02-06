@@ -34,7 +34,8 @@ namespace OnLineVideotech.Web.Areas.Admin.Models
         [Required]
         public string Summary { get; set; }
 
-        [Required]
         public List<PriceServiceModel> Prices { get; set; }
+
+        public List<GenreServiceModel> Genres { get; set; }
     }
 }

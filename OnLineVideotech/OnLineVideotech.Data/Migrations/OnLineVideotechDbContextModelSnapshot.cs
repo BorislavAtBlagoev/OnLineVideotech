@@ -136,9 +136,8 @@ namespace OnLineVideotech.Data.Migrations
 
             modelBuilder.Entity("OnLineVideotech.Data.Models.Genre", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -151,7 +150,7 @@ namespace OnLineVideotech.Data.Migrations
 
             modelBuilder.Entity("OnLineVideotech.Data.Models.GenreMovie", b =>
                 {
-                    b.Property<int>("GenreId");
+                    b.Property<Guid>("GenreId");
 
                     b.Property<Guid>("MovieId");
 
@@ -159,14 +158,13 @@ namespace OnLineVideotech.Data.Migrations
 
                     b.HasIndex("MovieId");
 
-                    b.ToTable("GenreMovie");
+                    b.ToTable("GenreMovies");
                 });
 
             modelBuilder.Entity("OnLineVideotech.Data.Models.History", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("Date");
 
@@ -181,7 +179,7 @@ namespace OnLineVideotech.Data.Migrations
 
             modelBuilder.Entity("OnLineVideotech.Data.Models.HistoryCustomer", b =>
                 {
-                    b.Property<int>("HistoryId");
+                    b.Property<Guid>("HistoryId");
 
                     b.Property<string>("CustomerId");
 
@@ -194,7 +192,7 @@ namespace OnLineVideotech.Data.Migrations
 
             modelBuilder.Entity("OnLineVideotech.Data.Models.HistoryMovie", b =>
                 {
-                    b.Property<int>("HistoryId");
+                    b.Property<Guid>("HistoryId");
 
                     b.Property<Guid>("MovieId");
 

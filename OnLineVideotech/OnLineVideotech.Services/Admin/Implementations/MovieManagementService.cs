@@ -11,11 +11,15 @@ namespace OnLineVideotech.Services.Admin.Interfaces
 {
     public class MovieManagementService : BaseService, IBaseService, IMovieManagementService
     {
-        private readonly IPriceService price;
+        private readonly IPriceService priceService;
+        private readonly IGenreMovieService genreMovieService;
 
-        public MovieManagementService(OnLineVideotechDbContext db, IPriceService price) : base(db)
+        public MovieManagementService(OnLineVideotechDbContext db,
+            IPriceService priceService,
+            IGenreMovieService genreMovieService) : base(db)
         {
-            this.price = price;
+            this.priceService = priceService;
+            this.genreMovieService = genreMovieService;
         }
 
         public async Task Create(
@@ -26,7 +30,8 @@ namespace OnLineVideotech.Services.Admin.Interfaces
             string posterPath,
             string trailerPath,
             string summary,
-            List<PriceServiceModel> prices)
+            List<PriceServiceModel> prices,
+            List<GenreServiceModel> genres)
         {
             Movie movie = new Movie
             {
@@ -41,9 +46,14 @@ namespace OnLineVideotech.Services.Admin.Interfaces
 
             this.Db.Add(movie);
 
-            foreach (var item in prices)
+            foreach (PriceServiceModel price in prices)
             {
-                await this.price.CreatePrice(movie.Id, item.RoleId, item.Price);                
+                await this.priceService.CreatePrice(movie.Id, price.RoleId, price.Price);
+            }
+
+            foreach (GenreServiceModel genre in genres)
+            {
+                await genreMovieService.Create(movie.Id, genre.Id);
             }
 
             await base.SaveChanges();

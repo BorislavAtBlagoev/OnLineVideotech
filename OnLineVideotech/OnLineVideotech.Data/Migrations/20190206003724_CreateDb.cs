@@ -12,8 +12,7 @@ namespace OnLineVideotech.Data.Migrations
                 name: "Genres",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(maxLength: 100, nullable: false)
                 },
                 constraints: table =>
@@ -25,8 +24,7 @@ namespace OnLineVideotech.Data.Migrations
                 name: "Histories",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<Guid>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
                     Price = table.Column<string>(maxLength: 100, nullable: false)
                 },
@@ -97,23 +95,23 @@ namespace OnLineVideotech.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "GenreMovie",
+                name: "GenreMovies",
                 columns: table => new
                 {
-                    GenreId = table.Column<int>(nullable: false),
+                    GenreId = table.Column<Guid>(nullable: false),
                     MovieId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GenreMovie", x => new { x.GenreId, x.MovieId });
+                    table.PrimaryKey("PK_GenreMovies", x => new { x.GenreId, x.MovieId });
                     table.ForeignKey(
-                        name: "FK_GenreMovie_Genres_GenreId",
+                        name: "FK_GenreMovies_Genres_GenreId",
                         column: x => x.GenreId,
                         principalTable: "Genres",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_GenreMovie_Movies_MovieId",
+                        name: "FK_GenreMovies_Movies_MovieId",
                         column: x => x.MovieId,
                         principalTable: "Movies",
                         principalColumn: "Id",
@@ -125,7 +123,7 @@ namespace OnLineVideotech.Data.Migrations
                 columns: table => new
                 {
                     MovieId = table.Column<Guid>(nullable: false),
-                    HistoryId = table.Column<int>(nullable: false)
+                    HistoryId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -195,7 +193,7 @@ namespace OnLineVideotech.Data.Migrations
                 name: "HistoryCustomer",
                 columns: table => new
                 {
-                    HistoryId = table.Column<int>(nullable: false),
+                    HistoryId = table.Column<Guid>(nullable: false),
                     CustomerId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
@@ -301,8 +299,8 @@ namespace OnLineVideotech.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_GenreMovie_MovieId",
-                table: "GenreMovie",
+                name: "IX_GenreMovies_MovieId",
+                table: "GenreMovies",
                 column: "MovieId");
 
             migrationBuilder.CreateIndex(
@@ -368,7 +366,7 @@ namespace OnLineVideotech.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "GenreMovie");
+                name: "GenreMovies");
 
             migrationBuilder.DropTable(
                 name: "HistoryCustomer");

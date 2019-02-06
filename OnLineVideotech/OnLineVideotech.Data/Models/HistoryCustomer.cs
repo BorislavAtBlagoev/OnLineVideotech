@@ -1,8 +1,10 @@
-﻿namespace OnLineVideotech.Data.Models
+﻿using System;
+
+namespace OnLineVideotech.Data.Models
 {
     public class HistoryCustomer
     {
-        public int HistoryId { get; set; }
+        public Guid HistoryId { get; set; }
 
         public History History { get; set; }
 

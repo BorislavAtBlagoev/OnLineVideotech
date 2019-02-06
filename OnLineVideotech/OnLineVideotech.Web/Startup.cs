@@ -55,6 +55,8 @@ namespace OnLineVideotech.Web
             services.AddTransient<IAdminUserService, AdminUserService>();
             services.AddTransient<IPriceService, PriceService>();
             services.AddTransient<IRoleService, RoleService>();
+            services.AddTransient<IGenreService, GenreService>();
+            services.AddTransient<IGenreMovieService, GenreMovieService>();
 
             services.AddAutoMapper();
 

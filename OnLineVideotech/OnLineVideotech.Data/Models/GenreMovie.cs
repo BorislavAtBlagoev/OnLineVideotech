@@ -1,11 +1,10 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace OnLineVideotech.Data.Models
 {
     public class GenreMovie
     {
-        public int GenreId { get; set; }
+        public Guid GenreId { get; set; }
 
         public Genre Genre { get; set; }
 

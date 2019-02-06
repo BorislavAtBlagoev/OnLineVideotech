@@ -16,6 +16,7 @@ namespace OnLineVideotech.Services.Interfaces
             string posterPath, 
             string trailerPath, 
             string summary,
-            List<PriceServiceModel> prices);
+            List<PriceServiceModel> prices,
+            List<GenreServiceModel> genres);
     }
 }

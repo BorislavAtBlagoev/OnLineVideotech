@@ -6,8 +6,13 @@ namespace OnLineVideotech.Data.Models
 {
     public class History
     {
+        public History()
+        {
+            this.Id = Guid.NewGuid();
+        }
+
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         public DateTime Date { get; set; }

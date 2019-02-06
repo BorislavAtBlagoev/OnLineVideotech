@@ -20,6 +20,7 @@ namespace OnLineVideotech.Data
 
         public DbSet<Genre> Genres { get; set; }
 
+        public DbSet<GenreMovie> GenreMovies { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

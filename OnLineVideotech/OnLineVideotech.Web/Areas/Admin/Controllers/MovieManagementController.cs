@@ -16,30 +16,43 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
         private readonly IMovieManagementService movies;
         private readonly UserManager<User> userManager;
         private readonly IRoleService roleService;
+        private readonly IGenreService genreService;
 
         public MovieManagementController(
             IMovieManagementService movies,
             UserManager<User> userManager,
-            IRoleService roleService)
+            IRoleService roleService,
+            IGenreService genreService)
         {
             this.movies = movies;
             this.userManager = userManager;
             this.roleService = roleService;
+            this.genreService = genreService;
         }
 
         public async Task<IActionResult> AddMovie()
         {
             IEnumerable<Role> roles = await roleService.GetAllRoles();
+            IEnumerable<Genre> genres = await genreService.GetAllGenres();
 
             AddMovieViewModel model = new AddMovieViewModel();
             model.Prices = new List<PriceServiceModel>();
+            model.Genres = new List<GenreServiceModel>();
 
             foreach (Role role in roles)
             {
-                PriceServiceModel price = new PriceServiceModel();
-                price.Role = role;
-                price.Price = 0;
-                model.Prices.Add(price);
+                PriceServiceModel priceModel = new PriceServiceModel();
+                priceModel.Role = role;
+                priceModel.Price = 0;
+                model.Prices.Add(priceModel);
+            }
+
+            foreach (Genre genre in genres)
+            {
+                GenreServiceModel genreModel = new GenreServiceModel();
+                genreModel.Name = genre.Name;
+                genreModel.Id = genre.Id;
+                model.Genres.Add(genreModel);
             }
 
             return this.View(model);
@@ -61,7 +74,8 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
                model.PosterPath,
                model.TrailerPath,
                model.Summary,
-               model.Prices);
+               model.Prices,
+               model.Genres);
 
             TempData.AddSuccessMessage($"Movie '{model.Name}' successfully created");
 
