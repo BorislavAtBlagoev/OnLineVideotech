@@ -43,7 +43,6 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
             {
                 PriceServiceModel priceModel = new PriceServiceModel();
                 priceModel.Role = role;
-                priceModel.Price = 0;
                 model.Prices.Add(priceModel);
             }
 
