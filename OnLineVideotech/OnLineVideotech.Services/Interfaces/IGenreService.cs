@@ -1,4 +1,6 @@
 ﻿using OnLineVideotech.Data.Models;
+using OnLineVideotech.Services.Admin.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,6 +10,8 @@ namespace OnLineVideotech.Services.Interfaces
     {
         Task Create(string name);
 
-        Task<List<Genre>> GetAllGenres();
+        Task<List<GenreServiceModel>> GetAllGenres();
+
+        Task<GenreServiceModel> FindGenre(Guid id);
     }
 }

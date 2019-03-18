@@ -33,7 +33,7 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
         public async Task<IActionResult> AddMovie()
         {
             IEnumerable<Role> roles = await roleService.GetAllRoles();
-            IEnumerable<Genre> genres = await genreService.GetAllGenres();
+            IEnumerable<GenreServiceModel> genres = await genreService.GetAllGenres();
 
             AddMovieViewModel model = new AddMovieViewModel();
             model.Prices = new List<PriceServiceModel>();
@@ -46,7 +46,7 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
                 model.Prices.Add(priceModel);
             }
 
-            foreach (Genre genre in genres)
+            foreach (GenreServiceModel genre in genres)
             {
                 GenreServiceModel genreModel = new GenreServiceModel();
                 genreModel.Name = genre.Name;

@@ -8,5 +8,10 @@ namespace OnLineVideotech.Web.Infrastructure.Extensions
         {
             tempData[GlobalConstants.TempDataSuccessMessageKey] = message;
         }
+
+        public static void AddErrorMessage(this ITempDataDictionary tempData, string message)
+        {
+            tempData[GlobalConstants.TempDataErrorMessageKey] = message;
+        }
     }
 }

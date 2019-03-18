@@ -18,41 +18,34 @@
     <input class="btn btn-sm btn-primary" type="submit" value="Create Genre" />
 </form>
 <br /><br />
-<table class="table table-bordered table-hover">
-    <thead>
-        <tr>
-            <th>
-                Genre
-            </th>
-            <th>
-
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var genre in Model.Genres)
-        {
-            <tr>
-                <th>
-                    @genre.Name
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr class="d-flex">
+                <th class="col-md-10">
+                    Genre
                 </th>
-                <th>
-                    @*<form asp-controller="Users" asp-action="AddToRole" method="post">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <input type="hidden" name="UserId" value="@user.Id" />
-                                <select name="Role" asp-items="Model.Roles" class="form-control"></select>
-                            </div>
-                            <div class="col-md-4">
-                                <input class="btn btn-sm btn-primary" type="submit" value="Add Role" />
-                            </div>
-                        </div>
-                    </form>*@
+                <th class="col-md-2">
+                    Options
                 </th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var genre in Model.Genres)
+            {
+                <tr class="d-flex">
+                    <td class="col-md-10">
+                        @genre.Name
+                    </td>
+                    <td class="col-md-2">
+                        <a asp-action="EditGenre" asp-route-id="@genre.Id" class="btn btn-info">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@genre.Id" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

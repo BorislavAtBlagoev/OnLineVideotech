@@ -62,6 +62,13 @@
                 </div>
             }
 
+            @if (TempData.ContainsKey(GlobalConstants.TempDataErrorMessageKey))
+            {
+                <div class="alert alert-danger">
+                    @TempData[GlobalConstants.TempDataErrorMessageKey]
+                </div>
+            }
+
             @RenderBody()
         </main>
     </div>

@@ -1,4 +1,5 @@
 ﻿using OnLineVideotech.Data.Models;
+using OnLineVideotech.Services.Admin.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -13,6 +14,6 @@ namespace OnLineVideotech.Web.Areas.Admin.Models.Genres
         [Display(Name="Genre name")]
         public string Name { get; set; }
 
-        public List<Genre> Genres { get; set; }
+        public List<GenreServiceModel> Genres { get; set; }
     }
 }

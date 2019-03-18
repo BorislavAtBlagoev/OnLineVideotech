@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnLineVideotech.Services.Admin.Models;
 using OnLineVideotech.Services.Interfaces;
 using OnLineVideotech.Web.Areas.Admin.Models.Genres;
 using OnLineVideotech.Web.Infrastructure.Extensions;
+using System;
 using System.Threading.Tasks;
 
 namespace OnLineVideotech.Web.Areas.Admin.Controllers
@@ -36,6 +38,18 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
             TempData.AddSuccessMessage($"Genre '{model.Name}' successfully created");
 
             return RedirectToAction(nameof(AddGenre));
+        }
+      
+        public async Task<IActionResult> EditGenre(Guid id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            GenreServiceModel genre = await this.genreService.FindGenre(id);
+
+            return View(id);
         }
     }
 }
