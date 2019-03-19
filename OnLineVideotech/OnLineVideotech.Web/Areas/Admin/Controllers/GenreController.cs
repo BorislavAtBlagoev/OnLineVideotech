@@ -15,7 +15,7 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
         public GenreController(IGenreService genreService)
         {
             this.genreService = genreService;
-        }
+        }  
 
         public async Task<IActionResult> AddGenre()
         {
@@ -39,7 +39,7 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(AddGenre));
         }
-      
+
         public async Task<IActionResult> EditGenre(Guid id)
         {
             if (id == null)
