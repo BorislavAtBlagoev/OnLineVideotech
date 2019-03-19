@@ -30,7 +30,7 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
             this.genreService = genreService;
         }
 
-        public async Task<IActionResult> AddMovie()
+        public async Task<IActionResult> CreateMovie()
         {
             IEnumerable<Role> roles = await roleService.GetAllRoles();
             IEnumerable<GenreServiceModel> genres = await genreService.GetAllGenres();
@@ -58,7 +58,7 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddMovie(AddMovieViewModel model)
+        public async Task<IActionResult> CreateMovie(AddMovieViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -78,7 +78,7 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
 
             TempData.AddSuccessMessage($"Movie '{model.Name}' successfully created");
 
-            return RedirectToAction(nameof(AddMovie));
+            return RedirectToAction(nameof(CreateMovie));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
             this.genreService = genreService;
         }  
 
-        public async Task<IActionResult> AddGenre()
+        public async Task<IActionResult> Add()
         {
             AddGenreViewModel model = new AddGenreViewModel();
             model.Genres = await this.genreService.GetAllGenres();
@@ -26,7 +26,7 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddGenre(AddGenreViewModel model)
+        public async Task<IActionResult> Add(AddGenreViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -37,10 +37,10 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
 
             TempData.AddSuccessMessage($"Genre '{model.Name}' successfully created");
 
-            return RedirectToAction(nameof(AddGenre));
+            return RedirectToAction(nameof(Add));
         }
 
-        public async Task<IActionResult> EditGenre(Guid id)
+        public async Task<IActionResult> Edit(Guid id)
         {
             if (id == null)
             {

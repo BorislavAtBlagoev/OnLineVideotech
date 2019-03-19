@@ -1,0 +1,15 @@
+﻿@model AddMovieViewModel;
+
+@{
+    ViewData["Title"] = "Add genre to movie";
+}
+
+<h4><b>Step 2:</b> Movie genres</h4>
+@for (int i = 0; i < Model.Genres.Count; i++)
+{
+    <div class="form-check form-check-inline">
+        <input asp-for="@Model.Genres[i].IsSelected" class="form-check-input" type="checkbox" id="inlineCheckbox1">
+        <label class="form-check-label" for="inlineCheckbox1">@Model.Genres[i].Name</label>
+        <input type="hidden" asp-for="@Model.Genres[i].Id" value="@Model.Genres[i].Id" class="form-control" />
+    </div>
+}
