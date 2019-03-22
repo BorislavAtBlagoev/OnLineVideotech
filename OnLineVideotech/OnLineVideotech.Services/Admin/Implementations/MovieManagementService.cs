@@ -53,7 +53,10 @@ namespace OnLineVideotech.Services.Admin.Interfaces
 
             foreach (GenreServiceModel genre in genres)
             {
-                await genreMovieService.Create(movie.Id, genre.Id);
+                if (genre.IsSelected)
+                {
+                    await genreMovieService.Create(movie.Id, genre.Id);
+                }
             }
 
             await base.SaveChanges();

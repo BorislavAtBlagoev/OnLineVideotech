@@ -23,7 +23,7 @@ namespace OnLineVideotech.Services.Implementations
                 Name = name
             };
 
-            await this.Db.AddAsync(genre);
+            await this.Db.Genres.AddAsync(genre);
             await base.SaveChanges();
         }
 
@@ -47,6 +47,30 @@ namespace OnLineVideotech.Services.Implementations
                     Name = x.Name
                 })
                 .ToListAsync();
+        }
+
+        public async Task UpdateGenre(GenreServiceModel genreServiceModel)
+        {
+            Genre genre = new Genre
+            {
+                Id = genreServiceModel.Id,
+                Name = genreServiceModel.Name
+            };
+
+            this.Db.Genres.Update(genre);
+            await this.Db.SaveChangesAsync();
+        }
+
+        public async Task Delete(GenreServiceModel genreServiceModel)
+        {
+            Genre genre = new Genre
+            {
+                Id = genreServiceModel.Id,
+                Name = genreServiceModel.Name
+            };
+
+            this.Db.Genres.Remove(genre);
+            await this.Db.SaveChangesAsync();
         }
     }
 }

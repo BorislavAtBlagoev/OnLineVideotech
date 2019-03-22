@@ -1,0 +1,14 @@
+﻿@model EditGenreViewModel;
+
+@{
+    ViewData["Title"] = "Delete genre";
+}
+
+<h4>Are you sure you want to delete genre "@Model.Name" ?</h4>
+<hr />
+
+<form asp-action="Delete" method="post">
+    <div>
+        <input class="btn btn-sm btn-danger" type="submit" value="Yes, delete !" />
+    </div>
+</form>

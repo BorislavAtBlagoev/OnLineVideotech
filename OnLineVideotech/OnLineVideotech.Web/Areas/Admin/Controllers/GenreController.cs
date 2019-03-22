@@ -35,7 +35,7 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
 
             await this.genreService.Create(model.Name);
 
-            TempData.AddSuccessMessage($"Genre '{model.Name}' successfully created");
+            TempData.AddSuccessMessage($"Genre '{model.Name}' successfully created !");
 
             return RedirectToAction(nameof(Add));
         }
@@ -48,8 +48,73 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
             }
 
             GenreServiceModel genre = await this.genreService.FindGenre(id);
+            EditGenreViewModel genreViewModel = new EditGenreViewModel
+            {
+                Id = genre.Id,
+                Name = genre.Name
+            };
 
-            return View(id);
+            return View(genreViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditGenreViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            GenreServiceModel genreServiceModel = new GenreServiceModel
+            {
+                Id = model.Id,
+                Name = model.Name
+            };
+
+            await this.genreService.UpdateGenre(genreServiceModel);
+
+            TempData.AddSuccessMessage($"Genre '{model.Name}' successfully updated !");
+
+            return RedirectToAction(nameof(Edit));
+        }
+
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            GenreServiceModel genre = await this.genreService.FindGenre(id);
+            EditGenreViewModel genreViewModel = new EditGenreViewModel
+            {
+                Id = genre.Id,
+                Name = genre.Name
+            };
+
+            return View(genreViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(EditGenreViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            GenreServiceModel genreServiceModel = new GenreServiceModel
+            {
+                Id = model.Id,
+                Name = model.Name
+            };
+
+            await this.genreService.Delete(genreServiceModel);
+
+            TempData.AddSuccessMessage($"Genre '{model.Name}' successfully deleted !");
+
+
+            return RedirectToAction(nameof(Add));
         }
     }
 }
