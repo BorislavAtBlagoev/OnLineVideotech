@@ -75,7 +75,7 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
 
             TempData.AddSuccessMessage($"Genre '{model.Name}' successfully updated !");
 
-            return RedirectToAction(nameof(Edit));
+            return RedirectToAction(nameof(Add));
         }
 
         public async Task<IActionResult> Delete(Guid id)

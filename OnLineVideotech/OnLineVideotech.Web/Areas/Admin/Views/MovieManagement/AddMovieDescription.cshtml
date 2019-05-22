@@ -14,7 +14,7 @@
 </div>
 <div class="form-group">
     <label asp-for="Year"></label>
-    <input asp-for="Year" type="date" asp-format="{0:yyyy-MM-dd}" class="form-control" />
+    <input asp-for="Year" type="date" value="@DateTime.Now" asp-format="{0:yyyy-MM-dd}" class="form-control" />
     <span asp-validation-for="Year" class="text-danger"></span>
 </div>
 <div class="form-group">

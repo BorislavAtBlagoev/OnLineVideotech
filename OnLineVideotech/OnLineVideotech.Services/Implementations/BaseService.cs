@@ -6,24 +6,16 @@ namespace OnLineVideotech.Services.Implementations
 {
     public class BaseService : IBaseService
     {
-        private readonly OnLineVideotechDbContext db;
-
         public BaseService(OnLineVideotechDbContext db)
         {
-            this.db = db;
+            this.Db = db;
         }
 
-        public OnLineVideotechDbContext Db
-        {
-            get
-            {
-                return this.db;
-            }
-        }
+        public OnLineVideotechDbContext Db { get; }
 
         public async Task SaveChanges()
         {
-            await this.db.SaveChangesAsync();
+            await this.Db.SaveChangesAsync();
         }
     }
 }
