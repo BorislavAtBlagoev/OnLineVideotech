@@ -41,11 +41,13 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
                 })
                 .ToListAsync();
 
-            return View(new AdminUserListingsViewModel
+            AdminUserListingsViewModel userRoles = new AdminUserListingsViewModel
             {
                 Users = users,
                 Roles = roles
-            });
+            };
+
+            return View(userRoles);
         }
 
         [HttpPost]

@@ -79,7 +79,7 @@ namespace OnLineVideotech.Web
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Movie/Error");
                 app.UseHsts();
             }
 
@@ -93,12 +93,12 @@ namespace OnLineVideotech.Web
             {
                 routes.MapRoute(
                   name: "areas",
-                  template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                  template: "{area:exists}/{controller=Movie}/{action=Index}/{id?}"
                 );
 
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Movie}/{action=Index}/{id?}");
             });
         }
     }
