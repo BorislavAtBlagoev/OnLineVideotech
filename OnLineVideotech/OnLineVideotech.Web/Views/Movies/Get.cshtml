@@ -6,12 +6,11 @@
 
 <h3>@ViewData["Title"]</h3>
 
-<div class="row justify-content-around">
-    @foreach(var movie in Model)
-    {
-        <div class="col-md-4">
-            <img src="@movie.PosterPath" class="img-fluid" alt="Responsive image">
-            <a asp-action="Details" asp-route-id="@movie.Id" class="btn btn-info">Details</a>
-        </div>
-    }
-</div>
+@foreach (var movie in Model)
+{
+    <div class="col-sm-3 thumbnail-main">
+        <a asp-action="Details" asp-route-id="@movie.Id" />
+        <img src="@movie.PosterPath" class="img-fluid movie-poster" alt="Responsive image" asp-action="Details" asp-route-id="@movie.Id">
+        <br /><br />
+    </div>
+}

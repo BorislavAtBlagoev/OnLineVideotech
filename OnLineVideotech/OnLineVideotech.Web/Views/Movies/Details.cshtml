@@ -4,21 +4,22 @@
     ViewData["Title"] = "Movie Detail";
 }
 
-<h1>Test</h1>
+<h1>@Model.Name</h1>
 <div class="container">
     <div class="row">
         <div class="col-sm-6">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Color_icon_blue.svg/2000px-Color_icon_blue.svg.png" alt="post img" class="pull-left img-responsive postImg img-thumbnail margin10">
+            <img src="@Model.PosterPath" class="img-fluid" alt="Responsive image">      
         </div>
         <div class="col-sm-6">
+            <h3>Rating: @Model.Rating | VideoPath: @Model.VideoPath</h3>
             <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/xLCn88bfW1o" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe src="@Model.TrailerPath" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
+            <article>
+                <p>
+                    @Model.Summary
+                </p>
+            </article>
         </div>
-    </div>
-    <article>
-        <p>
-            @Model.Summary
-        </p>
-    </article>
+    </div>    
 </div>
