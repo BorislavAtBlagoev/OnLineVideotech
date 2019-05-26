@@ -46,6 +46,7 @@ namespace OnLineVideotech.Services.Implementations
                     Id = x.Id,
                     Name = x.Name
                 })
+                .OrderBy(x => x.Name)
                 .ToListAsync();
         }
 
