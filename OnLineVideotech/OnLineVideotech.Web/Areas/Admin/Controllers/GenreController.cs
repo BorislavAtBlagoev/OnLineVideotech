@@ -26,6 +26,7 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(AddGenreViewModel model)
         {
             if (!ModelState.IsValid)
@@ -58,6 +59,7 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditGenreViewModel model)
         {
             if (!ModelState.IsValid)
@@ -96,6 +98,7 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(EditGenreViewModel model)
         {
             if (!ModelState.IsValid)
