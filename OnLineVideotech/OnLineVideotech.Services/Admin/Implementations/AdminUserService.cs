@@ -19,7 +19,7 @@ namespace OnLineVideotech.Services.Admin.Implementations
 
         public async Task<IEnumerable<AdminUserListingServiceModel>> AllAsync()
         {
-            return await this.db
+            return await  this.db
                    .Users
                    .Select(x => new AdminUserListingServiceModel
                    {
