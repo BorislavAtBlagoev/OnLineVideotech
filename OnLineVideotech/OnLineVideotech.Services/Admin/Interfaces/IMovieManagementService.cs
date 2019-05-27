@@ -1,10 +1,9 @@
-﻿using OnLineVideotech.Services.Admin.Models;
-using OnLineVideotech.Services.Implementations;
+﻿using OnLineVideotech.Services.Admin.ServiceModels;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace OnLineVideotech.Services.Interfaces
+namespace OnLineVideotech.Services.Admin.Interfaces
 {
     public interface IMovieManagementService : IBaseService
     {

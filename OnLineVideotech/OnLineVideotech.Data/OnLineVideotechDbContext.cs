@@ -79,7 +79,7 @@ namespace OnLineVideotech.Data
             builder
                 .Entity<Price>()
                 .HasOne(m => m.Movie)
-                .WithMany(r => r.Roles)
+                .WithMany(r => r.Prices)
                 .HasForeignKey(m => m.MovieId);
 
             builder

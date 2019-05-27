@@ -1,10 +1,6 @@
 ﻿using AutoMapper;
-using OnLineVideotech.Common.Mapping;
 using OnLineVideotech.Data.Models;
-using OnLineVideotech.Services.Admin.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using OnLineVideotech.Services.Admin.ServiceModels;
 
 namespace OnLineVideotech.Web.Infrastructure.Mapping
 {

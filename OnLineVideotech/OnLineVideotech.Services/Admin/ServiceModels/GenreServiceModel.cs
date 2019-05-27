@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OnLineVideotech.Services.Admin.Models
+namespace OnLineVideotech.Services.Admin.ServiceModels
 {
     public class GenreServiceModel
     {

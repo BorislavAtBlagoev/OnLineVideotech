@@ -1,7 +1,4 @@
-﻿using OnLineVideotech.Common.Mapping;
-using OnLineVideotech.Data.Models;
-
-namespace OnLineVideotech.Services.Admin.Models
+﻿namespace OnLineVideotech.Services.Admin.ServiceModels
 {
     public class AdminUserListingServiceModel
     {

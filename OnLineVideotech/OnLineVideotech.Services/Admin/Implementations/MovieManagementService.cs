@@ -1,25 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using OnLineVideotech.Data;
 using OnLineVideotech.Data.Models;
-using OnLineVideotech.Services.Admin.Models;
-using OnLineVideotech.Services.Implementations;
-using OnLineVideotech.Services.Interfaces;
+using OnLineVideotech.Services.Admin.Interfaces;
+using OnLineVideotech.Services.Admin.ServiceModels;
 
-namespace OnLineVideotech.Services.Admin.Interfaces
+namespace OnLineVideotech.Services.Admin.Implementations
 {
     public class MovieManagementService : BaseService, IBaseService, IMovieManagementService
     {
-        private readonly IPriceService priceService;
-        private readonly IGenreMovieService genreMovieService;
-
-        public MovieManagementService(OnLineVideotechDbContext db,
-            IPriceService priceService,
-            IGenreMovieService genreMovieService) : base(db)
+        public MovieManagementService(OnLineVideotechDbContext db) : base(db)
         {
-            this.priceService = priceService;
-            this.genreMovieService = genreMovieService;
         }
 
         public async Task Create(
@@ -41,24 +34,28 @@ namespace OnLineVideotech.Services.Admin.Interfaces
                 VideoPath = videoPath,
                 PosterPath = posterPath,
                 TrailerPath = trailerPath,
-                Summary = summary
+                Summary = summary,
             };
 
-            this.Db.Add(movie);
-
-            foreach (PriceServiceModel price in prices)
-            {
-                await this.priceService.CreatePrice(movie.Id, price.RoleId, price.Price);
-            }
-
-            foreach (GenreServiceModel genre in genres)
-            {
-                if (genre.IsSelected)
+            movie.Genres = genres
+                .Where(g => g.IsSelected)
+                .Select(g => new GenreMovie
                 {
-                    await genreMovieService.Create(movie.Id, genre.Id);
-                }
-            }
+                    GenreId = g.Id,
+                    MovieId = movie.Id
+                })
+                .ToList();
 
+            movie.Prices = prices
+                .Select(p => new Price
+                {
+                    MovieId = movie.Id,
+                    RoleId = p.RoleId,
+                    MoviePrice = p.Price
+                })
+                .ToList();
+
+            this.Db.Add(movie);
             await base.SaveChanges();
         }
     }

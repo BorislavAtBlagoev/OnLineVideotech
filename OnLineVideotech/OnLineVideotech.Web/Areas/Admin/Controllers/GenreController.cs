@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OnLineVideotech.Services.Admin.Models;
-using OnLineVideotech.Services.Interfaces;
+using OnLineVideotech.Services.Admin.Interfaces;
+using OnLineVideotech.Services.Admin.ServiceModels;
 using OnLineVideotech.Web.Areas.Admin.Models.Genres;
 using OnLineVideotech.Web.Infrastructure.Extensions;
 using System;

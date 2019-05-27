@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using OnLineVideotech.Data;
 using OnLineVideotech.Data.Models;
-using OnLineVideotech.Services.Interfaces;
+using OnLineVideotech.Services.Admin.Interfaces;
 
-namespace OnLineVideotech.Services.Implementations
+namespace OnLineVideotech.Services.Admin.Implementations
 {
     public class GenreMovieService : BaseService, IBaseService, IGenreMovieService
     {

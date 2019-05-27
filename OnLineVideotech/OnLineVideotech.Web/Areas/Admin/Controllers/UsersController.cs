@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OnLineVideotech.Data.Models;
 using OnLineVideotech.Services.Admin.Interfaces;
-using OnLineVideotech.Services.Admin.Models;
+using OnLineVideotech.Services.Admin.ServiceModels;
 using OnLineVideotech.Web.Areas.Admin.Models.Users;
 using OnLineVideotech.Web.Infrastructure.Extensions;
 using System.Collections.Generic;

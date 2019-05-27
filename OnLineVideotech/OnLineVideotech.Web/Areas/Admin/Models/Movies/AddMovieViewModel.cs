@@ -1,4 +1,4 @@
-﻿using OnLineVideotech.Services.Admin.Models;
+﻿using OnLineVideotech.Services.Admin.ServiceModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

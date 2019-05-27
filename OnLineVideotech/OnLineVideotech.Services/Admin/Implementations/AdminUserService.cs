@@ -4,22 +4,19 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using OnLineVideotech.Data;
 using OnLineVideotech.Services.Admin.Interfaces;
-using OnLineVideotech.Services.Admin.Models;
+using OnLineVideotech.Services.Admin.ServiceModels;
 
 namespace OnLineVideotech.Services.Admin.Implementations
 {
-    public class AdminUserService : IAdminUserService
+    public class AdminUserService : BaseService, IBaseService, IAdminUserService
     {
-        private readonly OnLineVideotechDbContext db;
-
-        public AdminUserService(OnLineVideotechDbContext db)
+        public AdminUserService(OnLineVideotechDbContext db) : base(db)
         {
-            this.db = db;
         }
 
         public async Task<IEnumerable<AdminUserListingServiceModel>> AllAsync()
         {
-            return await  this.db
+            return await this.Db
                    .Users
                    .Select(x => new AdminUserListingServiceModel
                    {
@@ -27,11 +24,6 @@ namespace OnLineVideotech.Services.Admin.Implementations
                        Email = x.Email
                    })
                    .ToListAsync();
-        }
-
-        public async Task SaveChanges()
-        {
-            await this.db.SaveChangesAsync();
         }
     }
 }

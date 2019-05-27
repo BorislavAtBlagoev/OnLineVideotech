@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using OnLineVideotech.Services.Admin.Models;
+using OnLineVideotech.Services.Admin.ServiceModels;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace OnLineVideotech.Web.Areas.Admin.Models.Users
 {

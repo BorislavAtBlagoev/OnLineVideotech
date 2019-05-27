@@ -1,8 +1,7 @@
 ﻿using OnLineVideotech.Data;
-using OnLineVideotech.Services.Interfaces;
 using System.Threading.Tasks;
 
-namespace OnLineVideotech.Services.Implementations
+namespace OnLineVideotech.Services
 {
     public class BaseService : IBaseService
     {

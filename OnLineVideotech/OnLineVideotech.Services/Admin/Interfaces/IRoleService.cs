@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace OnLineVideotech.Services.Interfaces
+namespace OnLineVideotech.Services.Admin.Interfaces
 {
-    public interface IRoleService
+    public interface IRoleService : IBaseService
     {
         Task<IEnumerable<Role>> GetAllRoles();
     }

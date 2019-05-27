@@ -40,6 +40,6 @@ namespace OnLineVideotech.Data.Models
 
         public List<HistoryMovie> Histories { get; set; } = new List<HistoryMovie>();
 
-        public List<Price> Roles { get; set; } = new List<Price>();
+        public List<Price> Prices { get; set; } = new List<Price>();
      }
 }

@@ -30,7 +30,7 @@ namespace OnLineVideotech.Services.Implementations
                     TrailerPath = m.TrailerPath,
                     Summary = m.Summary,
                     Year = m.Year,
-                    Roles = m.Roles
+                    Prices = m.Prices
                 })
                 .ToListAsync();
         }
@@ -50,7 +50,7 @@ namespace OnLineVideotech.Services.Implementations
                 TrailerPath = movie.TrailerPath,
                 Summary = movie.Summary,
                 Year = movie.Year,
-                Roles = movie.Roles
+                Prices = movie.Prices
             };
         }
     }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnLineVideotech.Data;
 
 namespace OnLineVideotech.Data.Migrations
 {
     [DbContext(typeof(OnLineVideotechDbContext))]
-    partial class OnLineVideotechDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190527215505_ChangeRolesPropertyFromMovieTable")]
+    partial class ChangeRolesPropertyFromMovieTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using OnLineVideotech.Data;
 using OnLineVideotech.Data.Models;
-using OnLineVideotech.Services.Admin.Models;
-using OnLineVideotech.Services.Interfaces;
+using OnLineVideotech.Services.Admin.Interfaces;
+using OnLineVideotech.Services.Admin.ServiceModels;
 
-namespace OnLineVideotech.Services.Implementations
+namespace OnLineVideotech.Services.Admin.Implementations
 {
     public class GenreService : BaseService, IBaseService, IGenreService
     {
