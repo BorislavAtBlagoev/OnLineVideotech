@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OnLineVideotech.Data.Models
 {
-    public class History
+    public class UserMoneyBalance
     {
-        public History()
+        public UserMoneyBalance()
         {
             this.Id = Guid.NewGuid();
         }
@@ -15,15 +14,11 @@ namespace OnLineVideotech.Data.Models
         [Key]
         public Guid Id { get; set; }
 
-        [Required]
-        public DateTime Date { get; set; }
-
-        [Required]
         [Column(TypeName = "decimal(18,2)")]
-        public decimal Price { get; set; }
+        public decimal Balance { get; set; }
 
-        public List<HistoryMovie> Movies { get; set; }
+        public string UserId { get; set; }
 
-        public List<HistoryCustomer> Customers { get; set; }
+        public User User { get; set; }
     }
 }

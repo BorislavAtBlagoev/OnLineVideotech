@@ -88,6 +88,12 @@ namespace OnLineVideotech.Data
                .WithMany(m => m.Movies)
                .HasForeignKey(r => r.RoleId);
 
+            builder
+                .Entity<User>()
+                .HasOne(u => u.Balance)
+                .WithOne(b => b.User)
+                .HasForeignKey<UserMoneyBalance>(ub => ub.UserId);
+
             base.OnModelCreating(builder);
 
             builder.Entity<User>().ToTable("Users");

@@ -58,5 +58,24 @@ namespace OnLineVideotech.Services.Admin.Implementations
             this.Db.Add(movie);
             await base.SaveChanges();
         }
+
+        public async Task<MovieAdminServiceModel> FindMovie(Guid id)
+        {
+            Movie movie = await this.Db.Movies.FindAsync(id);
+
+            return new MovieAdminServiceModel
+            {
+                Id = movie.Id,
+                Name = movie.Name,
+                Year = movie.Year,
+                Rating = movie.Rating,
+                VideoPath = movie.VideoPath,
+                PosterPath = movie.PosterPath,
+                TrailerPath = movie.TrailerPath,
+                Summary = movie.Summary,
+                Genres = movie.Genres,
+                Prices = movie.Prices
+            };
+        }
     }
 }

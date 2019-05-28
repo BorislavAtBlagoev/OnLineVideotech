@@ -5,6 +5,7 @@ using OnLineVideotech.Services.Admin.Interfaces;
 using OnLineVideotech.Services.Admin.ServiceModels;
 using OnLineVideotech.Web.Areas.Admin.Models;
 using OnLineVideotech.Web.Infrastructure.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -61,7 +62,7 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return this.View(model);
             }
              
            await this.movies.Create(
@@ -79,5 +80,17 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(CreateMovie));
         }
+
+        public async Task<IActionResult> EditMovie(Guid id)
+        {
+            MovieAdminServiceModel model = await this.movies.FindMovie(id);
+            return this.View(model);
+        }
+
+        //[HttpPost]
+        //public async Task<IActionResult> EditMovie()
+        //{
+        //    return this.View();
+        //}
     }
 }

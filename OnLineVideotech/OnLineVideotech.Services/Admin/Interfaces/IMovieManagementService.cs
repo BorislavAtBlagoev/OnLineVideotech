@@ -17,5 +17,7 @@ namespace OnLineVideotech.Services.Admin.Interfaces
             string summary,
             List<PriceServiceModel> prices,
             List<GenreServiceModel> genres);
+
+        Task<MovieAdminServiceModel> FindMovie(Guid id);
     }
 }

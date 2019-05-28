@@ -1,0 +1,26 @@
+﻿@model MovieServiceModel;
+
+@{
+    ViewData["Title"] = "Edit movie";
+}
+
+@{
+    ViewData["Title"] = "Create movie";
+}
+
+<form asp-controller="MovieManagement" asp-action="AddMovie" method="post">
+    <div class="row">
+        <div class="col-md-6">
+            @await Html.PartialAsync("AddMovieDescription", Model)
+        </div>
+        <div class="col-md-6">
+            @await Html.PartialAsync("AddGenreToMovie", Model)
+            @await Html.PartialAsync("AddMoviePrice", Model)
+        </div>
+    </div>
+    <input class="btn btn-sm btn-primary" type="submit" value="Edit Movie" />
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

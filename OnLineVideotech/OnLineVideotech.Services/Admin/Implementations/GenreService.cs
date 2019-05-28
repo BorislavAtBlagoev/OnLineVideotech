@@ -73,5 +73,15 @@ namespace OnLineVideotech.Services.Admin.Implementations
             this.Db.Genres.Remove(genre);
             await this.Db.SaveChangesAsync();
         }
+
+        //public async Task<IEnumerable<Genre>> GetAllGenreForMovie(Guid MovieId)
+        //{
+        //    IEnumerable<GenreMovie> movieGenres = await this.Db.GenreMovies
+        //        .Where(x => x.MovieId == MovieId)
+        //        .ToListAsync();
+
+        //    IEnumerable<Genre> genres = await this.Db.Genres
+        //        .Where(g => g.Id )
+        //}
     }
 }
