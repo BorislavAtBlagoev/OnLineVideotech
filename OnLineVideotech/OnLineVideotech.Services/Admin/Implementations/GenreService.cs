@@ -74,14 +74,20 @@ namespace OnLineVideotech.Services.Admin.Implementations
             await this.Db.SaveChangesAsync();
         }
 
-        //public async Task<IEnumerable<Genre>> GetAllGenreForMovie(Guid MovieId)
-        //{
-        //    IEnumerable<GenreMovie> movieGenres = await this.Db.GenreMovies
-        //        .Where(x => x.MovieId == MovieId)
-        //        .ToListAsync();
+        public async Task<List<Genre>> GetAllGenreForMovie(Guid MovieId)
+        {
+            List<GenreMovie> movieGenres = await this.Db.GenreMovies
+                .Where(x => x.MovieId == MovieId)
+                .ToListAsync();
 
-        //    IEnumerable<Genre> genres = await this.Db.Genres
-        //        .Where(g => g.Id )
-        //}
+            List<Genre> genres = new List<Genre>();
+
+            foreach (var item in movieGenres)
+            {
+                genres.Add(await this.Db.Genres.FindAsync(item.GenreId));
+            }
+
+            return genres;
+        }
     }
 }

@@ -31,10 +31,10 @@ namespace OnLineVideotech.Services.Admin.ServiceModels
         [Required]
         public string Summary { get; set; }
 
-        public List<GenreMovie> Genres { get; set; } = new List<GenreMovie>();
+        public List<GenreServiceModel> Genres { get; set; } 
 
-        public List<HistoryMovie> Histories { get; set; } = new List<HistoryMovie>();
+        public List<HistoryMovie> Histories { get; set; } 
 
-        public List<Price> Prices { get; set; } = new List<Price>();
+        public List<PriceServiceModel> Prices { get; set; } 
     }
 }

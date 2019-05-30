@@ -1,7 +1,10 @@
-﻿using OnLineVideotech.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using OnLineVideotech.Data;
 using OnLineVideotech.Data.Models;
 using OnLineVideotech.Services.Admin.Interfaces;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace OnLineVideotech.Services.Admin.Implementations
@@ -22,6 +25,15 @@ namespace OnLineVideotech.Services.Admin.Implementations
             };
 
             await this.Db.AddAsync(price);           
+        }
+
+        public async Task<List<Price>> GetAllPricesForMovie(Guid idMovie)
+        {
+            List<Price> prices = await Db.Prices
+                .Where(p => p.MovieId == idMovie)
+                .ToListAsync();
+
+            return prices;
         }
     }
 }

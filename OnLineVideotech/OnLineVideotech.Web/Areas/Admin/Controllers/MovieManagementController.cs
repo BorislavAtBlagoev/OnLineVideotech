@@ -83,7 +83,20 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
 
         public async Task<IActionResult> EditMovie(Guid id)
         {
-            MovieAdminServiceModel model = await this.movies.FindMovie(id);
+            MovieAdminServiceModel movie = await this.movies.FindMovie(id);
+            AddMovieViewModel model = new AddMovieViewModel
+            {
+               Name = movie.Name,
+               Year = movie.Year,
+               Rating = movie.Rating,
+               VideoPath = movie.VideoPath,
+               PosterPath =  movie.PosterPath,
+               TrailerPath = movie.TrailerPath,
+               Summary = movie.Summary,
+               Prices = movie.Prices,
+               Genres = movie.Genres
+            };
+
             return this.View(model);
         }
 

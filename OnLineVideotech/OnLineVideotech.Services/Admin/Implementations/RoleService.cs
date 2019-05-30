@@ -4,6 +4,7 @@ using OnLineVideotech.Data;
 using OnLineVideotech.Data.Models;
 using OnLineVideotech.Services.Admin.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace OnLineVideotech.Services.Admin.Implementations
@@ -15,7 +16,7 @@ namespace OnLineVideotech.Services.Admin.Implementations
 
         public RoleService(
             RoleManager<Role> roleManager,
-            UserManager<User> userManager, 
+            UserManager<User> userManager,
             OnLineVideotechDbContext db) : base(db)
         {
             this.roleManager = roleManager;
@@ -27,6 +28,11 @@ namespace OnLineVideotech.Services.Admin.Implementations
             IEnumerable<Role> roles = await this.roleManager.Roles.ToListAsync();
 
             return roles;
+        }
+
+        public async Task<Role> FindRole(string roleId)
+        {
+            return  await this.roleManager.Roles.SingleAsync(x => x.Id == roleId);
         }
     }
 }

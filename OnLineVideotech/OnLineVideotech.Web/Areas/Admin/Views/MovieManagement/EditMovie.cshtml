@@ -1,4 +1,4 @@
-﻿@model MovieServiceModel;
+﻿@model AddMovieViewModel;
 
 @{
     ViewData["Title"] = "Edit movie";
@@ -18,7 +18,7 @@
             @await Html.PartialAsync("AddMoviePrice", Model)
         </div>
     </div>
-    <input class="btn btn-sm btn-primary" type="submit" value="Edit Movie" />
+    <input class="btn btn-sm btn-primary" type="submit" value="Save" />
 </form>
 
 @section Scripts {

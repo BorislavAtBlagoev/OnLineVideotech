@@ -1,4 +1,5 @@
-﻿using OnLineVideotech.Services.Admin.ServiceModels;
+﻿using OnLineVideotech.Data.Models;
+using OnLineVideotech.Services.Admin.ServiceModels;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -16,5 +17,7 @@ namespace OnLineVideotech.Services.Admin.Interfaces
         Task UpdateGenre(GenreServiceModel genreServiceModel);
 
         Task Delete(GenreServiceModel genreServiceModel);
+
+        Task<List<Genre>> GetAllGenreForMovie(Guid MovieId);
     }
 }

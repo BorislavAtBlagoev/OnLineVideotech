@@ -11,8 +11,19 @@ namespace OnLineVideotech.Services.Admin.Implementations
 {
     public class MovieManagementService : BaseService, IBaseService, IMovieManagementService
     {
-        public MovieManagementService(OnLineVideotechDbContext db) : base(db)
+        private readonly IGenreService genreService;
+        private readonly IPriceService priceService;
+        private readonly IRoleService roleService;
+
+        public MovieManagementService(
+            OnLineVideotechDbContext db,
+            IGenreService genreService,
+            IPriceService priceService,
+            IRoleService roleService) : base(db)
         {
+            this.genreService = genreService;
+            this.priceService = priceService;
+            this.roleService = roleService;
         }
 
         public async Task Create(
@@ -61,7 +72,32 @@ namespace OnLineVideotech.Services.Admin.Implementations
 
         public async Task<MovieAdminServiceModel> FindMovie(Guid id)
         {
-            Movie movie = await this.Db.Movies.FindAsync(id);
+            Movie movie = await this.Db.Movies.FindAsync(id);           
+            List<Genre> genres = await this.genreService.GetAllGenreForMovie(movie.Id);
+            List<GenreServiceModel> genres1 = await this.genreService.GetAllGenres();
+
+            List<GenreServiceModel> genresMovieModel = genres.Select(g => new GenreServiceModel
+            {
+                Id = g.Id,
+                Name = g.Name
+            })
+            .ToList();
+
+            List<Price> prices = await this.priceService.GetAllPricesForMovie(movie.Id);
+            List<PriceServiceModel> pricesServiceMovel = prices.Select(p => new PriceServiceModel
+            {
+                RoleId = p.RoleId,
+                Price = p.MoviePrice,
+                Role = p.Role
+            })
+            .ToList();
+
+            foreach (var price in pricesServiceMovel)
+            {
+                Role role = await this.roleService.FindRole(price.RoleId);
+
+                price.Role = role;
+            }
 
             return new MovieAdminServiceModel
             {
@@ -73,8 +109,8 @@ namespace OnLineVideotech.Services.Admin.Implementations
                 PosterPath = movie.PosterPath,
                 TrailerPath = movie.TrailerPath,
                 Summary = movie.Summary,
-                Genres = movie.Genres,
-                Prices = movie.Prices
+                Genres = genresMovieModel,
+                Prices = pricesServiceMovel
             };
         }
     }
