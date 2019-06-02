@@ -1,4 +1,4 @@
-﻿@model AddMovieViewModel;
+﻿@model MovieAdminViewModel;
 
 @{
     ViewData["Title"] = "Create movie";
@@ -6,15 +6,17 @@
 
 <form asp-controller="MovieManagement" asp-action="AddMovie" method="post">
     <div class="row">
+        <div class="col-md-3">
+        </div>
         <div class="col-md-6">
             @await Html.PartialAsync("AddMovieDescription", Model)
-        </div>
-        <div class="col-md-6">
             @await Html.PartialAsync("AddGenreToMovie", Model)
             @await Html.PartialAsync("AddMoviePrice", Model)
+             <input class="btn btn-sm btn-primary" type="submit" value="Create Movie" />
+        </div>
+        <div class="col-md-1">
         </div>
     </div>
-    <input class="btn btn-sm btn-primary" type="submit" value="Create Movie" />
 </form>
 
 @section Scripts {

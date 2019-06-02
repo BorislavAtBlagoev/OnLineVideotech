@@ -35,7 +35,7 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
             IEnumerable<Role> roles = await roleService.GetAllRoles();
             IEnumerable<GenreServiceModel> genres = await genreService.GetAllGenres();
 
-            AddMovieViewModel model = new AddMovieViewModel();
+            MovieAdminViewModel model = new MovieAdminViewModel();
             model.Prices = new List<PriceServiceModel>();
             model.Genres = new List<GenreServiceModel>();
 
@@ -58,7 +58,7 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateMovie(AddMovieViewModel model)
+        public async Task<IActionResult> CreateMovie(MovieAdminViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -84,7 +84,7 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
         public async Task<IActionResult> EditMovie(Guid id)
         {
             MovieAdminServiceModel movie = await this.movies.FindMovie(id);
-            AddMovieViewModel model = new AddMovieViewModel
+            MovieAdminViewModel model = new MovieAdminViewModel
             {
                Name = movie.Name,
                Year = movie.Year,
@@ -100,10 +100,15 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
             return this.View(model);
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> EditMovie()
-        //{
-        //    return this.View();
-        //}
+        [HttpPost]
+        public async Task<IActionResult> EditMovie(MovieAdminViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return this.View(model);
+            }
+
+            return this.View();
+        }
     }
 }

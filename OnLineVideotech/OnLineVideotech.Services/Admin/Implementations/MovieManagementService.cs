@@ -73,15 +73,28 @@ namespace OnLineVideotech.Services.Admin.Implementations
         public async Task<MovieAdminServiceModel> FindMovie(Guid id)
         {
             Movie movie = await this.Db.Movies.FindAsync(id);           
-            List<Genre> genres = await this.genreService.GetAllGenreForMovie(movie.Id);
-            List<GenreServiceModel> genres1 = await this.genreService.GetAllGenres();
+            List<Genre> genresMovie = await this.genreService.GetAllGenreForMovie(movie.Id);
+            List<GenreServiceModel> allGenres = await this.genreService.GetAllGenres();
 
-            List<GenreServiceModel> genresMovieModel = genres.Select(g => new GenreServiceModel
+            List<GenreServiceModel> genresMovieModel = new List<GenreServiceModel>();
+
+            foreach (var genre in allGenres)
             {
-                Id = g.Id,
-                Name = g.Name
-            })
-            .ToList();
+                GenreServiceModel genreServiceModel = new GenreServiceModel();
+                genreServiceModel.Id = genre.Id;
+                genreServiceModel.Name = genre.Name;
+
+                if (genresMovie.Any(x => x.Id == genre.Id))
+                {
+                    genreServiceModel.IsSelected = true;
+                }
+                else
+                {
+                    genreServiceModel.IsSelected = false;
+                }
+
+                genresMovieModel.Add(genreServiceModel);
+            }
 
             List<Price> prices = await this.priceService.GetAllPricesForMovie(movie.Id);
             List<PriceServiceModel> pricesServiceMovel = prices.Select(p => new PriceServiceModel

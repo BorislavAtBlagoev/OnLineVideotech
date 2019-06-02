@@ -4,6 +4,7 @@ using OnLineVideotech.Services.Admin.ServiceModels;
 using OnLineVideotech.Web.Areas.Admin.Models.Genres;
 using OnLineVideotech.Web.Infrastructure.Extensions;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace OnLineVideotech.Web.Areas.Admin.Controllers
@@ -34,9 +35,17 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
                 return View(model);
             }
 
-            await this.genreService.Create(model.Name);
+            model.Genres = await this.genreService.GetAllGenres();
 
-            TempData.AddSuccessMessage($"Genre '{model.Name}' successfully created !");
+            if (model.Genres.Any(x => x.Name.ToLower() == model.Name.ToLower()))
+            {
+                TempData.AddErrorMessage($"Genre with name '{model.Name}' already exists !");
+            }
+            else
+            {
+                await this.genreService.Create(model.Name);
+                TempData.AddSuccessMessage($"Genre '{model.Name}' successfully created !");
+            }           
 
             return RedirectToAction(nameof(Add));
         }

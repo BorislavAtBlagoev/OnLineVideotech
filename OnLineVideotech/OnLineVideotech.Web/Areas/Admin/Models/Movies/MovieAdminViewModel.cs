@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace OnLineVideotech.Web.Areas.Admin.Models
 {
-    public class AddMovieViewModel
+    public class MovieAdminViewModel
     {
         [Required]
         [StringLength(100, MinimumLength = 1)]
