@@ -20,7 +20,7 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
 
         public async Task<IActionResult> Add()
         {
-            AddGenreViewModel model = new AddGenreViewModel();
+            GenreViewModel model = new GenreViewModel();
             model.Genres = await this.genreService.GetAllGenres();
 
             return View(model);
@@ -28,7 +28,7 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Add(AddGenreViewModel model)
+        public async Task<IActionResult> Add(GenreViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -58,7 +58,7 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
             }
 
             GenreServiceModel genre = await this.genreService.FindGenre(id);
-            EditGenreViewModel genreViewModel = new EditGenreViewModel
+            GenreViewModel genreViewModel = new GenreViewModel
             {
                 Id = genre.Id,
                 Name = genre.Name
@@ -69,24 +69,35 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(EditGenreViewModel model)
+        public async Task<IActionResult> Edit(GenreViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            GenreServiceModel genreServiceModel = new GenreServiceModel
+            model.Genres = await this.genreService.GetAllGenres();
+
+            if (model.Genres.Any(x => x.Name.ToLower() == model.Name.ToLower()))
             {
-                Id = model.Id,
-                Name = model.Name
-            };
+                TempData.AddErrorMessage($"Genre with name '{model.Name}' already exists !");
 
-            await this.genreService.UpdateGenre(genreServiceModel);
+                return RedirectToAction(nameof(Edit));               
+            }
+            else
+            {
+                GenreServiceModel genreServiceModel = new GenreServiceModel
+                {
+                    Id = model.Id,
+                    Name = model.Name
+                };
 
-            TempData.AddSuccessMessage($"Genre '{model.Name}' successfully updated !");
+                await this.genreService.UpdateGenre(genreServiceModel);
 
-            return RedirectToAction(nameof(Add));
+                TempData.AddSuccessMessage($"Genre '{model.Name}' successfully updated !");
+
+                return RedirectToAction(nameof(Add));
+            }
         }
 
         public async Task<IActionResult> Delete(Guid id)
@@ -97,7 +108,7 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
             }
 
             GenreServiceModel genre = await this.genreService.FindGenre(id);
-            EditGenreViewModel genreViewModel = new EditGenreViewModel
+            GenreViewModel genreViewModel = new GenreViewModel
             {
                 Id = genre.Id,
                 Name = genre.Name
@@ -108,7 +119,7 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(EditGenreViewModel model)
+        public async Task<IActionResult> Delete(GenreViewModel model)
         {
             if (!ModelState.IsValid)
             {

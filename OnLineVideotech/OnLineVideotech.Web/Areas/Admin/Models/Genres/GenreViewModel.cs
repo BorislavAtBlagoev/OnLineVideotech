@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace OnLineVideotech.Web.Areas.Admin.Models.Genres
 {
-    public class AddGenreViewModel
+    public class GenreViewModel
     {
         public Guid Id { get; set; }
 
