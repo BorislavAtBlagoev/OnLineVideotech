@@ -22,6 +22,8 @@ namespace OnLineVideotech.Data
 
         public DbSet<GenreMovie> GenreMovies { get; set; }
 
+        public DbSet<UserMoneyBalance> UserMoneyBalance { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder

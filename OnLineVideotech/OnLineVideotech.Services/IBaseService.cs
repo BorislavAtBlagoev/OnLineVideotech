@@ -5,7 +5,6 @@ namespace OnLineVideotech.Services
 {
     public interface IBaseService
     {
-        Task SaveChanges();
         OnLineVideotechDbContext Db { get; }
     }
 }

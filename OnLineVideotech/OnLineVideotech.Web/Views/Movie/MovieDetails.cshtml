@@ -29,6 +29,10 @@
             {
                 <a class="btn btn-danger" asp-area="Admin" asp-controller="MovieManagement" asp-action="EditMovie" asp-route-id="@Model.Id">Edit</a>
             }
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a class="btn btn-success" asp-controller="Movie" asp-action="BuyMovie" asp-route-id="@Model.Id">Buy</a>
+            }
         </div>
     </div>
 </div>

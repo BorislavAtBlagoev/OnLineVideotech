@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnLineVideotech.Services.Interfaces;
 using OnLineVideotech.Services.ServiceModels;
@@ -30,6 +31,14 @@ namespace OnLineVideotech.Web.Controllers
             MovieServiceModel movie = await this.movieService.FindMovie(id);
 
             return View(movie);
+        }        
+
+        [Authorize]
+        public IActionResult BuyMovie(Guid id)
+        {
+            UserBalanceViewModel userBalanceModel = new UserBalanceViewModel();
+
+            return View(userBalanceModel);
         }
 
         public IActionResult Privacy()

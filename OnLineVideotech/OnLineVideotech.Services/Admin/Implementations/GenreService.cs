@@ -24,12 +24,17 @@ namespace OnLineVideotech.Services.Admin.Implementations
             };
 
             await this.Db.Genres.AddAsync(genre);
-            await base.SaveChanges();
+            await this.Db.SaveChangesAsync();
         }
 
         public async Task<GenreServiceModel> FindGenre(Guid id)
         {
-            Genre genre = await this.Db.Genres.FindAsync(id);
+            Genre genre = new Genre();
+
+            if (this.Db.Genres.Any(g => g.Id == id))
+            {
+                genre = await this.Db.Genres.FindAsync(id);
+            }
 
             return new GenreServiceModel
             {

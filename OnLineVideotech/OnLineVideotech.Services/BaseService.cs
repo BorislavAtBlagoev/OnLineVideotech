@@ -11,10 +11,5 @@ namespace OnLineVideotech.Services
         }
 
         public OnLineVideotechDbContext Db { get; }
-
-        public async Task SaveChanges()
-        {
-            await this.Db.SaveChangesAsync();
-        }
     }
 }

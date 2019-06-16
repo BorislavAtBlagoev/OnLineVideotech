@@ -67,7 +67,7 @@ namespace OnLineVideotech.Services.Admin.Implementations
                 .ToList();
 
             this.Db.Add(movie);
-            await base.SaveChanges();
+            await this.Db.SaveChangesAsync();
         }
 
         public async Task<MovieAdminServiceModel> FindMovie(Guid id)
