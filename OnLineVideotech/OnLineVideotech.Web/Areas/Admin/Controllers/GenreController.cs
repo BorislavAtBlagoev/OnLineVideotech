@@ -16,7 +16,7 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
         public GenreController(IGenreService genreService)
         {
             this.genreService = genreService;
-        }  
+        }
 
         public async Task<IActionResult> Add()
         {
@@ -45,7 +45,7 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
             {
                 await this.genreService.Create(model.Name);
                 TempData.AddSuccessMessage($"Genre '{model.Name}' successfully created !");
-            }           
+            }
 
             return RedirectToAction(nameof(Add));
         }
@@ -82,7 +82,7 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
             {
                 TempData.AddErrorMessage($"Genre with name '{model.Name}' already exists !");
 
-                return RedirectToAction(nameof(Edit));               
+                return RedirectToAction(nameof(Edit));
             }
             else
             {
@@ -104,10 +104,16 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Add));
             }
 
             GenreServiceModel genre = await this.genreService.FindGenre(id);
+
+            if (genre.Name == null)
+            {
+                return RedirectToAction(nameof(Add));
+            }
+
             GenreViewModel genreViewModel = new GenreViewModel
             {
                 Id = genre.Id,
@@ -135,7 +141,6 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
             await this.genreService.Delete(genreServiceModel);
 
             TempData.AddSuccessMessage($"Genre '{model.Name}' successfully deleted !");
-
 
             return RedirectToAction(nameof(Add));
         }

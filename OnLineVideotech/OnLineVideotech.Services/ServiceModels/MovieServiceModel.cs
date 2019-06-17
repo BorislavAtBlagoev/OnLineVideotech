@@ -22,6 +22,10 @@ namespace OnLineVideotech.Services.ServiceModels
 
         public string Summary { get; set; }
 
+        public string RoleId { get; set; }
+
+        public decimal Price { get; set; }
+
         public List<GenreMovie> Genres { get; set; } = new List<GenreMovie>();
 
         public List<HistoryMovie> Histories { get; set; } = new List<HistoryMovie>();

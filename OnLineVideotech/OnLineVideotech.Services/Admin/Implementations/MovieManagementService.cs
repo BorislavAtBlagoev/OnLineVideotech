@@ -11,6 +11,9 @@ namespace OnLineVideotech.Services.Admin.Implementations
 {
     public class MovieManagementService : BaseService, IBaseService, IMovieManagementService
     {
+        private const string YoutubeStringReplace = "/embed/";
+        private const string YoutubeStringForReplace = "/watch?v=";
+
         private readonly IGenreService genreService;
         private readonly IPriceService priceService;
         private readonly IRoleService roleService;
@@ -37,6 +40,8 @@ namespace OnLineVideotech.Services.Admin.Implementations
             List<PriceServiceModel> prices,
             List<GenreServiceModel> genres)
         {
+            trailerPath = trailerPath.Replace(YoutubeStringForReplace, YoutubeStringReplace);
+
             Movie movie = new Movie
             {
                 Name = name,

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using OnLineVideotech.Data;
 using OnLineVideotech.Data.Models;
+using OnLineVideotech.Services.Admin.Interfaces;
 using OnLineVideotech.Services.Interfaces;
 using OnLineVideotech.Services.ServiceModels;
 
@@ -12,14 +13,17 @@ namespace OnLineVideotech.Services.Implementations
 {
     public class MovieService : BaseService, IBaseService, IMovieService
     {
-        public MovieService(OnLineVideotechDbContext db) : base(db)
+        private IPriceService priceService;
+
+        public MovieService(OnLineVideotechDbContext db, IPriceService priceService) : base(db)
         {
+            this.priceService = priceService;
         }
 
         public async Task<IEnumerable<MovieServiceModel>> GetMovies()
         {
-            return await this.Db.Movies.Select(m =>
-                new MovieServiceModel
+            IEnumerable<MovieServiceModel> movieModel = await this.Db.Movies
+                .Select(m => new MovieServiceModel
                 {
                     Id = m.Id,
                     Name = m.Name,
@@ -29,17 +33,17 @@ namespace OnLineVideotech.Services.Implementations
                     VideoPath = m.VideoPath,
                     TrailerPath = m.TrailerPath,
                     Summary = m.Summary,
-                    Year = m.Year,
-                    Prices = m.Prices
+                    Year = m.Year
                 })
                 .ToListAsync();
+
+            return movieModel;
         }
 
         public async Task<MovieServiceModel> FindMovie(Guid id)
         {
             Movie movie = await this.Db.Movies.FindAsync(id);
-
-            return new MovieServiceModel
+            MovieServiceModel movieModel = new MovieServiceModel
             {
                 Id = movie.Id,
                 Name = movie.Name,
@@ -49,9 +53,12 @@ namespace OnLineVideotech.Services.Implementations
                 VideoPath = movie.VideoPath,
                 TrailerPath = movie.TrailerPath,
                 Summary = movie.Summary,
-                Year = movie.Year,
-                Prices = movie.Prices
+                Year = movie.Year
             };
+
+            movieModel.Prices = await this.priceService.GetAllPricesForMovie(movieModel.Id);
+
+            return movieModel;
         }
     }
 }

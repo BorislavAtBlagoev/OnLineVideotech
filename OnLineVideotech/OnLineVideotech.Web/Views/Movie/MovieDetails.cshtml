@@ -5,7 +5,7 @@
 }
 
 <div class="container">
-    <h1>@Model.Name</h1>
+    <h1>@Model.Name (@Model.Year.Year)</h1>
     <div class="row">
         <div class="col-sm-6">
             <img src="@Model.PosterPath" class="img-fluid" alt="Responsive image">
@@ -14,7 +14,8 @@
         <div class="col-sm-6">
             <h3>
                 <img src="~/imdb-icon-256-322875901.png" class="imdb-icon" />
-                Rating: @Model.Rating
+                Rating: @Model.Rating |
+                Price: @Model.Price BGN
             </h3>
             <div class="video-container">
                 <iframe src="@Model.TrailerPath" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

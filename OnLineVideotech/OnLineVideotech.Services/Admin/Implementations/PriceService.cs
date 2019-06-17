@@ -11,8 +11,11 @@ namespace OnLineVideotech.Services.Admin.Implementations
 {
     public class PriceService : BaseService, IBaseService, IPriceService
     {
-        public PriceService(OnLineVideotechDbContext db) : base(db)
+        private IRoleService roleService;
+
+        public PriceService(OnLineVideotechDbContext db, IRoleService roleService) : base(db)
         {
+            this.roleService = roleService;
         }
 
         public async Task CreatePrice(Guid movieId, string roleId, decimal moviePrice)
@@ -32,6 +35,11 @@ namespace OnLineVideotech.Services.Admin.Implementations
             List<Price> prices = await Db.Prices
                 .Where(p => p.MovieId == idMovie)
                 .ToListAsync();
+
+            foreach (Price price in prices)
+            {
+                price.Role = await this.roleService.FindRole(price.RoleId);
+            }
 
             return prices;
         }
