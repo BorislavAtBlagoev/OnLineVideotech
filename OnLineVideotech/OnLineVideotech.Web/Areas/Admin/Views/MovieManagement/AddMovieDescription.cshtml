@@ -24,7 +24,14 @@
 </div>
 <div class="form-group">
     <label asp-for="VideoPath"></label>
-    <input asp-for="VideoPath" type="file" class="form-control" />
+
+    @if (Model.VideoPath != null)
+    {
+        <br />
+        <label>@Model.VideoPath - Change video path:</label>
+    }
+
+    <input asp-for="VideoPath" value="@Model.VideoPath" type="file" class="form-control" />
     <span asp-validation-for="VideoPath" class="text-danger"></span>
 </div>
 <div class="form-group">
