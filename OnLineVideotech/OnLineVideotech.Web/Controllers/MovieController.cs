@@ -18,43 +18,87 @@ namespace OnLineVideotech.Web.Controllers
         private readonly UserManager<User> userManager;
         private readonly RoleManager<Role> roleManager;
         private readonly IMovieService movieService;
+        private readonly IUserBalanceService userBalanceService;
 
         public MovieController(UserManager<User> userManager,
             RoleManager<Role> roleManager,
-            IMovieService movieService)
+            IMovieService movieService,
+            IUserBalanceService userBalanceService)
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
             this.movieService = movieService;
+            this.userBalanceService = userBalanceService;
         }
 
         public async Task<IActionResult> Index()
         {
             IEnumerable<MovieServiceModel> movies = await this.movieService.GetMovies();
 
+            if (User.Identity.IsAuthenticated)
+            {
+                User user = await userManager.GetUserAsync(HttpContext.User);
+                IList<string> roles = await userManager.GetRolesAsync(user);
+                string role = roles.SingleOrDefault();
+
+                foreach (MovieServiceModel movie in movies)
+                {
+                    MovieServiceModel movieModel = await this.movieService.FindMovie(movie.Id);
+
+                    movie.Price = movieModel.Prices.SingleOrDefault(x => x.Role.Name == role).MoviePrice;
+                }
+            }
+
             return View(movies);
         }
 
         public async Task<IActionResult> MovieDetails(Guid id)
-        {
+        {            
             MovieServiceModel movieModel = await this.movieService.FindMovie(id);
-            User user = await userManager.GetUserAsync(HttpContext.User);
-            IList<string> roles = await userManager.GetRolesAsync(user);          
 
-            foreach (string role in roles)
+            if (User.Identity.IsAuthenticated)
             {
-                movieModel.Price = movieModel.Prices.SingleOrDefault(x => x.Role.Name == role).MoviePrice;
-            }
+                User user = await userManager.GetUserAsync(HttpContext.User);
+                IList<string> roles = await userManager.GetRolesAsync(user);
+
+                foreach (string role in roles)
+                {
+                    movieModel.Price = movieModel.Prices.SingleOrDefault(x => x.Role.Name == role).MoviePrice;
+                }
+            }          
 
             return View(movieModel);
         }
 
         [Authorize]
-        public IActionResult BuyMovie(Guid id)
+        public async Task<IActionResult> BuyMovie(Guid id)
         {
-            UserBalanceViewModel userBalanceModel = new UserBalanceViewModel();
+            MovieServiceModel movieModel = await this.movieService.FindMovie(id);
 
-            return View(userBalanceModel);
+            User user = await userManager.GetUserAsync(HttpContext.User);
+            IList<string> roles = await userManager.GetRolesAsync(user);
+            string role = roles.SingleOrDefault();
+
+            movieModel.Price = movieModel.Prices.SingleOrDefault(x => x.Role.Name == role).MoviePrice;
+
+            UserBalanceServiceModel userBalanceModel = new UserBalanceServiceModel();
+            userBalanceModel = this.userBalanceService.GetUserBalance(user.Id);
+
+            BuyMovieViewModel buyMovieViewModel = new BuyMovieViewModel();
+            buyMovieViewModel.Balance = userBalanceModel.Balance;
+            buyMovieViewModel.MovieId = id;
+            buyMovieViewModel.Price = movieModel.Price;
+            buyMovieViewModel.MovieName = movieModel.Name;
+
+            return View(buyMovieViewModel);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult BuyMovie(BuyMovieViewModel buyMovieViewModel)
+        {
+
+            return View(buyMovieViewModel);
         }
 
         public IActionResult Privacy()

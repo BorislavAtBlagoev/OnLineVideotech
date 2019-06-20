@@ -147,11 +147,17 @@ namespace OnLineVideotech.Services.Admin.Implementations
             List<GenreServiceModel> genres)
         {
             Movie movie = this.Db.Movies.Find(id);
-
+           
             movie.Name = name;
             movie.Year = year;
             movie.Rating = rating;
             movie.VideoPath = videoPath != null ? videoPath : movie.VideoPath;
+
+            if (trailerPath != movie.TrailerPath)
+            {
+                trailerPath = trailerPath.Replace(YoutubeStringForReplace, YoutubeStringReplace);
+            }
+
             movie.TrailerPath = trailerPath;
             movie.PosterPath = posterPath;
             movie.Summary = summary;
@@ -177,17 +183,14 @@ namespace OnLineVideotech.Services.Admin.Implementations
                 }
             }
 
-            List<Price> pricesDb = this.Db.Prices.ToList();
+            List<Price> pricesDb = this.Db.Prices.Where(x => x.MovieId == movie.Id).ToList();
 
             foreach (Price price in pricesDb)
             {
-                if (prices.Any(p => p.Id == price.Id))
-                {
-                    price.MoviePrice = prices.First(p => p.Id == price.Id).Price;
-                }
-            }
+                price.MoviePrice = prices.First(p => p.Id == price.Id && p.RoleId == price.RoleId).Price;
 
-            movie.Prices = pricesDb;
+                this.Db.Prices.Update(price);
+            }
 
             this.Db.Movies.Update(movie);
             this.Db.SaveChanges();

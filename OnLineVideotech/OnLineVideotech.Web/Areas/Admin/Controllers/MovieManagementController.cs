@@ -121,6 +121,8 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
                 model.Prices,
                 model.Genres);
 
+            TempData.AddSuccessMessage($"Movie '{model.Name}' successfully edited !");
+
             return RedirectToAction(nameof(EditMovie));
         }
     }

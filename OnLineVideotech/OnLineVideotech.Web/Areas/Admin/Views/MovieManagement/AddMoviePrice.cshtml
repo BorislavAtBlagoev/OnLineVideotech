@@ -28,7 +28,9 @@
                                 <input type="hidden" name="RoleId" value="@Model.Prices[i].Role.Id" />
                                 <input asp-for="@Model.Prices[i].Price" class="form-control" />
                                 <span asp-validation-for="@Model.Prices[i].Price" class="text-danger"></span>
-                                <input type="hidden" asp-for="@Model.Prices[i].RoleId" value="@Model.Prices[i].Role.Id" class="form-control" />
+
+                                <input type="hidden" asp-for="@Model.Prices[i].Id" value="@Model.Prices[i].Id" class="form-control" />
+                                <input type="hidden" asp-for="@Model.Prices[i].RoleId" value="@Model.Prices[i].RoleId" class="form-control" />
                                 <input type="hidden" asp-for="@Model.Prices[i].Role.Name" value="@Model.Prices[i].Role.Name" class="form-control" />
                             </div>
                         </div>
