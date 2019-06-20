@@ -20,7 +20,7 @@ namespace OnLineVideotech.Services.Admin.Interfaces
 
         Task<MovieAdminServiceModel> FindMovie(Guid id);
 
-        Task EditMovie(
+        void EditMovie(
             Guid id,
             string name,
             DateTime year,

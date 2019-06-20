@@ -134,7 +134,7 @@ namespace OnLineVideotech.Services.Admin.Implementations
             };
         }
 
-        public async Task EditMovie(
+        public void EditMovie(
             Guid id,
             string name,
             DateTime year,
@@ -146,7 +146,7 @@ namespace OnLineVideotech.Services.Admin.Implementations
             List<PriceServiceModel> prices,
             List<GenreServiceModel> genres)
         {
-            Movie movie = await this.Db.Movies.FindAsync(id);
+            Movie movie = this.Db.Movies.Find(id);
 
             movie.Name = name;
             movie.Year = year;
@@ -158,7 +158,7 @@ namespace OnLineVideotech.Services.Admin.Implementations
 
             foreach (GenreServiceModel genre in genres)
             {
-                Genre genreMovieDb = this.Db.Genres.SingleOrDefault(x => x.Id == genre.Id);
+                GenreMovie genreMovieDb = this.Db.GenreMovies.Find(genre.Id, movie.Id);
 
                 if (genreMovieDb == null && genre.IsSelected)
                 {
@@ -169,11 +169,11 @@ namespace OnLineVideotech.Services.Admin.Implementations
                             MovieId = movie.Id
                         };
 
-                    await this.Db.GenreMovies.AddAsync(genreMovie);
+                    this.Db.GenreMovies.Add(genreMovie);
                 }
                 else if (genreMovieDb != null && !genre.IsSelected)
                 {
-                    //this.Db.GenreMovies.Remove(genreMovieDb);
+                    this.Db.GenreMovies.Remove(genreMovieDb);
                 }
             }
 
@@ -181,13 +181,16 @@ namespace OnLineVideotech.Services.Admin.Implementations
 
             foreach (Price price in pricesDb)
             {
-                price.MoviePrice = prices.First(p => p.Id == price.Id).Price;
+                if (prices.Any(p => p.Id == price.Id))
+                {
+                    price.MoviePrice = prices.First(p => p.Id == price.Id).Price;
+                }
             }
 
             movie.Prices = pricesDb;
 
             this.Db.Movies.Update(movie);
-            await this.Db.SaveChangesAsync();
+            this.Db.SaveChanges();
         }
     }
 }
