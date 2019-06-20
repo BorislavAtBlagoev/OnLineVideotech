@@ -7,6 +7,8 @@ namespace OnLineVideotech.Web.Areas.Admin.Models
 {
     public class MovieAdminViewModel
     {
+        public Guid Id { get; set; }
+
         [Required]
         [StringLength(100, MinimumLength = 1)]
         [Display(Name = "Movie name")]
@@ -22,6 +24,9 @@ namespace OnLineVideotech.Web.Areas.Admin.Models
         [Required]
         [Display(Name = "Video path")]
         public string VideoPath { get; set; }
+
+        [Display(Name = "Video path")]
+        public string VideoPathEdit { get; set; }
 
         [Required]
         [Display(Name = "Poster address")]

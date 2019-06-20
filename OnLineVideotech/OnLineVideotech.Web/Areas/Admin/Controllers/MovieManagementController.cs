@@ -13,18 +13,18 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
 {
     public class MovieManagementController : BaseAdminController
     {
-        private readonly IMovieManagementService movies;
+        private readonly IMovieManagementService moviesService;
         private readonly UserManager<User> userManager;
         private readonly IRoleService roleService;
         private readonly IGenreService genreService;
 
         public MovieManagementController(
-            IMovieManagementService movies,
+            IMovieManagementService moviesService,
             UserManager<User> userManager,
             IRoleService roleService,
             IGenreService genreService)
         {
-            this.movies = movies;
+            this.moviesService = moviesService;
             this.userManager = userManager;
             this.roleService = roleService;
             this.genreService = genreService;
@@ -64,17 +64,17 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
             {
                 return this.View(model);
             }
-             
-           await this.movies.Create(
-               model.Name,
-               model.Year,
-               model.Rating,
-               model.VideoPath,
-               model.PosterPath,
-               model.TrailerPath,
-               model.Summary,
-               model.Prices,
-               model.Genres);
+
+            await this.moviesService.Create(
+                model.Name,
+                model.Year,
+                model.Rating,
+                model.VideoPath,
+                model.PosterPath,
+                model.TrailerPath,
+                model.Summary,
+                model.Prices,
+                model.Genres);
 
             TempData.AddSuccessMessage($"Movie '{model.Name}' successfully created");
 
@@ -83,32 +83,45 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
 
         public async Task<IActionResult> EditMovie(Guid id)
         {
-            MovieAdminServiceModel movie = await this.movies.FindMovie(id);
+            MovieAdminServiceModel movie = await this.moviesService.FindMovie(id);
             MovieAdminViewModel model = new MovieAdminViewModel
             {
-               Name = movie.Name,
-               Year = movie.Year,
-               Rating = movie.Rating,
-               VideoPath = movie.VideoPath,
-               PosterPath =  movie.PosterPath,
-               TrailerPath = movie.TrailerPath,
-               Summary = movie.Summary,
-               Prices = movie.Prices,
-               Genres = movie.Genres
+                Id = movie.Id,
+                Name = movie.Name,
+                Year = movie.Year,
+                Rating = movie.Rating,
+                VideoPath = movie.VideoPath,
+                PosterPath = movie.PosterPath,
+                TrailerPath = movie.TrailerPath,
+                Summary = movie.Summary,
+                Prices = movie.Prices,
+                Genres = movie.Genres
             };
 
             return this.View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditMovie(MovieAdminViewModel model)
+        public IActionResult EditMovie(MovieAdminViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return this.View(model);
             }
 
-            return this.View();
+            this.moviesService.EditMovie(
+                model.Id,
+                model.Name,
+                model.Year,
+                model.Rating,
+                model.VideoPathEdit,
+                model.PosterPath,
+                model.TrailerPath,
+                model.Summary,
+                model.Prices,
+                model.Genres);
+
+            return RedirectToAction(nameof(EditMovie));
         }
     }
 }

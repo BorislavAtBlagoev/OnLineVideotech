@@ -1,9 +1,5 @@
 ﻿@model MovieAdminViewModel;
 
-@{
-    ViewData["Title"] = "Add price to movie";
-}
-
 <hr />
 <h4><b>Step 3:</b> Movie price for different types of user</h4>
 
@@ -23,16 +19,17 @@
         {
             <tr>
                 <th>
-                    @Model.Prices[i].Role
+                    @Model.Prices[i].Role.Name
                 </th>
                 <th>
                     <div class="row">
                         <div class="col-md-8">
-                            <input type="hidden" name="RoleId" value="@Model.Prices[i].Role.Id" />
                             <div class="form-group">
+                                <input type="hidden" name="RoleId" value="@Model.Prices[i].Role.Id" />
                                 <input asp-for="@Model.Prices[i].Price" class="form-control" />
                                 <span asp-validation-for="@Model.Prices[i].Price" class="text-danger"></span>
                                 <input type="hidden" asp-for="@Model.Prices[i].RoleId" value="@Model.Prices[i].Role.Id" class="form-control" />
+                                <input type="hidden" asp-for="@Model.Prices[i].Role.Name" value="@Model.Prices[i].Role.Name" class="form-control" />
                             </div>
                         </div>
                         <div class="col-md-4">

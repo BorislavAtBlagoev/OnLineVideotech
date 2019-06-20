@@ -29,10 +29,17 @@
     {
         <br />
         <label>@Model.VideoPath - Change video path:</label>
+        <input asp-for="VideoPathEdit" type="file" class="form-control" />
+        <span asp-validation-for="VideoPathEdit" class="text-danger"></span>
+        <input type="hidden" asp-for="@Model.VideoPath" value="@Model.VideoPath" class="form-control" />
+    }
+    else
+    {
+        <input asp-for="VideoPath" type="file" class="form-control" />
+        <span asp-validation-for="VideoPath" class="text-danger"></span>
+        <input type="hidden" asp-for="@Model.VideoPath" value="@Model.VideoPath" class="form-control" />
     }
 
-    <input asp-for="VideoPath" value="@Model.VideoPath" type="file" class="form-control" />
-    <span asp-validation-for="VideoPath" class="text-danger"></span>
 </div>
 <div class="form-group">
     <label asp-for="PosterPath"></label>

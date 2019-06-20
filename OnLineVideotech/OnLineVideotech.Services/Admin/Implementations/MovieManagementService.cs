@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using OnLineVideotech.Data;
 using OnLineVideotech.Data.Models;
 using OnLineVideotech.Services.Admin.Interfaces;
@@ -77,7 +78,7 @@ namespace OnLineVideotech.Services.Admin.Implementations
 
         public async Task<MovieAdminServiceModel> FindMovie(Guid id)
         {
-            Movie movie = await this.Db.Movies.FindAsync(id);           
+            Movie movie = await this.Db.Movies.FindAsync(id);
             List<Genre> genresMovie = await this.genreService.GetAllGenreForMovie(movie.Id);
             List<GenreServiceModel> allGenres = await this.genreService.GetAllGenres();
 
@@ -104,6 +105,7 @@ namespace OnLineVideotech.Services.Admin.Implementations
             List<Price> prices = await this.priceService.GetAllPricesForMovie(movie.Id);
             List<PriceServiceModel> pricesServiceMovel = prices.Select(p => new PriceServiceModel
             {
+                Id = p.Id,
                 RoleId = p.RoleId,
                 Price = p.MoviePrice,
                 Role = p.Role
@@ -130,6 +132,62 @@ namespace OnLineVideotech.Services.Admin.Implementations
                 Genres = genresMovieModel,
                 Prices = pricesServiceMovel
             };
+        }
+
+        public async Task EditMovie(
+            Guid id,
+            string name,
+            DateTime year,
+            double rating,
+            string videoPath,
+            string posterPath,
+            string trailerPath,
+            string summary,
+            List<PriceServiceModel> prices,
+            List<GenreServiceModel> genres)
+        {
+            Movie movie = await this.Db.Movies.FindAsync(id);
+
+            movie.Name = name;
+            movie.Year = year;
+            movie.Rating = rating;
+            movie.VideoPath = videoPath != null ? videoPath : movie.VideoPath;
+            movie.TrailerPath = trailerPath;
+            movie.PosterPath = posterPath;
+            movie.Summary = summary;
+
+            foreach (GenreServiceModel genre in genres)
+            {
+                Genre genreMovieDb = this.Db.Genres.SingleOrDefault(x => x.Id == genre.Id);
+
+                if (genreMovieDb == null && genre.IsSelected)
+                {
+                    GenreMovie genreMovie =
+                        new GenreMovie
+                        {
+                            GenreId = genre.Id,
+                            MovieId = movie.Id
+                        };
+
+                    await this.Db.GenreMovies.AddAsync(genreMovie);
+                }
+                else if (genreMovieDb != null && !genre.IsSelected)
+                {
+                    //this.Db.GenreMovies.Remove(genreMovieDb);
+                }
+            }
+
+            List<Price> pricesDb = this.Db.Prices.ToList();
+
+            foreach (Price price in pricesDb)
+            {
+                price.MoviePrice = prices.First(p => p.Id == price.Id).Price;
+            }
+
+            movie.Prices = pricesDb;
+
+            this.Db.Movies.Update(movie);
+            await this.Db.SaveChangesAsync();
         }
     }
 }
