@@ -22,8 +22,8 @@ namespace OnLineVideotech.Data.Models
         [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
 
-        public List<HistoryMovie> Movies { get; set; }
+        public List<HistoryMovie> Movies { get; set; } = new List<HistoryMovie>();
 
-        public List<HistoryCustomer> Customers { get; set; }
+        public List<HistoryCustomer> Customers { get; set; } = new List<HistoryCustomer>();
     }
 }

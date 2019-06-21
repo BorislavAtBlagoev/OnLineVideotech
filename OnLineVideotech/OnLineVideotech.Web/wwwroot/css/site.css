@@ -103,3 +103,8 @@ body {
 .cc-img {
     margin: 0 auto;
 }
+
+.nav-item:hover {
+    background-color: #FFC107;
+    border-radius: 7px;
+}

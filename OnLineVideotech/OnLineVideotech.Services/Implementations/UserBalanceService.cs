@@ -38,6 +38,15 @@ namespace OnLineVideotech.Services.Implementations
             await this.Db.SaveChangesAsync();
         }
 
+        public async Task DecreaseBalance(string userId, decimal amount)
+        {
+            UserMoneyBalance userMoneyBalance = this.Db.UserMoneyBalance.Single(x => x.UserId == userId);
+            userMoneyBalance.Balance = userMoneyBalance.Balance - amount;
+
+            this.Db.UserMoneyBalance.Update(userMoneyBalance);
+            await this.Db.SaveChangesAsync();
+        }
+
         public UserBalanceServiceModel GetUserBalance(string userId)
         {
             UserMoneyBalance userBalance = this.Db.UserMoneyBalance

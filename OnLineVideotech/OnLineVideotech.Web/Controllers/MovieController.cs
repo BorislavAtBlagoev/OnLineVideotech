@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using OnLineVideotech.Data.Models;
 using OnLineVideotech.Services.Interfaces;
 using OnLineVideotech.Services.ServiceModels;
+using OnLineVideotech.Web.Infrastructure.Extensions;
 using OnLineVideotech.Web.Models;
 
 namespace OnLineVideotech.Web.Controllers
@@ -53,7 +54,7 @@ namespace OnLineVideotech.Web.Controllers
         }
 
         public async Task<IActionResult> MovieDetails(Guid id)
-        {            
+        {
             MovieServiceModel movieModel = await this.movieService.FindMovie(id);
 
             if (User.Identity.IsAuthenticated)
@@ -65,13 +66,66 @@ namespace OnLineVideotech.Web.Controllers
                 {
                     movieModel.Price = movieModel.Prices.SingleOrDefault(x => x.Role.Name == role).MoviePrice;
                 }
-            }          
+            }
 
             return View(movieModel);
         }
 
         [Authorize]
-        public async Task<IActionResult> BuyMovie(Guid id)
+        public IActionResult BuyMovie(Guid id)
+        {
+            BuyMovieViewModel buyMovieViewModel = new BuyMovieViewModel();
+            buyMovieViewModel.MovieId = id;
+
+            return View(buyMovieViewModel);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> PayWithCard(Guid id)
+        {
+            BuyMovieViewModel buyMovieViewModel = await GetPaymentModel(id);
+
+            return View(buyMovieViewModel);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> PayFromBalance(Guid id)
+        {
+            BuyMovieViewModel buyMovieViewModel = await GetPaymentModel(id);
+
+            return View(buyMovieViewModel);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> PayFromBalance(BuyMovieViewModel buyMovieViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(buyMovieViewModel);
+            }
+
+            User user = await userManager.GetUserAsync(HttpContext.User);
+
+            await this.movieService.BuyMovie(user.Id, buyMovieViewModel.MovieId, buyMovieViewModel.Price);
+
+            TempData.AddSuccessMessage($"Your purchase was successful!");
+
+            return RedirectToAction(nameof(MovieDetails), new { id = buyMovieViewModel.MovieId });
+        }
+
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        private async Task<BuyMovieViewModel> GetPaymentModel(Guid id)
         {
             MovieServiceModel movieModel = await this.movieService.FindMovie(id);
 
@@ -90,26 +144,7 @@ namespace OnLineVideotech.Web.Controllers
             buyMovieViewModel.Price = movieModel.Price;
             buyMovieViewModel.MovieName = movieModel.Name;
 
-            return View(buyMovieViewModel);
-        }
-
-        [Authorize]
-        [HttpPost]
-        public IActionResult BuyMovie(BuyMovieViewModel buyMovieViewModel)
-        {
-
-            return View(buyMovieViewModel);
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return buyMovieViewModel;
         }
     }
 }

@@ -1,7 +1,4 @@
 ﻿using OnLineVideotech.Services.ServiceModels;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace OnLineVideotech.Services.Interfaces
@@ -11,5 +8,7 @@ namespace OnLineVideotech.Services.Interfaces
         Task AddAmount(UserBalanceServiceModel userModel, string userId);
 
         UserBalanceServiceModel GetUserBalance(string userId);
+
+        Task DecreaseBalance(string userId, decimal amount);
     }
 }

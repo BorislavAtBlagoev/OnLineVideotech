@@ -8,6 +8,9 @@ namespace OnLineVideotech.Services.Interfaces
     public interface IMovieService
     {
         Task<IEnumerable<MovieServiceModel>> GetMovies();
+
         Task<MovieServiceModel> FindMovie(Guid id);
+
+        Task BuyMovie(string userId, Guid movieId, decimal price);
     }
 }

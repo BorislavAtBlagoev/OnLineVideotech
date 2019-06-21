@@ -14,10 +14,14 @@ namespace OnLineVideotech.Services.Implementations
     public class MovieService : BaseService, IBaseService, IMovieService
     {
         private IPriceService priceService;
+        private IUserBalanceService userBalance;
 
-        public MovieService(OnLineVideotechDbContext db, IPriceService priceService) : base(db)
+        public MovieService(OnLineVideotechDbContext db, 
+            IPriceService priceService,
+            IUserBalanceService userBalance) : base(db)
         {
             this.priceService = priceService;
+            this.userBalance = userBalance;
         }
 
         public async Task<IEnumerable<MovieServiceModel>> GetMovies()
@@ -59,6 +63,32 @@ namespace OnLineVideotech.Services.Implementations
             movieModel.Prices = await this.priceService.GetAllPricesForMovie(movieModel.Id);
 
             return movieModel;
+        }
+
+        public async Task BuyMovie(string userId, Guid movieId, decimal price)
+        {
+            await this.userBalance.DecreaseBalance(userId, price);
+
+            History history = new History();
+            history.Price = price;
+
+            HistoryCustomer historyCustomer = new HistoryCustomer()
+            {
+                HistoryId = history.Id,
+                CustomerId = userId
+            };
+
+            HistoryMovie historyMovie = new HistoryMovie()
+            {
+                HistoryId = history.Id,
+                MovieId = movieId
+            };
+
+            history.Customers.Add(historyCustomer);
+            history.Movies.Add(historyMovie);          
+
+            await this.Db.Histories.AddAsync(history);
+            await this.Db.SaveChangesAsync();
         }
     }
 }

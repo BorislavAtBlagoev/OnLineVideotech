@@ -26,6 +26,8 @@ namespace OnLineVideotech.Services.ServiceModels
 
         public decimal Price { get; set; }
 
+        public bool Purchased { get; set; }
+
         public List<GenreMovie> Genres { get; set; } = new List<GenreMovie>();
 
         public List<HistoryMovie> Histories { get; set; } = new List<HistoryMovie>();
