@@ -39,7 +39,7 @@
                                 <a class="nav-link text-dark" asp-area="Admin" asp-controller="MovieManagement" asp-action="CreateMovie">New movie</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Genre" asp-action="Add">Genre manager</a>
+                                <a class="nav-link" asp-area="Admin" asp-controller="Genre" asp-action="Add">Genre manager</a>
                             </li>
                         }
                         @if (User.Identity.IsAuthenticated)

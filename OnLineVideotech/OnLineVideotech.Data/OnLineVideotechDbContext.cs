@@ -24,6 +24,10 @@ namespace OnLineVideotech.Data
 
         public DbSet<UserMoneyBalance> UserMoneyBalance { get; set; }
 
+        public DbSet<HistoryMovie> HistoryMovie { get; set; }
+
+        public DbSet<HistoryCustomer> HistoryCustomer { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder

@@ -46,6 +46,8 @@ namespace OnLineVideotech.Web.Controllers
                 {
                     MovieServiceModel movieModel = await this.movieService.FindMovie(movie.Id);
 
+                    movie.IsPurchased = this.movieService.IsPurchased(user.Id, movie.Id);
+
                     movie.Price = movieModel.Prices.SingleOrDefault(x => x.Role.Name == role).MoviePrice;
                 }
             }
@@ -106,6 +108,15 @@ namespace OnLineVideotech.Web.Controllers
             }
 
             User user = await userManager.GetUserAsync(HttpContext.User);
+
+            UserBalanceServiceModel userBalance = this.userBalanceService.GetUserBalance(user.Id);
+
+            if (userBalance.Balance < buyMovieViewModel.Price)
+            {
+                TempData.AddErrorMessage("You don't have enough money in your account !");
+
+                return RedirectToAction(nameof(PayFromBalance), new { id = buyMovieViewModel.MovieId });
+            }
 
             await this.movieService.BuyMovie(user.Id, buyMovieViewModel.MovieId, buyMovieViewModel.Price);
 

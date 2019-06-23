@@ -16,7 +16,7 @@ namespace OnLineVideotech.Services.Implementations
         private IPriceService priceService;
         private IUserBalanceService userBalance;
 
-        public MovieService(OnLineVideotechDbContext db, 
+        public MovieService(OnLineVideotechDbContext db,
             IPriceService priceService,
             IUserBalanceService userBalance) : base(db)
         {
@@ -65,6 +65,15 @@ namespace OnLineVideotech.Services.Implementations
             return movieModel;
         }
 
+        public bool IsPurchased(string userId, Guid movieId)
+        {
+            //var c = this.Db.Histories.Join(this.Db.Histories,
+            //    p => p.Customers.Where(x => x.CustomerId == userId),
+            //    c => c.);
+
+            return false;
+        }
+
         public async Task BuyMovie(string userId, Guid movieId, decimal price)
         {
             await this.userBalance.DecreaseBalance(userId, price);
@@ -85,7 +94,7 @@ namespace OnLineVideotech.Services.Implementations
             };
 
             history.Customers.Add(historyCustomer);
-            history.Movies.Add(historyMovie);          
+            history.Movies.Add(historyMovie);
 
             await this.Db.Histories.AddAsync(history);
             await this.Db.SaveChangesAsync();

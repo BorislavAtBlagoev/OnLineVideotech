@@ -26,14 +26,21 @@
                     @Model.Summary
                 </p>
             </article>
-            @if (User.IsInRole(GlobalConstants.AdministratorRole))
-            {
-                <a class="btn btn-danger" asp-area="Admin" asp-controller="MovieManagement" asp-action="EditMovie" asp-route-id="@Model.Id">Edit</a>
-            }
             @if (User.Identity.IsAuthenticated)
             {
-                <a class="btn btn-success" asp-controller="Movie" asp-action="BuyMovie" asp-route-id="@Model.Id">Buy</a>
+                <a class="btn btn-warning btn-lg btn-block" asp-controller="Movie" asp-action="BuyMovie" asp-route-id="@Model.Id">Buy</a>
             }
+            @if (User.IsInRole(GlobalConstants.AdministratorRole))
+            {
+                <a class="btn btn-danger btn-lg btn-block" asp-area="Admin" asp-controller="MovieManagement" asp-action="EditMovie" asp-route-id="@Model.Id">Edit</a>
+            }
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <video controls>
+                <source src="C:\Users\encho\Desktop\New folder\ppp.mp4" type="video/mp4">
+            </video>
         </div>
     </div>
 </div>
