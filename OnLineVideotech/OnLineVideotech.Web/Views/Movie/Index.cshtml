@@ -11,10 +11,15 @@
         <div class="col-md-3 thumbnail-main">
             <a asp-action="MovieDetails" asp-route-id="@movie.Id" />
             <img src="@movie.PosterPath" class="img-fluid movie-poster" alt="Responsive image" asp-action="Details" asp-route-id="@movie.Id">
-            @if (User.Identity.IsAuthenticated)
+            @if (User.Identity.IsAuthenticated && !movie.IsPurchased)
             {
                 <a class="btn btn-warning btn-lg btn-block" asp-controller="Movie" asp-action="BuyMovie" asp-route-id="@movie.Id">Price: @movie.Price BGN</a>
             }
+            else if (User.Identity.IsAuthenticated && movie.IsPurchased)
+            {
+                <a class="btn btn-warning btn-lg btn-block">Purchased</a>
+            }
+
             @if (User.IsInRole(GlobalConstants.AdministratorRole))
             {
                 <a class="btn btn-info btn-lg btn-block" asp-area="Admin" asp-controller="MovieManagement" asp-action="EditMovie" asp-route-id="@movie.Id">Edit</a>

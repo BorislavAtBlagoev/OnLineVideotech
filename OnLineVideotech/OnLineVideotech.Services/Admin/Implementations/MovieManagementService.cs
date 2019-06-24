@@ -72,7 +72,7 @@ namespace OnLineVideotech.Services.Admin.Implementations
                 })
                 .ToList();
 
-            this.Db.Add(movie);
+            this.Db.Movies.Add(movie);
             await this.Db.SaveChangesAsync();
         }
 

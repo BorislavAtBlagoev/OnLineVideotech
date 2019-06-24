@@ -24,10 +24,6 @@ namespace OnLineVideotech.Data
 
         public DbSet<UserMoneyBalance> UserMoneyBalance { get; set; }
 
-        public DbSet<HistoryMovie> HistoryMovie { get; set; }
-
-        public DbSet<HistoryCustomer> HistoryCustomer { get; set; }
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder
@@ -45,38 +41,6 @@ namespace OnLineVideotech.Data
                 .HasOne(gm => gm.Movie)
                 .WithMany(g => g.Genres)
                 .HasForeignKey(gm => gm.MovieId);
-
-            builder
-                .Entity<HistoryMovie>()
-                .HasKey(h => new { h.HistoryId, h.MovieId });
-
-            builder
-                .Entity<HistoryMovie>()
-                .HasOne(hm => hm.Movie)
-                .WithMany(m => m.Histories)
-                .HasForeignKey(hm => hm.MovieId);
-
-            builder
-                .Entity<HistoryMovie>()
-                .HasOne(hm => hm.History)
-                .WithMany(h => h.Movies)
-                .HasForeignKey(hm => hm.HistoryId);
-
-            builder
-                .Entity<HistoryCustomer>()
-                .HasKey(hc => new { hc.HistoryId, hc.CustomerId });
-
-            builder
-                .Entity<HistoryCustomer>()
-                .HasOne(hc => hc.Customer)
-                .WithMany(h => h.Histories)
-                .HasForeignKey(hc => hc.CustomerId);
-
-            builder
-                .Entity<HistoryCustomer>()
-                .HasOne(hc => hc.History)
-                .WithMany(c => c.Customers)
-                .HasForeignKey(hc => hc.HistoryId);
 
             builder
                 .Entity<Price>()
@@ -100,6 +64,22 @@ namespace OnLineVideotech.Data
                 .WithOne(b => b.User)
                 .HasForeignKey<UserMoneyBalance>(ub => ub.UserId);
 
+            builder
+                .Entity<History>()
+                .HasKey(pr => new { pr.Id, pr.CustomerId, pr.MovieId });
+
+            builder
+               .Entity<History>()
+               .HasOne(r => r.Movie)
+               .WithMany(m => m.Histories)
+               .HasForeignKey(r => r.MovieId);
+
+            builder
+               .Entity<History>()
+               .HasOne(r => r.Customer)
+               .WithMany(m => m.Histories)
+               .HasForeignKey(r => r.CustomerId);
+
             base.OnModelCreating(builder);
 
             builder.Entity<User>().ToTable("Users");
@@ -107,7 +87,7 @@ namespace OnLineVideotech.Data
             builder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims");
             builder.Entity<IdentityUserClaim<string>>().ToTable("UserClaims");
             builder.Entity<IdentityUserRole<string>>().ToTable("UserRoles");
-            builder.Entity<IdentityUserToken<string>>().ToTable("UserTokens");            
+            builder.Entity<IdentityUserToken<string>>().ToTable("UserTokens");
             builder.Entity<IdentityUserLogin<string>>().ToTable("UserLogins");
         }
     }

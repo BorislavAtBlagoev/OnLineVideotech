@@ -38,7 +38,7 @@ namespace OnLineVideotech.Data.Models
 
         public List<GenreMovie> Genres { get; set; } = new List<GenreMovie>();
 
-        public List<HistoryMovie> Histories { get; set; } = new List<HistoryMovie>();
+        public List<History> Histories { get; set; } = new List<History>();
 
         public List<Price> Prices { get; set; } = new List<Price>();
      }

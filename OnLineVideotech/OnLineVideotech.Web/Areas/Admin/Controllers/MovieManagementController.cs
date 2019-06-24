@@ -42,6 +42,7 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
             foreach (Role role in roles)
             {
                 PriceServiceModel priceModel = new PriceServiceModel();
+                priceModel.RoleId = role.Id;
                 priceModel.Role = role;
                 model.Prices.Add(priceModel);
             }

@@ -14,5 +14,7 @@ namespace OnLineVideotech.Services.Interfaces
         Task BuyMovie(string userId, Guid movieId, decimal price);
 
         bool IsPurchased(string userId, Guid movieId);
+
+        Task<IEnumerable<MovieServiceModel>> GetAllPurchasedMoviesForUser(string userId);
     }
 }

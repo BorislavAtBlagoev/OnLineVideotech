@@ -67,11 +67,7 @@ namespace OnLineVideotech.Services.Implementations
 
         public bool IsPurchased(string userId, Guid movieId)
         {
-            //var c = this.Db.Histories.Join(this.Db.Histories,
-            //    p => p.Customers.Where(x => x.CustomerId == userId),
-            //    c => c.);
-
-            return false;
+            return this.Db.Histories.Any(x => x.MovieId == movieId && x.CustomerId == userId);
         }
 
         public async Task BuyMovie(string userId, Guid movieId, decimal price)
@@ -80,24 +76,41 @@ namespace OnLineVideotech.Services.Implementations
 
             History history = new History();
             history.Price = price;
-
-            HistoryCustomer historyCustomer = new HistoryCustomer()
-            {
-                HistoryId = history.Id,
-                CustomerId = userId
-            };
-
-            HistoryMovie historyMovie = new HistoryMovie()
-            {
-                HistoryId = history.Id,
-                MovieId = movieId
-            };
-
-            history.Customers.Add(historyCustomer);
-            history.Movies.Add(historyMovie);
+            history.CustomerId = userId;
+            history.MovieId = movieId;
+            history.Date = DateTime.Now;
 
             await this.Db.Histories.AddAsync(history);
             await this.Db.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<MovieServiceModel>> GetAllPurchasedMoviesForUser(string userId)
+        {
+            List<History> userHistories = await this.Db.Histories.Where(x => x.CustomerId == userId).ToListAsync();
+            List<MovieServiceModel> movies = new List<MovieServiceModel>();
+
+            foreach (History history in userHistories)
+            {
+               Movie movie = await this.Db.Movies
+                    .FindAsync(history.MovieId);
+
+                MovieServiceModel movieModel = new MovieServiceModel
+                {
+                    Id = movie.Id,
+                    Name = movie.Name,
+                    Genres = movie.Genres,
+                    Rating = movie.Rating,
+                    PosterPath = movie.PosterPath,
+                    VideoPath = movie.VideoPath,
+                    TrailerPath = movie.TrailerPath,
+                    Summary = movie.Summary,
+                    Year = movie.Year
+                };
+
+                movies.Add(movieModel);
+            }
+
+            return movies;
         }
     }
 }

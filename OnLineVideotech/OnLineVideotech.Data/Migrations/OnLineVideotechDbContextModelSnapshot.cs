@@ -15,7 +15,7 @@ namespace OnLineVideotech.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.1-servicing-10028")
+                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -163,44 +163,26 @@ namespace OnLineVideotech.Data.Migrations
 
             modelBuilder.Entity("OnLineVideotech.Data.Models.History", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("Date");
-
-                    b.Property<string>("Price")
-                        .IsRequired()
-                        .HasMaxLength(100);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Histories");
-                });
-
-            modelBuilder.Entity("OnLineVideotech.Data.Models.HistoryCustomer", b =>
-                {
-                    b.Property<Guid>("HistoryId");
+                    b.Property<Guid>("Id");
 
                     b.Property<string>("CustomerId");
 
-                    b.HasKey("HistoryId", "CustomerId");
+                    b.Property<Guid>("MovieId");
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id", "CustomerId", "MovieId");
+
+                    b.HasAlternateKey("Id");
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("HistoryCustomer");
-                });
-
-            modelBuilder.Entity("OnLineVideotech.Data.Models.HistoryMovie", b =>
-                {
-                    b.Property<Guid>("HistoryId");
-
-                    b.Property<Guid>("MovieId");
-
-                    b.HasKey("HistoryId", "MovieId");
-
                     b.HasIndex("MovieId");
 
-                    b.ToTable("HistoryMovie");
+                    b.ToTable("Histories");
                 });
 
             modelBuilder.Entity("OnLineVideotech.Data.Models.Movie", b =>
@@ -397,24 +379,11 @@ namespace OnLineVideotech.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("OnLineVideotech.Data.Models.HistoryCustomer", b =>
+            modelBuilder.Entity("OnLineVideotech.Data.Models.History", b =>
                 {
                     b.HasOne("OnLineVideotech.Data.Models.User", "Customer")
                         .WithMany("Histories")
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("OnLineVideotech.Data.Models.History", "History")
-                        .WithMany("Customers")
-                        .HasForeignKey("HistoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("OnLineVideotech.Data.Models.HistoryMovie", b =>
-                {
-                    b.HasOne("OnLineVideotech.Data.Models.History", "History")
-                        .WithMany("Movies")
-                        .HasForeignKey("HistoryId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("OnLineVideotech.Data.Models.Movie", "Movie")

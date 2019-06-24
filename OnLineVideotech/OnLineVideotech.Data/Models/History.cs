@@ -20,10 +20,15 @@ namespace OnLineVideotech.Data.Models
 
         [Required]
         [Column(TypeName = "decimal(18,2)")]
+
         public decimal Price { get; set; }
 
-        public List<HistoryMovie> Movies { get; set; } = new List<HistoryMovie>();
+        public Guid MovieId { get; set; }
 
-        public List<HistoryCustomer> Customers { get; set; } = new List<HistoryCustomer>();
+        public Movie Movie { get; set; }
+
+        public string CustomerId { get; set; }
+
+        public User Customer { get; set; }
     }
 }

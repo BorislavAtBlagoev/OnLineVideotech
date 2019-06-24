@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using OnLineVideotech.Data.Models;
 using OnLineVideotech.Services.Interfaces;
 using OnLineVideotech.Services.ServiceModels;
+using OnLineVideotech.Web.Infrastructure;
 using OnLineVideotech.Web.Infrastructure.Extensions;
 using OnLineVideotech.Web.Models;
 
@@ -42,6 +43,13 @@ namespace OnLineVideotech.Web.Controllers
                 IList<string> roles = await userManager.GetRolesAsync(user);
                 string role = roles.SingleOrDefault();
 
+                if (role == null)
+                {
+                    await this.userManager.AddToRoleAsync(user, GlobalConstants.RegularUser);
+
+                    role = GlobalConstants.RegularUser;
+                }
+
                 foreach (MovieServiceModel movie in movies)
                 {
                     MovieServiceModel movieModel = await this.movieService.FindMovie(movie.Id);
@@ -66,8 +74,10 @@ namespace OnLineVideotech.Web.Controllers
 
                 foreach (string role in roles)
                 {
-                    movieModel.Price = movieModel.Prices.SingleOrDefault(x => x.Role.Name == role).MoviePrice;
+                    movieModel.Price = movieModel.Prices.SingleOrDefault(x => x.Role.Name == role).MoviePrice;                   
                 }
+
+                movieModel.IsPurchased = this.movieService.IsPurchased(user.Id, movieModel.Id);
             }
 
             return View(movieModel);
@@ -111,7 +121,7 @@ namespace OnLineVideotech.Web.Controllers
 
             UserBalanceServiceModel userBalance = this.userBalanceService.GetUserBalance(user.Id);
 
-            if (userBalance.Balance < buyMovieViewModel.Price)
+            if (userBalance.Balance < buyMovieViewModel.Price || userBalance.Balance == 0)
             {
                 TempData.AddErrorMessage("You don't have enough money in your account !");
 
@@ -129,6 +139,16 @@ namespace OnLineVideotech.Web.Controllers
         {
             return View();
         }
+
+        public async Task<IActionResult> Library()
+        {
+            User user = await userManager.GetUserAsync(HttpContext.User);
+
+            IEnumerable<MovieServiceModel> movies = await this.movieService.GetAllPurchasedMoviesForUser(user.Id);
+
+            return View(movies);
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

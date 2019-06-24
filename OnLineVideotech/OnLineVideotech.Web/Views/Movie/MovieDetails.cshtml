@@ -26,7 +26,7 @@
                     @Model.Summary
                 </p>
             </article>
-            @if (User.Identity.IsAuthenticated)
+            @if (User.Identity.IsAuthenticated && !Model.IsPurchased)
             {
                 <a class="btn btn-warning btn-lg btn-block" asp-controller="Movie" asp-action="BuyMovie" asp-route-id="@Model.Id">Buy</a>
             }
@@ -36,11 +36,14 @@
             }
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-6">
-            <video controls>
-                <source src="C:\Users\encho\Desktop\New folder\ppp.mp4" type="video/mp4">
-            </video>
+    @if (User.Identity.IsAuthenticated && Model.IsPurchased)
+    {
+        <div class="row">
+            <div class="col-sm-6">
+                <video controls>
+                    <source src="C:\Users\encho\Desktop\New folder\ppp.mp4" type="video/mp4">
+                </video>
+            </div>
         </div>
-    </div>
+    }
 </div>

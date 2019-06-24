@@ -33,8 +33,6 @@ namespace OnLineVideotech.Services.Admin.ServiceModels
 
         public List<GenreServiceModel> Genres { get; set; } 
 
-        public List<HistoryMovie> Histories { get; set; } 
-
         public List<PriceServiceModel> Prices { get; set; } 
     }
 }

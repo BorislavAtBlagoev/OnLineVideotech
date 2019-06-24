@@ -30,8 +30,6 @@ namespace OnLineVideotech.Services.ServiceModels
 
         public List<GenreMovie> Genres { get; set; } = new List<GenreMovie>();
 
-        public List<HistoryMovie> Histories { get; set; } = new List<HistoryMovie>();
-
         public List<Price> Prices { get; set; } = new List<Price>();
     }
 }
