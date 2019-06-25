@@ -24,6 +24,8 @@ namespace OnLineVideotech.Data
 
         public DbSet<UserMoneyBalance> UserMoneyBalance { get; set; }
 
+        public DbSet<Comment> Comments { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder
@@ -79,6 +81,22 @@ namespace OnLineVideotech.Data
                .HasOne(r => r.Customer)
                .WithMany(m => m.Histories)
                .HasForeignKey(r => r.CustomerId);
+
+            builder
+                .Entity<Comment>()
+                .HasKey(com => new { com.Id, com.CustomerId , com.MovieId});
+
+            builder
+               .Entity<Comment>()
+               .HasOne(c => c.Customer)
+               .WithMany(m => m.Comments)
+               .HasForeignKey(c => c.CustomerId);
+
+            builder
+               .Entity<Comment>()
+               .HasOne(c => c.Movie)
+               .WithMany(m => m.Comments)
+               .HasForeignKey(c => c.MovieId);
 
             base.OnModelCreating(builder);
 

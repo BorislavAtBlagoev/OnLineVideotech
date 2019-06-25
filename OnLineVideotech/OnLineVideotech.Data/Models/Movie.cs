@@ -41,5 +41,7 @@ namespace OnLineVideotech.Data.Models
         public List<History> Histories { get; set; } = new List<History>();
 
         public List<Price> Prices { get; set; } = new List<Price>();
-     }
+
+        public List<Comment> Comments { get; set; } = new List<Comment>();
+    }
 }

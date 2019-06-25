@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace OnLineVideotech.Services.Interfaces
 {
-    public interface IUserBalanceService
+    public interface IUserBalanceService : IBaseService
     {
         Task AddAmount(UserBalanceServiceModel userModel, string userId);
 

@@ -21,16 +21,19 @@ namespace OnLineVideotech.Web.Controllers
         private readonly RoleManager<Role> roleManager;
         private readonly IMovieService movieService;
         private readonly IUserBalanceService userBalanceService;
+        private readonly ICommentService commentService;
 
         public MovieController(UserManager<User> userManager,
             RoleManager<Role> roleManager,
             IMovieService movieService,
-            IUserBalanceService userBalanceService)
+            IUserBalanceService userBalanceService,
+            ICommentService commentService)
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
             this.movieService = movieService;
             this.userBalanceService = userBalanceService;
+            this.commentService = commentService;
         }
 
         public async Task<IActionResult> Index()
@@ -67,6 +70,14 @@ namespace OnLineVideotech.Web.Controllers
         {
             MovieServiceModel movieModel = await this.movieService.FindMovie(id);
 
+            movieModel.Comments = await this.commentService.GetAllCommentsForMovie(movieModel.Id);
+            movieModel.Comments = movieModel.Comments
+                .OrderByDescending(x => x.Date)
+                .ThenBy(p => p.Date.Hour)
+                .ThenBy(c => c.Date.Minute)
+                .ThenBy(s => s.Date.Second)
+                .ToList();
+
             if (User.Identity.IsAuthenticated)
             {
                 User user = await userManager.GetUserAsync(HttpContext.User);
@@ -74,7 +85,7 @@ namespace OnLineVideotech.Web.Controllers
 
                 foreach (string role in roles)
                 {
-                    movieModel.Price = movieModel.Prices.SingleOrDefault(x => x.Role.Name == role).MoviePrice;                   
+                    movieModel.Price = movieModel.Prices.SingleOrDefault(x => x.Role.Name == role).MoviePrice;
                 }
 
                 movieModel.IsPurchased = this.movieService.IsPurchased(user.Id, movieModel.Id);
@@ -149,6 +160,25 @@ namespace OnLineVideotech.Web.Controllers
             return View(movies);
         }
 
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> CreateComment(MovieServiceModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                //var errors = ModelState.Select(x => x.Value.Errors)
+                //           .Where(y => y.Count > 0)
+                //           .ToList();
+
+                return RedirectToAction(nameof(MovieDetails), new { id = model.Id });
+            }
+
+            User user = await userManager.GetUserAsync(HttpContext.User);
+
+            await this.commentService.AddCommentForMovie(model.Comment, user.Id, model.Id);
+
+            return RedirectToAction(nameof(MovieDetails), new { id = model.Id });
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

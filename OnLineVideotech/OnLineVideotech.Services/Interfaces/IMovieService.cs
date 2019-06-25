@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OnLineVideotech.Services.Interfaces
 {
-    public interface IMovieService
+    public interface IMovieService : IBaseService
     {
         Task<IEnumerable<MovieServiceModel>> GetMovies();
 

@@ -13,7 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OnLineVideotech.Common\OnLineVideotech.Common.csproj" />
     <ProjectReference Include="..\OnLineVideotech.Data\OnLineVideotech.Data.csproj" />
   </ItemGroup>
 

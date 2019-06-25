@@ -1,6 +1,7 @@
 ﻿using OnLineVideotech.Data.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace OnLineVideotech.Services.ServiceModels
 {
@@ -31,5 +32,11 @@ namespace OnLineVideotech.Services.ServiceModels
         public List<GenreMovie> Genres { get; set; } = new List<GenreMovie>();
 
         public List<Price> Prices { get; set; } = new List<Price>();
+
+        public List<CommentServiceModel> Comments { get; set; } = new List<CommentServiceModel>();
+
+        [Required]
+        [StringLength(2000, MinimumLength = 3)]
+        public string Comment { get; set; }
     }
 }
