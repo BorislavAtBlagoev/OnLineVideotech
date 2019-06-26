@@ -4,9 +4,11 @@ using OnLineVideotech.Data.Models;
 using OnLineVideotech.Services.Admin.Interfaces;
 using OnLineVideotech.Services.Admin.ServiceModels;
 using OnLineVideotech.Web.Areas.Admin.Models;
+using OnLineVideotech.Web.Areas.Admin.Models.Movies;
 using OnLineVideotech.Web.Infrastructure.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace OnLineVideotech.Web.Areas.Admin.Controllers
@@ -125,6 +127,36 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
             TempData.AddSuccessMessage($"Movie '{model.Name}' successfully edited !");
 
             return RedirectToAction(nameof(EditMovie));
+        }
+
+        public async Task<IActionResult> DeleteMovie(Guid id)
+        {
+            MovieAdminServiceModel movie = await this.moviesService.FindMovie(id);
+            DeleteMovieViewModel movieModel = new DeleteMovieViewModel();
+
+            movieModel.MovieName = movie.Name;
+            movieModel.Id = movie.Id;
+
+            return View(movieModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteMovie(DeleteMovieViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                //var errors = ModelState.Select(x => x.Value.Errors)
+                //           .Where(y => y.Count > 0)
+                //           .ToList();
+
+                return View(model);
+            }
+
+            await this.moviesService.DeleteMovie(model.Id);
+
+            TempData.AddSuccessMessage($"Movie '{model.MovieName}' successfully deleted !");
+
+            return RedirectToAction("Index", "Movie");
         }
     }
 }

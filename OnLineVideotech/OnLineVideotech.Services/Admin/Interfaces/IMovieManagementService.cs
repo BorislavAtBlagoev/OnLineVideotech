@@ -31,5 +31,7 @@ namespace OnLineVideotech.Services.Admin.Interfaces
             string summary,
             List<PriceServiceModel> prices,
             List<GenreServiceModel> genres);
+
+        Task DeleteMovie(Guid id);
     }
 }

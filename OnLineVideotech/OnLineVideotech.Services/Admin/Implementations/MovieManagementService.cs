@@ -147,7 +147,7 @@ namespace OnLineVideotech.Services.Admin.Implementations
             List<GenreServiceModel> genres)
         {
             Movie movie = this.Db.Movies.Find(id);
-           
+
             movie.Name = name;
             movie.Year = year;
             movie.Rating = rating;
@@ -194,6 +194,15 @@ namespace OnLineVideotech.Services.Admin.Implementations
 
             this.Db.Movies.Update(movie);
             this.Db.SaveChanges();
+        }
+
+        public async Task DeleteMovie(Guid id)
+        {
+            Movie movie = await this.Db.Movies.FindAsync(id);
+
+            this.Db.Movies.Remove(movie);
+
+            await this.Db.SaveChangesAsync();
         }
     }
 }
