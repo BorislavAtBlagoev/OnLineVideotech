@@ -99,6 +99,10 @@ body {
         box-shadow: 0px 0px 20px 20px rgba(68, 102, 172, 0.35);
     }
 
+        .movie-poster:hover + .movied {
+            display: inline-block;
+        }
+
 .imdb-icon {
     width: 70px;
     height: 70px;

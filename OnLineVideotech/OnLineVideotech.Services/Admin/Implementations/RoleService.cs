@@ -34,5 +34,13 @@ namespace OnLineVideotech.Services.Admin.Implementations
         {
             return  await this.roleManager.Roles.SingleAsync(x => x.Id == roleId);
         }
+
+        public async Task<string> GetUserRole(string userId)
+        {
+            User user = await this.userManager.FindByIdAsync(userId);
+            IList<string> roles = await this.userManager.GetRolesAsync(user);
+
+            return roles.SingleOrDefault();
+        }
     }
 }

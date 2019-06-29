@@ -29,7 +29,9 @@
                         <div class="row">
                             <div class="col-md-10">
                                 <input type="hidden" name="UserId" value="@user.Id" />
-                                <select name="Role" asp-items="Model.Roles" class="form-control"></select>
+                                <select name="Role" asp-items="Model.Roles.Where(x => x.Text != user.Role)" class="form-control">
+                                    <option selected value="@user.Role">@user.Role</option>
+                                </select>
                             </div>
                             <div class="col-md-2">
                                 <input class="btn btn-sm btn-primary" type="submit" value="Add Role" />

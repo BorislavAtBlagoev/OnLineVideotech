@@ -9,5 +9,7 @@ namespace OnLineVideotech.Web.Areas.Admin.Models.Users
         public IEnumerable<AdminUserListingServiceModel> Users { get; set; }
 
         public IEnumerable<SelectListItem> Roles { get; set; }
+
+        public string UserRole { get; set; }
     }
 }

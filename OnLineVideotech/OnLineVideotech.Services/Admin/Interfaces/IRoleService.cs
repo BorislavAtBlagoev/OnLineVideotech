@@ -9,5 +9,7 @@ namespace OnLineVideotech.Services.Admin.Interfaces
         Task<IEnumerable<Role>> GetAllRoles();
 
         Task<Role> FindRole(string roleId);
+
+        Task<string> GetUserRole(string userId);
     }
 }
