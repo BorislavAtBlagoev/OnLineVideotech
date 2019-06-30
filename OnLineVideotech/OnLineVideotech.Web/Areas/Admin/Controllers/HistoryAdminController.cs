@@ -21,5 +21,13 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
 
             return View(histories);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> History(HistoryServiceModel model)
+        {
+            List<HistoryServiceModel> histories = await this.historyService.GetHistory();
+
+            return View(histories);
+        }
     }
 }

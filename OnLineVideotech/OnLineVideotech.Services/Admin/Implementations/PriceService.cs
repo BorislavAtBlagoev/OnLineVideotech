@@ -33,13 +33,9 @@ namespace OnLineVideotech.Services.Admin.Implementations
         public async Task<List<Price>> GetAllPricesForMovie(Guid idMovie)
         {
             List<Price> prices = await Db.Prices
+                .Include(x => x.Role)
                 .Where(p => p.MovieId == idMovie)
                 .ToListAsync();
-
-            foreach (Price price in prices)
-            {
-                price.Role = await this.roleService.FindRole(price.RoleId);
-            }
 
             return prices;
         }

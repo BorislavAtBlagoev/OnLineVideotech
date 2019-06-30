@@ -14,5 +14,11 @@ namespace OnLineVideotech.Services.ServiceModels
         public string MovieName { get; set; }
 
         public string CustomerName { get; set; }
+
+        public string MovieSearch { get; set; }
+
+        public DateTime DateSearch { get; set; }
+
+        public string UserSearch { get; set; }
     }
 }

@@ -46,7 +46,11 @@ namespace OnLineVideotech.Services.Implementations
 
         public async Task<MovieServiceModel> FindMovie(Guid id)
         {
-            Movie movie = await this.Db.Movies.FindAsync(id);
+            Movie movie = await this.Db.Movies
+                .Include(x => x.Genres)
+                    .ThenInclude(p => p.Genre)
+                .SingleOrDefaultAsync(m => m.Id == id);
+
             MovieServiceModel movieModel = new MovieServiceModel
             {
                 Id = movie.Id,
