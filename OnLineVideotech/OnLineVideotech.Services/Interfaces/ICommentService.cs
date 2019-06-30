@@ -11,5 +11,9 @@ namespace OnLineVideotech.Services.Interfaces
         Task<List<CommentServiceModel>> GetAllCommentsForMovie(Guid movieId);
 
         Task AddCommentForMovie(string comment, string userId, Guid movieId);
+
+        Task DeleteComment(Guid id);
+
+        Task<CommentServiceModel> FindComment(Guid id);
     }
 }

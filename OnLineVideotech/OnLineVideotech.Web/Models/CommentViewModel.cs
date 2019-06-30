@@ -1,17 +1,17 @@
 ﻿using System;
 
-namespace OnLineVideotech.Services.ServiceModels
+namespace OnLineVideotech.Web.Models
 {
-    public class CommentServiceModel
+    public class CommentViewModel
     {
-        public Guid Id { get; set; }
+        public Guid MovieId { get; set; }
+
+        public Guid CommentId { get; set; }
 
         public string Comment { get; set; }
 
         public string UserName { get; set; }
 
         public DateTime Date { get; set; }
-
-        public Guid MovieId { get; set; }
     }
 }

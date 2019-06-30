@@ -51,5 +51,30 @@ namespace OnLineVideotech.Services.Implementations
 
             return comentServiceModels;
         }
+
+        public async Task<CommentServiceModel> FindComment(Guid id)
+        {
+            Comment comment = await this.Db.Comments
+                .Include(x => x.Movie)
+                .Include(p => p.Customer)
+                .SingleOrDefaultAsync(c => c.Id == id);
+
+            return new CommentServiceModel
+            {
+                Id = comment.Id,
+                UserName = comment.Customer.UserName,
+                MovieId = comment.MovieId,
+                Comment = comment.UserComment,
+                Date = comment.Date
+            };
+        }
+
+        public async Task DeleteComment(Guid id)
+        {
+            Comment comment = await this.Db.Comments.SingleOrDefaultAsync(x => x.Id == id);
+
+            this.Db.Comments.Remove(comment);
+            await this.Db.SaveChangesAsync();
+        }
     }
 }

@@ -180,6 +180,34 @@ namespace OnLineVideotech.Web.Controllers
             return RedirectToAction(nameof(MovieDetails), new { id = model.Id });
         }
 
+        [Authorize]
+        public async Task<IActionResult> DeleteComment(Guid id)
+        {
+            CommentServiceModel commentModel = await this.commentService.FindComment(id);
+
+            return View(commentModel);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> DeleteComment(CommentServiceModel commentModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                //var errors = ModelState.Select(x => x.Value.Errors)
+                //           .Where(y => y.Count > 0)
+                //           .ToList();
+
+                return RedirectToAction(nameof(MovieDetails), new { id = commentModel.MovieId });
+            }
+
+            await this.commentService.DeleteComment(commentModel.Id);
+
+            TempData.AddSuccessMessage($"Comment successfully deleted !");
+
+            return RedirectToAction(nameof(MovieDetails), new { id = commentModel.MovieId });
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
