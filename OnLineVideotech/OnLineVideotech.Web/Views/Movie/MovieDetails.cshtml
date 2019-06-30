@@ -27,11 +27,22 @@
             }
             <br /> <br />
 
-            <h4 class="header-section-details">Payment info</h4>
             @if (User.Identity.IsAuthenticated)
             {
+                <h4 class="header-section-details">Payment info</h4>
+
                 <label>Actual price: @Model.Price BGN</label>
+                <br />
+                @if (Model.IsPurchased)
+                {
+                    <label>Purchased:</label>
+                    <br />
+                    <label>- Purchased at a price: @Model.History.Price</label>
+                    <br />
+                    <label>- Date of purchase: @Model.History.Date</label>
+                }
             }
+            <br /> <br />
         </div>
     </div>
     <div class="row">
@@ -62,7 +73,7 @@
         @if (User.Identity.IsAuthenticated && !Model.IsPurchased)
         {
             <div class="col-sm-6">
-                <a class="btn btn-warning btn-lg btn-block" asp-controller="Movie" asp-action="BuyMovie" asp-route-id="@Model.Id">Buy</a>
+                <a class="btn btn-warning btn-lg btn-block" asp-controller="Movie" asp-action="BuyMovie" asp-route-id="@Model.Id">Buy - @Model.Price BGN</a>
             </div>
         }
         @if (User.IsInRole(GlobalConstants.AdministratorRole))
@@ -72,7 +83,7 @@
             </div>
         }
     </div>
-    <br /> <br />  
+    <br /> <br />
     @await Html.PartialAsync("Comments", Model)
 </div>
 

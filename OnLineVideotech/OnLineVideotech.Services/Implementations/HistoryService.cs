@@ -26,7 +26,8 @@ namespace OnLineVideotech.Services.Implementations
                     Id = p.Id,
                     MovieName = p.Movie.Name,
                     CustomerName = p.Customer.UserName,
-                    Price = p.Price
+                    Price = p.Price,
+                    Date = p.Date
                 })
                 .ToListAsync();
         }
@@ -42,7 +43,8 @@ namespace OnLineVideotech.Services.Implementations
                     Id = p.Id,
                     MovieName = p.Movie.Name,
                     CustomerName = p.Customer.UserName,
-                    Price = p.Price
+                    Price = p.Price,
+                    Date = p.Date
                 })
                 .ToListAsync();
         }
@@ -52,13 +54,18 @@ namespace OnLineVideotech.Services.Implementations
             History history = await this.Db.Histories
                 .SingleOrDefaultAsync(x => x.CustomerId == userId && x.MovieId == movieId);
 
-            return new HistoryServiceModel
+            HistoryServiceModel historyModel = new HistoryServiceModel();
+
+            if (history != null)
             {
-                Id = history.Id,
-                MovieName = history.Movie.Name,
-                CustomerName = history.Customer.UserName,
-                Price = history.Price
-            };
+                historyModel.Id = history.Id;
+                historyModel.MovieName = history.Movie.Name;
+                historyModel.CustomerName = history.Customer.UserName;
+                historyModel.Price = history.Price;
+                historyModel.Date = history.Date;
+            }
+
+            return historyModel;
         }
     }
 }

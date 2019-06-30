@@ -22,18 +22,21 @@ namespace OnLineVideotech.Web.Controllers
         private readonly IMovieService movieService;
         private readonly IUserBalanceService userBalanceService;
         private readonly ICommentService commentService;
+        private readonly IHistoryService historyService;
 
         public MovieController(UserManager<User> userManager,
             RoleManager<Role> roleManager,
             IMovieService movieService,
             IUserBalanceService userBalanceService,
-            ICommentService commentService)
+            ICommentService commentService,
+            IHistoryService historyService)
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
             this.movieService = movieService;
             this.userBalanceService = userBalanceService;
             this.commentService = commentService;
+            this.historyService = historyService;
         }
 
         public async Task<IActionResult> Index()
@@ -76,11 +79,14 @@ namespace OnLineVideotech.Web.Controllers
                 .ThenBy(p => p.Date.Hour)
                 .ThenBy(c => c.Date.Minute)
                 .ThenBy(s => s.Date.Second)
-                .ToList();
+                .ToList();           
 
             if (User.Identity.IsAuthenticated)
             {
                 User user = await userManager.GetUserAsync(HttpContext.User);
+
+                movieModel.History = await this.historyService.GetHistoryForMovieAboutUser(user.Id, id);
+
                 IList<string> roles = await userManager.GetRolesAsync(user);
 
                 foreach (string role in roles)
