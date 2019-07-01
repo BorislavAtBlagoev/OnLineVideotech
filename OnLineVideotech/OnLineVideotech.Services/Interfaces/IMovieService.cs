@@ -7,7 +7,7 @@ namespace OnLineVideotech.Services.Interfaces
 {
     public interface IMovieService : IBaseService
     {
-        Task<IEnumerable<MovieServiceModel>> GetMovies();
+        Task<List<MovieServiceModel>> GetMovies();
 
         Task<MovieServiceModel> FindMovie(Guid id);
 
@@ -16,5 +16,7 @@ namespace OnLineVideotech.Services.Interfaces
         bool IsPurchased(string userId, Guid movieId);
 
         Task<IEnumerable<MovieServiceModel>> GetAllPurchasedMoviesForUser(string userId);
+
+        Task<MovieFilterServiceModel> FilteredMovies(MovieFilterServiceModel moviesModel);
     }
 }

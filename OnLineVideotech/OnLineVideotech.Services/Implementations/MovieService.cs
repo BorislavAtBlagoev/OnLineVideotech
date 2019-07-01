@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using OnLineVideotech.Data;
 using OnLineVideotech.Data.Models;
 using OnLineVideotech.Services.Admin.Interfaces;
+using OnLineVideotech.Services.Admin.ServiceModels;
 using OnLineVideotech.Services.Interfaces;
 using OnLineVideotech.Services.ServiceModels;
 
@@ -24,9 +25,9 @@ namespace OnLineVideotech.Services.Implementations
             this.userBalance = userBalance;
         }
 
-        public async Task<IEnumerable<MovieServiceModel>> GetMovies()
+        public async Task<List<MovieServiceModel>> GetMovies()
         {
-            IEnumerable<MovieServiceModel> movieModel = await this.Db.Movies
+            List<MovieServiceModel> movieModel = await this.Db.Movies
                 .Select(m => new MovieServiceModel
                 {
                     Id = m.Id,
@@ -95,8 +96,8 @@ namespace OnLineVideotech.Services.Implementations
 
             foreach (History history in userHistories)
             {
-               Movie movie = await this.Db.Movies
-                    .FindAsync(history.MovieId);
+                Movie movie = await this.Db.Movies
+                     .FindAsync(history.MovieId);
 
                 MovieServiceModel movieModel = new MovieServiceModel
                 {
@@ -115,6 +116,99 @@ namespace OnLineVideotech.Services.Implementations
             }
 
             return movies;
+        }
+
+        public async Task<MovieFilterServiceModel> FilteredMovies(MovieFilterServiceModel moviesModel)
+        {
+            MovieFilterServiceModel movieModel = new MovieFilterServiceModel();
+
+            if (moviesModel.MovieName != null && moviesModel.Year == null && !moviesModel.Genres.Any(x => x.IsSelected))
+            {
+                movieModel.MovieCollection = await this.Db.Movies
+                    .Include(p => p.Prices)
+                      .ThenInclude(c => c.Role)
+                     .Include(k => k.Prices)
+                    .Where(d => d.Name.Contains(moviesModel.MovieName))
+                    .Select(g => new MovieServiceModel
+                    {
+                        Id = g.Id,
+                        Name = g.Name,
+                        Rating = g.Rating,
+                        PosterPath = g.PosterPath,
+                        VideoPath = g.VideoPath,
+                        TrailerPath = g.TrailerPath,
+                        Summary = g.Summary,
+                        Year = g.Year
+                    })
+                    .ToListAsync();
+            }
+            if (moviesModel.Year != null && moviesModel.MovieName == null && !moviesModel.Genres.Any(x => x.IsSelected))
+            {
+                try
+                {
+                    movieModel.MovieCollection = await this.Db.Movies
+                   .Include(p => p.Prices)
+                     .ThenInclude(c => c.Role)
+                    .Include(k => k.Prices)
+                   .Where(d => d.Year.Year == int.Parse(moviesModel.Year))
+                   .Select(g => new MovieServiceModel
+                   {
+                       Id = g.Id,
+                       Name = g.Name,
+                       Rating = g.Rating,
+                       PosterPath = g.PosterPath,
+                       VideoPath = g.VideoPath,
+                       TrailerPath = g.TrailerPath,
+                       Summary = g.Summary,
+                       Year = g.Year
+                   })
+                   .ToListAsync();
+                }
+                catch (Exception)
+                {
+                    return movieModel;
+                }
+            }
+            if (moviesModel.Genres.Any(x => x.IsSelected) && moviesModel.Year == null && moviesModel.MovieName == null)
+            {
+                //foreach (GenreServiceModel genre in moviesModel.Genres)
+                //{
+                //    if (genre.IsSelected)
+                //    {
+                //        GenreMovie genreMovie = await this.Db.GenreMovies.SingleOrDefaultAsync(x => x.GenreId == genre.Id);
+
+                //        List<MovieServiceModel> movies = await this.Db.Movies
+                //           .Include(p => p.Prices)
+                //             .ThenInclude(c => c.Role)
+                //            .Include(k => k.Prices)
+                //            .Include(b => b.Genres)
+                //                .ThenInclude(t => t.Genre)
+                //           .Where(x => x.Genres.Contains(genreMovie))
+                //           .Select(g => new MovieServiceModel
+                //           {
+                //               Id = g.Id,
+                //               Name = g.Name,
+                //               Rating = g.Rating,
+                //               PosterPath = g.PosterPath,
+                //               VideoPath = g.VideoPath,
+                //               TrailerPath = g.TrailerPath,
+                //               Summary = g.Summary,
+                //               Year = g.Year
+                //           })
+                //           .ToListAsync();
+
+                //        foreach (MovieServiceModel movie in movies)
+                //        {
+                //            if (!movieModel.MovieCollection.Any(m => m.Id == movie.Id))
+                //            {
+                //                movieModel.MovieCollection.Add(movie);
+                //            }
+                //        }
+                //    }
+                //}
+            }
+
+            return movieModel;
         }
     }
 }

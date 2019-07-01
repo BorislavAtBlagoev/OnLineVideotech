@@ -21,6 +21,10 @@ namespace OnLineVideotech.Services.Implementations
             return await this.Db.Histories
                 .Include(m => m.Movie)
                 .Include(u => u.Customer)
+                .OrderBy(x => x.Customer.UserName)
+                .ThenBy(x => x.Date)
+                .ThenBy(x => x.Date.Minute)
+                .ThenBy(x => x.Date.Second)             
                 .Select(p => new HistoryServiceModel
                 {
                     Id = p.Id,

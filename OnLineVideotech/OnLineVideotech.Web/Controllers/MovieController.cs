@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OnLineVideotech.Data.Models;
+using OnLineVideotech.Services.Admin.Interfaces;
+using OnLineVideotech.Services.Admin.ServiceModels;
 using OnLineVideotech.Services.Interfaces;
 using OnLineVideotech.Services.ServiceModels;
 using OnLineVideotech.Web.Infrastructure;
@@ -23,13 +25,15 @@ namespace OnLineVideotech.Web.Controllers
         private readonly IUserBalanceService userBalanceService;
         private readonly ICommentService commentService;
         private readonly IHistoryService historyService;
+        private readonly IGenreService genreService;
 
         public MovieController(UserManager<User> userManager,
             RoleManager<Role> roleManager,
             IMovieService movieService,
             IUserBalanceService userBalanceService,
             ICommentService commentService,
-            IHistoryService historyService)
+            IHistoryService historyService,
+            IGenreService genreService)
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
@@ -37,17 +41,22 @@ namespace OnLineVideotech.Web.Controllers
             this.userBalanceService = userBalanceService;
             this.commentService = commentService;
             this.historyService = historyService;
+            this.genreService = genreService;
         }
 
         public async Task<IActionResult> Index()
         {
-            IEnumerable<MovieServiceModel> movies = await this.movieService.GetMovies();
+            MovieFilterServiceModel movieFilterServiceModel = new MovieFilterServiceModel();
+            List<MovieServiceModel> movies = await this.movieService.GetMovies();
+            List<GenreServiceModel> genres = await genreService.GetAllGenres();
+
+            movieFilterServiceModel.MovieCollection = movies;
 
             if (User.Identity.IsAuthenticated)
             {
                 User user = await userManager.GetUserAsync(HttpContext.User);
                 IList<string> roles = await userManager.GetRolesAsync(user);
-                string role = roles.SingleOrDefault();
+                string role = roles.SingleOrDefault();              
 
                 if (role == null)
                 {
@@ -64,9 +73,64 @@ namespace OnLineVideotech.Web.Controllers
 
                     movie.Price = movieModel.Prices.SingleOrDefault(x => x.Role.Name == role).MoviePrice;
                 }
+
+                foreach (GenreServiceModel genre in genres)
+                {
+                    GenreServiceModel genreModel = new GenreServiceModel();
+                    genreModel.Name = genre.Name;
+                    genreModel.Id = genre.Id;
+                    movieFilterServiceModel.Genres.Add(genreModel);
+                }              
             }
 
-            return View(movies);
+            return View(movieFilterServiceModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Index(MovieFilterServiceModel movieFilter)
+        {
+            MovieFilterServiceModel movieFilterServiceModel = await this.movieService.FilteredMovies(movieFilter);
+            List<GenreServiceModel> genres = await genreService.GetAllGenres();
+
+            if (User.Identity.IsAuthenticated)
+            {
+                User user = await userManager.GetUserAsync(HttpContext.User);
+                IList<string> roles = await userManager.GetRolesAsync(user);
+                string role = roles.SingleOrDefault();
+
+                if (role == null)
+                {
+                    await this.userManager.AddToRoleAsync(user, GlobalConstants.RegularUser);
+
+                    role = GlobalConstants.RegularUser;
+                }
+
+                if (movieFilterServiceModel.MovieCollection != null)
+                {
+                    foreach (MovieServiceModel movie in movieFilterServiceModel.MovieCollection)
+                    {
+                        MovieServiceModel movieModel = await this.movieService.FindMovie(movie.Id);
+
+                        movie.IsPurchased = this.movieService.IsPurchased(user.Id, movie.Id);
+
+                        movie.Price = movieModel.Prices.SingleOrDefault(x => x.Role.Name == role).MoviePrice;
+                    }
+                }
+                else
+                {
+                    movieFilterServiceModel.MovieCollection = new List<MovieServiceModel>();
+                }
+
+                foreach (GenreServiceModel genre in genres)
+                {
+                    GenreServiceModel genreModel = new GenreServiceModel();
+                    genreModel.Name = genre.Name;
+                    genreModel.Id = genre.Id;
+                    movieFilterServiceModel.Genres.Add(genreModel);
+                }
+            }
+
+            return View(movieFilterServiceModel);
         }
 
         public async Task<IActionResult> MovieDetails(Guid id)
@@ -212,7 +276,7 @@ namespace OnLineVideotech.Web.Controllers
             TempData.AddSuccessMessage($"Comment successfully deleted !");
 
             return RedirectToAction(nameof(MovieDetails), new { id = commentModel.MovieId });
-        }
+        }    
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

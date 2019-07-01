@@ -78,7 +78,7 @@ namespace OnLineVideotech.Web.Areas.Admin.Controllers
 
             model.Genres = await this.genreService.GetAllGenres();
 
-            if (model.Genres.Any(x => x.Name.ToLower() == model.Name.ToLower()))
+            if (model.Genres.Any(x => x.Name == model.Name))
             {
                 TempData.AddErrorMessage($"Genre with name '{model.Name}' already exists !");
 
