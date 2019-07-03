@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -136,6 +137,9 @@ namespace OnLineVideotech.Web.Controllers
         public async Task<IActionResult> MovieDetails(Guid id)
         {
             MovieServiceModel movieModel = await this.movieService.FindMovie(id);
+
+            movieModel.NumLinesSummary = Regex.Matches(movieModel.Summary, "\r\n").Count;
+            movieModel.NumLinesSummary = movieModel.NumLinesSummary + movieModel.NumLinesSummary + 1;
 
             movieModel.Comments = await this.commentService.GetAllCommentsForMovie(movieModel.Id);
             movieModel.Comments = movieModel.Comments

@@ -48,11 +48,9 @@
     <div class="row">
         <div class="col-sm-12">
             <h4 class="text-sm-center header-section-details">Summary</h4>
-            <article>
-                <p>
-                    @Model.Summary
-                </p>
-            </article>
+            <div class="form-group">
+                <textarea class="form-control rounded-0" style="background-color: #1C1D21; color: white; border-color: #1C1D21" rows="@Model.NumLinesSummary.ToString()"> @Model.Summary</textarea>
+            </div>
         </div>
     </div>
     <br />

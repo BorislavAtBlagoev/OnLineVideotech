@@ -23,6 +23,8 @@ namespace OnLineVideotech.Services.ServiceModels
 
         public string Summary { get; set; }
 
+        public int NumLinesSummary { get; set; }
+
         public decimal Price { get; set; }
 
         public bool IsPurchased { get; set; }

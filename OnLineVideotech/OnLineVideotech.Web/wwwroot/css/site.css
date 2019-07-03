@@ -10,14 +10,14 @@ a.navbar-brand {
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-    font-size: 14px;
+    font-size: 16px;
 }
 
-@media (min-width: 768px) {
+/*@media (min-width: 768px) {
     html {
         font-size: 16px;
     }
-}
+}*/
 
 .border-top {
     border-top: 1px solid #e5e5e5;
@@ -150,3 +150,8 @@ video {
     .header-section-details:hover {
         color: greenyellow;
     }
+
+.summary-area {
+    background-color: yellow;
+    color: white;
+}
