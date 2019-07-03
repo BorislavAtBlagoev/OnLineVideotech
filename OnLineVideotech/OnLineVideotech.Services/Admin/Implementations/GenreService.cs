@@ -94,5 +94,13 @@ namespace OnLineVideotech.Services.Admin.Implementations
 
             return genres;
         }
+
+        public async Task<List<Guid>> GetAllMoviesForGenre(Guid genreId)
+        {
+            return await this.Db.GenreMovies
+                .Where(x => x.GenreId == genreId)
+                .Select(c => c.MovieId)
+                .ToListAsync();
+        }
     }
 }

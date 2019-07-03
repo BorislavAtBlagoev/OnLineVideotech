@@ -7,7 +7,7 @@ namespace OnLineVideotech.Services.ServiceModels
 {
     public class MovieFilterServiceModel
     {
-        public List<MovieServiceModel> MovieCollection { get; set; } 
+        public List<MovieServiceModel> MovieCollection { get; set; } = new List<MovieServiceModel>();
 
         [Display(Name = "Movie name")]
         public string MovieName { get; set; }

@@ -65,11 +65,13 @@ namespace OnLineVideotech.Web
 
             services.AddAutoMapper();
 
+            services.AddMemoryCache();
+
             services.AddMvc(options =>
             {
                 options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
             })
-            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);           
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

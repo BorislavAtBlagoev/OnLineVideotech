@@ -19,5 +19,7 @@ namespace OnLineVideotech.Services.Admin.Interfaces
         Task Delete(GenreServiceModel genreServiceModel);
 
         Task<List<Genre>> GetAllGenreForMovie(Guid MovieId);
+
+        Task<List<Guid>> GetAllMoviesForGenre(Guid genreId);
     }
 }
