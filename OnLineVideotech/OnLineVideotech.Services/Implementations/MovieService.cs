@@ -128,11 +128,21 @@ namespace OnLineVideotech.Services.Implementations
             if (moviesModel.MovieName != null)
             {
                 movieModel = await SearchWithMovieName(moviesModel.MovieName, movieModel);
+
+                if (movieModel.MovieCollection.Count == 0)
+                {
+                    return movieModel;
+                }
             }
 
             if (moviesModel.Year != null)
             {
                 movieModel = await SearchWithMovieYear(moviesModel.Year, movieModel);
+
+                if (movieModel.MovieCollection.Count == 0)
+                {
+                    return movieModel;
+                }
             }
 
             if (moviesModel.Genres.Any(x => x.IsSelected))
@@ -243,7 +253,7 @@ namespace OnLineVideotech.Services.Implementations
                         {
                             List<Genre> genresList = await this.genreService.GetAllGenreForMovie(movie.Id);                  
 
-                            if (genresList.Any(g => g.Id == genre.Id))
+                            if (genresList.Any(g => g.Id == genre.Id) && !actualMovieList.Any(m => m.Id == movie.Id))
                             {
                                 actualMovieList.Add(movie);
                             }
